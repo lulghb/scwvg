@@ -12,6 +12,7 @@
     <modules>
         <module>scwvg-api</module>
         <module>scwvg-company</module>
+        <module>scwvg-access</module>
         <module>scwvg-pmee-6201</module>
         <module>scwvg-pmee-6202</module>
         <module>scwvg-pmee-6203</module>
@@ -58,10 +59,6 @@
        <dependency>
            <groupId>org.springframework.cloud</groupId>
            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-       </dependency>
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-actuator</artifactId>
        </dependency>
        <!--服务完善与服务描述-->
        <dependency>
