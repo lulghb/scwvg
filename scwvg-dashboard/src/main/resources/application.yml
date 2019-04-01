@@ -1,0 +1,17 @@
+server:
+  port: 9001
+spring:
+  application:
+    name: scwvg-dashboard
+eureka:
+  client:
+    service-url:
+      defaultZone: http://scwvg-eureka7601.com:7601/eureka/,http://scwvg-eureka7602.com:7602/eureka/,http://scwvg-eureka7603.com:7603/eureka/
+  instance:
+    instance-id: scwvg-dashboard.com
+    prefer-ip-address: true
+info:
+  app.name: scwvg-dashboard-heath
+  company.name: www.scwvg.com
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

@@ -1,0 +1,8 @@
+###修改端口以及访问路口classpath
+server:
+  port: 80
+####设置WEB日志
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd hh:mm:ss
+    level: debug
