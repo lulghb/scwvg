@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: com.scwvg.ScwvgEureka7602ApplicationTests
 -------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 12.738 s - in com.scwvg.ScwvgEureka7602ApplicationTests
+Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 13.12 s - in com.scwvg.ScwvgEureka7602ApplicationTests

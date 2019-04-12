@@ -12,7 +12,7 @@
     <modules>
         <module>scwvg-api</module>
         <module>scwvg-company</module>
-        <module>scwvg-access</module>
+        <module>scwvg-access-web</module>
         <module>scwvg-pmee-6201</module>
         <module>scwvg-pmee-6202</module>
         <module>scwvg-pmee-6203</module>

@@ -7,10 +7,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class ScwvgPmee6203ApplicationTests {
-
+public class ScwvgPmee6203ApplicationTests{
     @Test
     public void contextLoads() {
     }
-
 }

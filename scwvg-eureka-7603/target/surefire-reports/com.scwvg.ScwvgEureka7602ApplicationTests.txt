@@ -1,0 +1,7 @@
+-------------------------------------------------------------------------------
+Test set: com.scwvg.ScwvgEureka7602ApplicationTests
+-------------------------------------------------------------------------------
+Tests run: 1, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.54 s <<< FAILURE! - in com.scwvg.ScwvgEureka7602ApplicationTests
+initializationError(com.scwvg.ScwvgEureka7602ApplicationTests)  Time elapsed: 0.016 s  <<< ERROR!
+java.lang.IllegalStateException: Found multiple @SpringBootConfiguration annotated classes [Generic bean: class [com.scwvg.ScwvgEureka7602Application]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\IdeaProjects\scwvg\scwvg-eureka-7603\target\classes\com\scwvg\ScwvgEureka7602Application.class], Generic bean: class [com.scwvg.ScwvgEureka7603Application]; scope=; abstract=false; lazyInit=false; autowireMode=0; dependencyCheck=0; autowireCandidate=true; primary=false; factoryBeanName=null; factoryMethodName=null; initMethodName=null; destroyMethodName=null; defined in file [D:\IdeaProjects\scwvg\scwvg-eureka-7603\target\classes\com\scwvg\ScwvgEureka7603Application.class]]
+
