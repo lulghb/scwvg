@@ -1,7 +1,5 @@
-###�޸Ķ˿��Լ�����·��classpath
 server:
   port: 80
-####����WEB��־
 logging:
   pattern:
     dateformat: yyyy-MM-dd hh:mm:ss
