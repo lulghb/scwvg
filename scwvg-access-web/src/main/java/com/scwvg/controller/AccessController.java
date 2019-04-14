@@ -1,12 +1,8 @@
 package com.scwvg.controller;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.GetMapping;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.HashMap;
-import java.util.Map;
 
 /**
  * @aothor: lul
@@ -16,11 +12,32 @@ import java.util.Map;
  **/
 @Controller
 public class AccessController {
+
     private static String prefix="scwvg-zuul.com/wvg";
-    @RequestMapping("/login")
+    
+    /** 
+     * @Description:  后台登陆首页
+     * @Author: chen.baihoo
+     * @Date: 2019/4/14 
+     */ 
+    @GetMapping("/login")
     public String accessMain(){
-        return "login";
+        return "/login";
     }
 
-
+    @GetMapping("/index")
+    public String index(){
+        return "/index";
+    }
+    
+    /**
+     * TODO 注意：console 为关键字不能做 url地址结尾转发
+     * @Description:
+     * @Author: chen.baihoo
+     * @Date: 2019/4/14 
+     */ 
+    @GetMapping("/home/console")
+    public String console(){
+        return "/home/wvg-console";
+    }
 }
