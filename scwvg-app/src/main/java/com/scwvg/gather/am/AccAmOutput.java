@@ -72,11 +72,11 @@ public class AccAmOutput extends Output {
 			if(num > 0 && (bShould || num >= batchSize)) {
 				BulkResponse response = bulkRequest.execute().actionGet();
 				if (response.hasFailures()) {
-					// ´¦Àí´íÎó
+					// å¤„ç†é”™è¯¯
 					logger.info(response.buildFailureMessage());
-					logger.info("ÅúÁ¿²åÈëes´íÎó");
+					logger.info("æ‰¹é‡æ’å…¥esé”™è¯¯");
 				} else {
-					logger.info(String.format("Èëes:%s²åÈëÍê³É,ºÄÊ±:%sºÁÃë", bulkRequest.numberOfActions(), System.currentTimeMillis() - time));
+					logger.info(String.format("å…¥es:%sæ’å…¥å®Œæˆ,è€—æ—¶:%sæ¯«ç§’", bulkRequest.numberOfActions(), System.currentTimeMillis() - time));
 				}
 				bulkRequest = Global.esClientUtil.getBulkRequestBuilder();
 				time = System.currentTimeMillis();
@@ -90,11 +90,11 @@ public class AccAmOutput extends Output {
 		if(num > 0) {
 			BulkResponse response = bulkRequest.execute().actionGet();
 			if (response.hasFailures()) {
-				// ´¦Àí´íÎó
+				// å¤„ç†é”™è¯¯
 				logger.info(response.buildFailureMessage());
-				logger.info("ÅúÁ¿²åÈëes´íÎó");
+				logger.info("æ‰¹é‡æ’å…¥esé”™è¯¯");
 			} else {
-				logger.info(String.format("Èëes:%s²åÈëÍê³É,ºÄÊ±:%sºÁÃë", bulkRequest.numberOfActions(), System.currentTimeMillis() - time));
+				logger.info(String.format("å…¥es:%sæ’å…¥å®Œæˆ,è€—æ—¶:%sæ¯«ç§’", bulkRequest.numberOfActions(), System.currentTimeMillis() - time));
 			}
 		}
 		
@@ -114,7 +114,7 @@ public class AccAmOutput extends Output {
 	}
 	
 	/**
-	 * ÍË³öÏß³Ì
+	 * é€€å‡ºçº¿ç¨‹
 	 */
 	@Override
 	public void exit() {
@@ -122,7 +122,7 @@ public class AccAmOutput extends Output {
 	}
 	
 	public static void main(String[] args) {
-		String s = "¿ªÊ¼2019-04-13 23:59:59[324192686-170.129.240.26/59092|136.192.50.33, 1.3.6.1.2.1.1.3.0=109 days, 5:39:15.26, 1.3.6.1.6.3.1.1.4.1.0=1.3.6.1.4.1.2011.2.115, 1.3.6.1.4.1.2011.2.115=0, 1.3.6.1.4.1.2011.2.115=3, 1.3.6.1.4.1.2011.2.115=2, 1.3.6.1.4.1.2011.2.115=170.129.240.26, 1.3.6.1.4.1.2011.2.115=772907019, 1.3.6.1.4.1.2011.2.115=877797, 1.3.6.1.4.1.2011.2.115=771751969, 1.3.6.1.4.1.2011.2.115=27, 1.3.6.1.4.1.2011.2.115=2019-04-13 16:00:28Z, 1.3.6.1.4.1.2011.2.115=0, 1.3.6.1.4.1.2011.2.115=12, 1.3.6.1.4.1.2011.2.115=4, 1.3.6.1.4.1.2011.2.115=37, 1.3.6.1.4.1.2011.2.115=ZXHN F650, 1.3.6.1.4.1.2011.2.115=ONT_NO_DESCRIPTION?alarm-policy_0, , moInfo=snmp_check=1|totalid=2086948|jf_name=ÄÏ¸ÚÇøÒÆ¶¯Íø¹ÌÍøºÍĞËÉÌÏÃºÍĞËÉÌÏÃÎŞÏß»ú·¿|zd_name=ÒÆ¶¯Íø¹ÌÍøºÍĞËÉÌÏÃ|remark=1|city_name=¹ş¶û±õ|vendor_name=»ªÎª|device_name=¹ş¶û±õ_ÄÏ¸Ú_ºÍĞË´óÏÃ_OLT_1_»ªÎª_MA5680T|spec_name=ACC|devicetype_name=OLT|devicemodel_name=MA5680T|branch_name=|orgin_ip=170.129.240.26|oss_dev_name=¹ş¶û±õ_ÄÏ¸Ú_ºÍĞË´óÏÃ_OLT_1_»ªÎª_MA5680T|olt_adapter=|reverse_olt_adapter=|devcemodel_name=MA5680T|device_id=1701, oidInfo=state=0|row=5|event_name=ONUµçÔ´µôµç|perceivedseverity=1|event_adapter=POSITION=RACK:1,SHELF:$GetByLine(10),SLOT:$GetByLine(11),PORT:$GetByLine(12),ONUNUM:$GetByLine(13);¸æ¾¯Ãû³Æ=GPON ONTµôµç(DGi);Ó²¼ş°æ±¾=$GetByLine(14);ONTÃèÊöĞÅÏ¢(½öÍø¹Ü¿É¼û)=$Substr(\"15\",\"start\",\"?\"), MAC=$Substr(\"15\",\"?2\",\"?4\"), LOID=$Substr(\"15\",\"?4\",\"?end\"), ONUTYPE=$GetByLine(14), SERVICELEVEL=$Substr(\"15\",\"?\",\"?2\"), ONUIP=$Substr(\"15\",\"?1\",\"?2\"),ONUNAME=$OnuNameByIp(gatherID,\"15\",\"?1\",\"?2\"),|event_oid=772907019|recovery_oid=772972555]<AlarmStart>|^|BRANCH_NAME:|^|ORGIN_IP:170.129.240.26|^|CLEARANCETIMESTAMP:|^|OSS_DEV_NAME:¹ş¶û±õ_ÄÏ¸Ú_ºÍĞË´óÏÃ_OLT_1_»ªÎª_MA5680T|^|SEND_TIME:2019-04-13 23:59:59|^|ONLY_ID:324192686|^|ALARMTEXT:devcemodel_name#MA5680T|^|EQUIPMENTNAME:¹ş¶û±õ_ÄÏ¸Ú_ºÍĞË´óÏÃ_OLT_1_»ªÎª_MA5680T|^|ALARMORIGIN:136.192.50.33|^|ADDITIONALTEXT:POSITION=RACK:1,SHELF:0,SLOT:12,PORT:4,ONUNUM:37;¸æ¾¯Ãû³Æ=GPON ONTµôµç(DGi);Ó²¼ş°æ±¾=ZXHN F650;ONTÃèÊöĞÅÏ¢(½öÍø¹Ü¿É¼û)=ONT_NO_DESCRIPTION, MAC=, LOID=, ONUTYPE=ZXHN F650, SERVICELEVEL=alarm-policy_0, ONUIP=,ONUNAME=,|^|PERCEIVEDSEVERITY:1|^|EVENTTIME:2019-04-13 23:59:59|^|SPECIALTY:ACC|^|NECLASS:OLT|^|CLEARANCEREPORTFLAG:0|^|ALARMNAME:ONUµçÔ´µôµç|^|LOCATIONINFO:»ªÎª|^|TOTALID:2086948|^|JF_NAME:ÄÏ¸ÚÇøÒÆ¶¯Íø¹ÌÍøºÍĞËÉÌÏÃºÍĞËÉÌÏÃÎŞÏß»ú·¿|^|ZD_NAME:ÒÆ¶¯Íø¹ÌÍøºÍĞËÉÌÏÃ|^|SERIAL:1701/772907019(772972555)/1555171199|^|REGION:¹ş¶û±õ|^|IPADDRESS:170.129.240.26|^|REPAIRACTIONADVICE:|^|EQUIPMENTNAME_ALIAS:¹ş¶û±õ_ÄÏ¸Ú_ºÍĞË´óÏÃ_OLT_1_»ªÎª_MA5680T|^|RENOVATE_FLAG:0|^|<AlarmEnd>½áÊø";
+		String s = "å¼€å§‹2019-04-13 23:59:59[324192686-170.129.240.26/59092|136.192.50.33, 1.3.6.1.2.1.1.3.0=109 days, 5:39:15.26, 1.3.6.1.6.3.1.1.4.1.0=1.3.6.1.4.1.2011.2.115, 1.3.6.1.4.1.2011.2.115=0, 1.3.6.1.4.1.2011.2.115=3, 1.3.6.1.4.1.2011.2.115=2, 1.3.6.1.4.1.2011.2.115=170.129.240.26, 1.3.6.1.4.1.2011.2.115=772907019, 1.3.6.1.4.1.2011.2.115=877797, 1.3.6.1.4.1.2011.2.115=771751969, 1.3.6.1.4.1.2011.2.115=27, 1.3.6.1.4.1.2011.2.115=2019-04-13 16:00:28Z, 1.3.6.1.4.1.2011.2.115=0, 1.3.6.1.4.1.2011.2.115=12, 1.3.6.1.4.1.2011.2.115=4, 1.3.6.1.4.1.2011.2.115=37, 1.3.6.1.4.1.2011.2.115=ZXHN F650, 1.3.6.1.4.1.2011.2.115=ONT_NO_DESCRIPTION?alarm-policy_0, , moInfo=snmp_check=1|totalid=2086948|jf_name=å—å²—åŒºç§»åŠ¨ç½‘å›ºç½‘å’Œå…´å•†å¦å’Œå…´å•†å¦æ— çº¿æœºæˆ¿|zd_name=ç§»åŠ¨ç½‘å›ºç½‘å’Œå…´å•†å¦|remark=1|city_name=å“ˆå°”æ»¨|vendor_name=åä¸º|device_name=å“ˆå°”æ»¨_å—å²—_å’Œå…´å¤§å¦_OLT_1_åä¸º_MA5680T|spec_name=ACC|devicetype_name=OLT|devicemodel_name=MA5680T|branch_name=|orgin_ip=170.129.240.26|oss_dev_name=å“ˆå°”æ»¨_å—å²—_å’Œå…´å¤§å¦_OLT_1_åä¸º_MA5680T|olt_adapter=|reverse_olt_adapter=|devcemodel_name=MA5680T|device_id=1701, oidInfo=state=0|row=5|event_name=ONUç”µæºæ‰ç”µ|perceivedseverity=1|event_adapter=POSITION=RACK:1,SHELF:$GetByLine(10),SLOT:$GetByLine(11),PORT:$GetByLine(12),ONUNUM:$GetByLine(13);å‘Šè­¦åç§°=GPON ONTæ‰ç”µ(DGi);ç¡¬ä»¶ç‰ˆæœ¬=$GetByLine(14);ONTæè¿°ä¿¡æ¯(ä»…ç½‘ç®¡å¯è§)=$Substr(\"15\",\"start\",\"?\"), MAC=$Substr(\"15\",\"?2\",\"?4\"), LOID=$Substr(\"15\",\"?4\",\"?end\"), ONUTYPE=$GetByLine(14), SERVICELEVEL=$Substr(\"15\",\"?\",\"?2\"), ONUIP=$Substr(\"15\",\"?1\",\"?2\"),ONUNAME=$OnuNameByIp(gatherID,\"15\",\"?1\",\"?2\"),|event_oid=772907019|recovery_oid=772972555]<AlarmStart>|^|BRANCH_NAME:|^|ORGIN_IP:170.129.240.26|^|CLEARANCETIMESTAMP:|^|OSS_DEV_NAME:å“ˆå°”æ»¨_å—å²—_å’Œå…´å¤§å¦_OLT_1_åä¸º_MA5680T|^|SEND_TIME:2019-04-13 23:59:59|^|ONLY_ID:324192686|^|ALARMTEXT:devcemodel_name#MA5680T|^|EQUIPMENTNAME:å“ˆå°”æ»¨_å—å²—_å’Œå…´å¤§å¦_OLT_1_åä¸º_MA5680T|^|ALARMORIGIN:136.192.50.33|^|ADDITIONALTEXT:POSITION=RACK:1,SHELF:0,SLOT:12,PORT:4,ONUNUM:37;å‘Šè­¦åç§°=GPON ONTæ‰ç”µ(DGi);ç¡¬ä»¶ç‰ˆæœ¬=ZXHN F650;ONTæè¿°ä¿¡æ¯(ä»…ç½‘ç®¡å¯è§)=ONT_NO_DESCRIPTION, MAC=, LOID=, ONUTYPE=ZXHN F650, SERVICELEVEL=alarm-policy_0, ONUIP=,ONUNAME=,|^|PERCEIVEDSEVERITY:1|^|EVENTTIME:2019-04-13 23:59:59|^|SPECIALTY:ACC|^|NECLASS:OLT|^|CLEARANCEREPORTFLAG:0|^|ALARMNAME:ONUç”µæºæ‰ç”µ|^|LOCATIONINFO:åä¸º|^|TOTALID:2086948|^|JF_NAME:å—å²—åŒºç§»åŠ¨ç½‘å›ºç½‘å’Œå…´å•†å¦å’Œå…´å•†å¦æ— çº¿æœºæˆ¿|^|ZD_NAME:ç§»åŠ¨ç½‘å›ºç½‘å’Œå…´å•†å¦|^|SERIAL:1701/772907019(772972555)/1555171199|^|REGION:å“ˆå°”æ»¨|^|IPADDRESS:170.129.240.26|^|REPAIRACTIONADVICE:|^|EQUIPMENTNAME_ALIAS:å“ˆå°”æ»¨_å—å²—_å’Œå…´å¤§å¦_OLT_1_åä¸º_MA5680T|^|RENOVATE_FLAG:0|^|<AlarmEnd>ç»“æŸ";
 		String[] split = s.substring(s.indexOf("<AlarmStart>") + 12, s.indexOf("<AlarmEnd>")).split("\\|\\^\\|");
 		for (String string : split) {
 			if(string.length() <= 0 ) {

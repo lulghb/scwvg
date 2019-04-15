@@ -84,7 +84,7 @@ public class JdbcOutput extends Thread {
 			}
 		}
 		
-		// ¹Ø±ÕÁ¬½Ó
+		// å…³é—­è¿žæŽ¥
 		if(pst != null) {
 			try {
 				if(num >= 1) {

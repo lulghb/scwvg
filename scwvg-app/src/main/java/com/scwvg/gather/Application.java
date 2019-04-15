@@ -67,7 +67,7 @@ public class Application {
 					if(file.exists()) {
 						FileReader reader = null;
 						BufferedReader br = null;
-						logger.info("¿ªÊ¼¶ÁÈ¡: [{}]", file.getAbsolutePath());
+						logger.info("å¼€å§‹è¯»å–: [{}]", file.getAbsolutePath());
 						try {
 							reader = new FileReader(file);
 							br = new BufferedReader(reader);
@@ -93,7 +93,7 @@ public class Application {
 								} catch (IOException e) { e.printStackTrace(); }
 							}
 						}
-						logger.info("¶ÁÈ¡Íê³É: [{}]", file.getAbsolutePath());
+						logger.info("è¯»å–å®Œæˆ: [{}]", file.getAbsolutePath());
 					}
 				}
 				
@@ -108,7 +108,7 @@ public class Application {
 			System.out.println("init fail!");
 		}
 		
-		logger.info("ÍË³ö");
+		logger.info("é€€å‡º");
 	}
 	
 	public boolean init(String confPath) {
@@ -118,12 +118,12 @@ public class Application {
 			inStream = new FileInputStream(confPath);
 			properties.load(inStream);
 			Global.context = new Context();
-			//´´½¨Context¶ÔÏó£¬´æ´¢ÅäÖÃĞÅÏ¢
+			//åˆ›å»ºContextå¯¹è±¡ï¼Œå­˜å‚¨é…ç½®ä¿¡æ¯
 			for(Map.Entry<Object, Object> entry : properties.entrySet()) {
 				Global.context.put(String.valueOf(entry.getKey()), String.valueOf(entry.getValue()));
 			}
 			
-			// ³õÊ¼»¯esClient
+			// åˆå§‹åŒ–esClient
 			Global.esClientUtil = new ESClientUtil();
 			Global.esClientUtil.setHosts(Global.context.getString("es.hosts"));
 			Global.esClientUtil.setClusterName(Global.context.getString("es.clusterName"));
@@ -131,7 +131,7 @@ public class Application {
 			Global.esClientUtil.init();
 			
 			
-			//³õÊ¼»¯¶ÓÁĞ
+			//åˆå§‹åŒ–é˜Ÿåˆ—
 			Global.queue = new ArrayBlockingQueue<String>(Global.context.getInteger("queue.size", 5000));
 			
 		} catch (Exception e) {

@@ -6,16 +6,16 @@ import com.scwvg.gather.util.ESClientUtil;
 
 public class Global {
 	
-	/**ÅäÖÃ*/
+	/**é…ç½®*/
 	public static Context context = null;
 	
-	/**ÊÇ·ñÍË³ö*/
+	/**æ˜¯å¦é€€å‡º*/
 	public static boolean isExit = false;
 	
-	/**Es¿Í»§¶ËÁ¬½Ó*/
+	/**Eså®¢æˆ·ç«¯è¿æ¥*/
 	public static ESClientUtil esClientUtil = null;
 	
-	/**¶ÓÁĞ*/
+	/**é˜Ÿåˆ—*/
 	public static BlockingQueue<String> queue = null;
 
 }

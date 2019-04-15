@@ -23,7 +23,7 @@ import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson.JSONObject;
 
 /**
- * es¿Í»§¶Ë¹¤¾ßÀà
+ * eså®¢æˆ·ç«¯å·¥å…·ç±»
  * @author tangyonglin
  *
  */
@@ -31,16 +31,16 @@ public class ESClientUtil {
 	
 	private final static Logger log = LoggerFactory.getLogger(ESClientUtil.class);
 	
-	/**Ö÷»ú*/
+	/**ä¸»æœº*/
 	private String hosts;
-	/**es¼¯ÈºÃû³Æ*/
+	/**esé›†ç¾¤åç§°*/
 	private String clusterName;
-	/**ÊÇ·ñÆôÓÃĞáÌ½*/
+	/**æ˜¯å¦å¯ç”¨å—…æ¢*/
 	private boolean sniff = false;
-	/**ÊÇ·ñÁ¬½Ó*/
+	/**æ˜¯å¦è¿æ¥*/
 	private boolean connectFlag = false;
 	
-	/**es¿Í»§¶Ë*/
+	/**eså®¢æˆ·ç«¯*/
 	private TransportClient client;
 	
 	public static void main(String[] args) {
@@ -51,7 +51,7 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ³õÊ¼»¯es¿Í»§¶Ë
+	 * åˆå§‹åŒ–eså®¢æˆ·ç«¯
 	 * @throws Exception
 	 */
 	public void init() throws Exception {
@@ -69,15 +69,15 @@ public class ESClientUtil {
 				}
 			}
 			connectFlag = true;
-			log.info(String.format("%s %s", hosts, "es³õÊ¼»¯Íê³É"));
+			log.info(String.format("%s %s", hosts, "esåˆå§‹åŒ–å®Œæˆ"));
 
 		} else {
-			log.info("esÖ÷»ú²»ÄÜÎª¿Õ!");
+			log.info("esä¸»æœºä¸èƒ½ä¸ºç©º!");
 		}
 	}
 	
 	/**
-	 * ´´½¨Index
+	 * åˆ›å»ºIndex
 	 * @param index
 	 * @param type
 	 * @param settings
@@ -86,12 +86,12 @@ public class ESClientUtil {
 	 */
 	public boolean createIndex(String index, Settings settings, Map<String, String> mapping) {
 		if(!connectFlag) {
-			throw new RuntimeException("esÎ´³õÊ¼»¯£¡");
+			throw new RuntimeException("esæœªåˆå§‹åŒ–ï¼");
 		}
 		
 		IndicesAdminClient indices = this.client.admin().indices();
-		//ÅĞ¶ÏindexÊÇ·ñ´æÔÚ
-		if(!exists(new String[]{index})) {//index²»´æÔÚ, ´´½¨index£¬´´½¨mapping
+		//åˆ¤æ–­indexæ˜¯å¦å­˜åœ¨
+		if(!exists(new String[]{index})) {//indexä¸å­˜åœ¨, åˆ›å»ºindexï¼Œåˆ›å»ºmapping
 			CreateIndexRequestBuilder requestBuilder = indices.prepareCreate(index).setSettings(settings);
 			for(Map.Entry<String, String> entry : mapping.entrySet()) {
 				
@@ -106,12 +106,12 @@ public class ESClientUtil {
 			
 			return requestBuilder.execute().actionGet().isAcknowledged();
 		} 
-		log.info("Index: {}ÒÑ´æÔÚ£¡", index);
+		log.info("Index: {}å·²å­˜åœ¨ï¼", index);
 		return false;
 	}
 	
 	/**
-	 * ´´½¨mapping
+	 * åˆ›å»ºmapping
 	 * @param index
 	 * @param type
 	 * @param mapping
@@ -119,7 +119,7 @@ public class ESClientUtil {
 	 */
 	public boolean createMapping(String index, String type, String mapping) {
 		if(!connectFlag) {
-			throw new RuntimeException("esÎ´³õÊ¼»¯£¡");
+			throw new RuntimeException("esæœªåˆå§‹åŒ–ï¼");
 		}
 		IndicesAdminClient indices = this.client.admin().indices();
 		PutMappingRequest mappingRequest = Requests.putMappingRequest(index);
@@ -130,7 +130,7 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * É¾³ıË÷Òı
+	 * åˆ é™¤ç´¢å¼•
 	 * @param index
 	 * @return
 	 */
@@ -140,26 +140,26 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * indexÊÇ·ñ´æÔÚ
+	 * indexæ˜¯å¦å­˜åœ¨
 	 * @param indexs
 	 * @return
 	 */
 	public boolean exists(String[] indexs) {
 		if(!connectFlag) {
-			throw new RuntimeException("esÎ´³õÊ¼»¯£¡");
+			throw new RuntimeException("esæœªåˆå§‹åŒ–ï¼");
 		}
 		return this.client.admin().indices().prepareExists(indexs).execute().actionGet().isExists();
 	}
 	
 	/**
-	 * ÅĞ¶ÏÖ¸¶¨µÄË÷ÒıµÄÀàĞÍÊÇ·ñ´æÔÚ
-	 * @param indexName Ë÷ÒıÃû
-	 * @param indexType Ë÷ÒıÀàĞÍ
-	 * @return  ´æÔÚ£ºtrue; ²»´æÔÚ£ºfalse;
+	 * åˆ¤æ–­æŒ‡å®šçš„ç´¢å¼•çš„ç±»å‹æ˜¯å¦å­˜åœ¨
+	 * @param indexName ç´¢å¼•å
+	 * @param indexType ç´¢å¼•ç±»å‹
+	 * @return  å­˜åœ¨ï¼štrue; ä¸å­˜åœ¨ï¼šfalse;
 	 */
 	public boolean exists(String indexName,String indexType) {
 		if(!connectFlag) {
-			throw new RuntimeException("esÎ´³õÊ¼»¯£¡");
+			throw new RuntimeException("esæœªåˆå§‹åŒ–ï¼");
 		}
 		IndicesAdminClient indices = this.client.admin().indices();
 		TypesExistsResponse  response = indices.typesExists(new TypesExistsRequest(new String[]{indexName}, indexType)).actionGet();
@@ -167,7 +167,7 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * »ñÈ¡Bulk
+	 * è·å–Bulk
 	 * @return
 	 */
 	public BulkRequestBuilder getBulkRequestBuilder() {
@@ -175,11 +175,11 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param id	Ö÷¼ü
-	 * @param json	Êı¾İ
+	 * @param id	ä¸»é”®
+	 * @param json	æ•°æ®
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, String id, String json) {
@@ -187,10 +187,10 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param json	Êı¾İ
+	 * @param json	æ•°æ®
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, String json) {
@@ -198,11 +198,11 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param id	Ö÷¼ü
-	 * @param map	Êı¾İ
+	 * @param id	ä¸»é”®
+	 * @param map	æ•°æ®
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, String id, Map<String, Object> map) {
@@ -210,10 +210,10 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param map	Êı¾İ
+	 * @param map	æ•°æ®
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, Map<String, Object> map) {
@@ -221,11 +221,11 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param map	Êı¾İ
-	 * @param routings	Â·ÓÉ
+	 * @param map	æ•°æ®
+	 * @param routings	è·¯ç”±
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, Map<String, Object> map, String[] routings) {
@@ -233,24 +233,24 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param id	Ö÷¼ü
-	 * @param json	Êı¾İ
-	 * @param routings	Â·ÓÉ
+	 * @param id	ä¸»é”®
+	 * @param json	æ•°æ®
+	 * @param routings	è·¯ç”±
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, String id, String json, String[] routings) {
 		
-		if(StringUtils.isEmpty(id)) {//Èç¹ûIDÎª¿Õ£¬Ê¹ÓÃuuid
+		if(StringUtils.isEmpty(id)) {//å¦‚æœIDä¸ºç©ºï¼Œä½¿ç”¨uuid
 			id = UUID.randomUUID().toString();
 		}
 		
 		IndexRequestBuilder builder = client.prepareIndex(index, type, id);
 		
 		if(routings!=null && routings.length > 0) {
-			for(String routing : routings) {//Ö¸¶¨Â·ÓÉ
+			for(String routing : routings) {//æŒ‡å®šè·¯ç”±
 				builder.setRouting(routing);
 			}
 		}
@@ -260,24 +260,24 @@ public class ESClientUtil {
 	}
 	
 	/**
-	 * ´´½¨IndexRequestBuilder¶ÔÏó
-	 * @param index	Ë÷Òı
+	 * åˆ›å»ºIndexRequestBuilderå¯¹è±¡
+	 * @param index	ç´¢å¼•
 	 * @param type	mapping
-	 * @param id	Ö÷¼ü
-	 * @param map	Êı¾İ
-	 * @param routings	Â·ÓÉ
+	 * @param id	ä¸»é”®
+	 * @param map	æ•°æ®
+	 * @param routings	è·¯ç”±
 	 * @return
 	 */
 	public IndexRequestBuilder getIndexRequestBuilder(String index, String type, String id, Map<String, Object> map, String[] routings) {
 		
-		if(StringUtils.isEmpty(id)) {//Èç¹ûIDÎª¿Õ£¬Ê¹ÓÃuuid
+		if(StringUtils.isEmpty(id)) {//å¦‚æœIDä¸ºç©ºï¼Œä½¿ç”¨uuid
 			id = UUID.randomUUID().toString();
 		}
 		
 		IndexRequestBuilder builder = client.prepareIndex(index, type, id);
 		
 		if(routings!=null && routings.length > 0) {
-			for(String routing : routings) {//Ö¸¶¨Â·ÓÉ
+			for(String routing : routings) {//æŒ‡å®šè·¯ç”±
 				builder.setRouting(routing);
 			}
 		}
