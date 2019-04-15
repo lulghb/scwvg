@@ -5,7 +5,6 @@
 .gitignore
 *.iml
 *.bak
-/target/
 .settings
 *.class
 *.log
@@ -18,3 +17,6 @@
 *.rar
 .classpath
 *.class
+/target/
+/classes/
+
