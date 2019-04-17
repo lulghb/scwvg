@@ -1,5 +1,8 @@
 server:
   port: 8082
+  servlet:
+    session:
+      timeout: 10m
 spring:
   thymeleaf:
     encoding: UTF-8

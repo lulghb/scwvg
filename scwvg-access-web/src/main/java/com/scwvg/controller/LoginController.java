@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * version 0.1
  */
 @RestController
-@RequestMapping("/wvguser")
+@RequestMapping("/wvglogin")
 @Slf4j
 public class LoginController {
 

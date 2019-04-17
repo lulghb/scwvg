@@ -25,9 +25,8 @@ public class ScwvgAccessDeniedHandler implements AccessDeniedHandler {
 	@Override
 	public void handle(HttpServletRequest request, HttpServletResponse response,
                        AccessDeniedException accessDeniedException) throws IOException, ServletException {
-		
+		// 无权访问拦截
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
 		if (auth != null) {
 			logger.info("用户： '" + auth.getName() + "'试图访问保护的 URL: "
 					+ request.getRequestURI());

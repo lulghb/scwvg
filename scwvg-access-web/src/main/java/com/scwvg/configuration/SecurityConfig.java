@@ -1,7 +1,9 @@
 package com.scwvg.configuration;
 
 import com.scwvg.handler.ScwvgAccessDeniedHandler;
+import com.scwvg.handler.ScwvgAuthenticationEntryPoint;
 import com.scwvg.service.impl.WvgUserServiceImpl;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -9,10 +11,16 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.csrf.CsrfFilter;
+import org.springframework.security.web.session.HttpSessionEventPublisher;
+import org.springframework.web.filter.CharacterEncodingFilter;
+
+import java.util.Collections;
 
 /**
  * @project: 黑龙江电信接入适配系统
@@ -37,30 +45,68 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 */ 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		String [] staticres = new String[]{
+				"/login",
+				"/wvglogin/**",
+				"/json/**",
+				"/layui/**",
+				"/lib/**",
+				"/modules/**",
+				"/style/**",
+				"/tpl/**",
+				"/config.js/**",
+		};
 		// 1. 设置页面要需要权限请求得资源
 		http.authorizeRequests()
-				// 1.1  设置允许访问的资源路径
-				.antMatchers("/layui/css/**", "/layui/js/**", "/layui/fonts/**", "/index").permitAll()
-				// 1.2 设置H2内存数据库允许访问的资源路径
-				.antMatchers("/h2-console/**").permitAll()
-				// 1.3  设置允许访问的资源路径必须相相应得权限,可以传数组
+				// 1.01  设置允许访问的资源路径
+				.antMatchers(staticres).permitAll()
+				// 1.02  设置允许访问的资源路径必须相相应得权限,可以传数组（临时，部署上线放开）
 				.antMatchers("/admins/**").hasAnyAuthority("ROLE_ADMIN")
-				// 1.4  设置基于 from 表单登陆校验
+				// 1.03  设置任何地址的访问均需验证权限
+				.anyRequest().authenticated()
+				// 1.04  设置基于 from 表单登陆校验
 				.and().formLogin()
-				// 1.5  设置表单登陆错误，则跳转自定义得提示界面
-				.loginPage("/login").failureUrl("/wvguser/login-error?secError=true")
-				// 1.6  设置启用 remember me
+				// 1.05  设置表单登陆错误，则跳转自定义得提示界面
+				.loginPage("/login")
+				// 1.06  设置表单登陆成功，则跳转首页
+				//.defaultSuccessUrl("/index")
+				// 1.07  设置表单登陆错误，则跳转自定义得提示界面
+				.failureUrl("/wvglogin/login-error?secError=true")
+				// 1.08  设置启用 remember me
 				.and().rememberMe().key(KEY)
-				// 1.7   以类handler方式设置无权限处理异常，拒绝访问重定向到 403 页面
-				//.and().exceptionHandling().accessDeniedHandler(accessDeniedHandler())
-				// 1.8   处理异常，拒绝访问就重定向到 403 页面
-				.and().exceptionHandling().accessDeniedPage("/403")
-				;
-		// 2. 设置H2内存数据库 ，所需参数
-		// 2.1 禁用 H2 控制台的 CSRF 防护
-		http.csrf().ignoringAntMatchers("/h2-console/**"); 				
-		// 2.2 http设置请求头允许来自同一web工程框架内 H2 控制台 的请求
-		http.headers().frameOptions().sameOrigin();							
+				// 1.09  设置登陆退出操作
+				//.and().logout().logoutSuccessUrl("/logout").permitAll()
+				// 1.10  设置类handler方式设置无权限处理异常，拒绝访问重定向到 403 页面
+				.and().exceptionHandling().accessDeniedHandler(new ScwvgAccessDeniedHandler())
+				// 1.11  设置处理是转发或重定向到登录页面
+				.authenticationEntryPoint(new ScwvgAuthenticationEntryPoint());
+
+		// 2 http设置请求头允许来自同一web工程框架内的请求
+		http.headers().frameOptions().sameOrigin();
+
+		// 3. 解决中文乱码问题
+		CharacterEncodingFilter filter = new CharacterEncodingFilter();
+		// 3.1 设置字符集 UTF-8
+		filter.setEncoding("UTF-8");
+		// 3.2 设置覆盖所有请求编码
+		filter.setForceEncoding(true);
+		http.addFilterBefore(filter,CsrfFilter.class);
+
+		// 4. 回话 session 管理,当用户在其他地方登录了，原来登录过的Session就失效
+		http.sessionManagement()
+				// 4.1 session 会话超时无效跳转处理
+				.invalidSessionStrategy((request,response)->{
+					// TODO 待完善 跳转 url
+					request.getRequestDispatcher("/session/invalid")
+							.forward(request,response);
+				})
+				// 4.2 设置防止 session 篡改。即认证时，创建一个新http session，原session失效
+				.sessionFixation().migrateSession()
+				// 4.3 设置同一用户拥有多个并发session
+				.maximumSessions(2)
+				// 4,4 设置是否阻止新的登录。即当用户在其他地方登录了，原来登录过的Session就失效
+				.maxSessionsPreventsLogin(true)
+				.and();
 	}
 
 	/** 
@@ -114,13 +160,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		authenticationProvider.setPasswordEncoder(passwordEncoder());
 		//4. 返回身份验证提供类
 		return authenticationProvider;
-	}
-	/**
-	 * 以类handler方式设置无权限处理器
-	 * @return
-	 */
-	@Bean
-	public AccessDeniedHandler accessDeniedHandler() {
-		return new ScwvgAccessDeniedHandler();
 	}
 }

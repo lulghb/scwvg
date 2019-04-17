@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -25,8 +26,7 @@ public class Springmvc implements WebMvcConfigurer {
     @Value("${spring.messages.basename}")
     public String basename;
 
-
-    /** 
+    /**
      * @Description: 转换器服务类，添加工程定义的转化器
      * @Author: chen.baihoo
      * @Date: 2019/4/14 
@@ -40,7 +40,7 @@ public class Springmvc implements WebMvcConfigurer {
         service.addConverter(new ScwvgTrimString());
         return service;
     }
-    
+
     /** 
      * @Description: 用于解析消息得策略接口，支持这些小得参数和国际化
      * @Author: chen.baihoo
