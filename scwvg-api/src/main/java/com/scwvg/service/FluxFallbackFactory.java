@@ -23,8 +23,8 @@ public class FluxFallbackFactory implements FallbackFactory<FluxClientService> {
         return new FluxClientService() {
             @Override
             public List<FluxEntity> getaFlux() {
-                List<FluxEntity> feList=new ArrayList<FluxEntity>();
-                FluxEntity fe=new FluxEntity();
+                List<FluxEntity> feList = new ArrayList<FluxEntity>();
+                FluxEntity fe = new FluxEntity();
                 fe.setOlt_ip("系统故障，请联系管理员！");
                 feList.add(fe);
                 return feList;

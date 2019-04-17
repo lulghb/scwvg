@@ -15,8 +15,8 @@ spring:
 info:
   app.name: scwvg-pmee-consumer-5012
   company.name: www.scwvg.com
-  build.artifactId: scwvg-pmee-consumer
-  build.version: 1.0-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
 #开启服务熔断
 feign:
   hystrix:

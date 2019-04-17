@@ -17,7 +17,8 @@ import java.util.List;
 public class FluxService {
     @Resource
     FluxMapper fluxMapper;
-    public List<FluxEntity> listFlux(){
-      return fluxMapper.getFlux();
+
+    public List<FluxEntity> listFlux() {
+        return fluxMapper.getFlux();
     }
 }

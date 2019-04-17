@@ -39,6 +39,6 @@ eureka:
 info:
   app.name: scwvg-pmee-provider
   company.name: www.scwvg.com
-  build.artifactId: scwvg-pmee-6201
-  build.version: 1.0-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$
 

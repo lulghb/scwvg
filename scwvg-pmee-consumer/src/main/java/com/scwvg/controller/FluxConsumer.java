@@ -30,17 +30,17 @@ public class FluxConsumer {
 
     @RequestMapping(value = "/userLogin")
     @ResponseBody
-    public Map userLogin(HttpServletRequest request){
-        Map res= new HashMap();
-        String userName=request.getParameter("username");
-        String password=request.getParameter("password");
-        String vercode =request.getParameter("vercode");
-        String remember =request.getParameter("remember");
-        System.out.println("获取到的用户名是："+userName+"密码是："+password+"验证码是："+vercode);
+    public Map userLogin(HttpServletRequest request) {
+        Map res = new HashMap();
+        String userName = request.getParameter("username");
+        String password = request.getParameter("password");
+        String vercode = request.getParameter("vercode");
+        String remember = request.getParameter("remember");
+        System.out.println("获取到的用户名是：" + userName + "密码是：" + password + "验证码是：" + vercode);
 
-        res.put("code","0");
-        res.put("msg","登录成功");
-        res.put("data","access_token:c262e61cd13");
+        res.put("code", "0");
+        res.put("msg", "登录成功");
+        res.put("data", "access_token:c262e61cd13");
         return res;
     }
     /**

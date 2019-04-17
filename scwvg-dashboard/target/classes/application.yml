@@ -13,5 +13,5 @@ eureka:
 info:
   app.name: scwvg-dashboard-heath
   company.name: www.scwvg.com
-  build.artifactId: scwvg-dashboard
-  build.version: 0.0.1-SNAPSHOT
+  build.artifactId: $project.artifactId$
+  build.version: $project.version$

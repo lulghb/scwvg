@@ -18,6 +18,7 @@ public class ScwvgPmeeConsumerApplication extends SpringBootServletInitializer {
     public static void main(String[] args) {
         SpringApplication.run(ScwvgPmeeConsumerApplication.class, args);
     }
+
     @Override
     protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
         return builder.sources(ScwvgPmeeConsumerApplication.class);
