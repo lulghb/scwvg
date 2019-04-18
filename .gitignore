@@ -10,7 +10,7 @@
 *.log
 *.jar
 *.war
-*.nar
+*.nar	
 *.ear
 *.zip
 *.tar.gz
