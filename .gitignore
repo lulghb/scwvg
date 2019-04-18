@@ -11,7 +11,7 @@ rebel.xml
 .gitignore
 *.iml
 *.bak
-.target
+target/*
 .settings
 *.class
 *.log
