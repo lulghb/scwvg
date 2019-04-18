@@ -13,6 +13,7 @@
         <module>scwvg-api</module>
         <module>scwvg-company</module>
         <module>scwvg-access-web</module>
+       <!-- <module>scwvg-access</module>-->
         <module>scwvg-pmee-6201</module>
         <module>scwvg-pmee-6202</module>
         <module>scwvg-pmee-6203</module>
@@ -37,63 +38,63 @@
         <java.version>1.8</java.version>
         <spring-cloud.version>Greenwich.SR1</spring-cloud.version>
     </properties>
-   <dependencies>
-       <!--小辣椒依赖-->
-       <dependency>
-           <groupId>ch.qos.logback</groupId>
-           <artifactId>logback-core</artifactId>
-           <version>1.2.3</version>
-       </dependency>
-       <!--连接池依赖-->
-       <dependency>
-           <groupId>com.alibaba</groupId>
-           <artifactId>druid</artifactId>
-           <version>1.0.31</version>
-       </dependency>
-       <!--mysql依赖-->
-       <dependency>
-           <groupId>mysql</groupId>
-           <artifactId>mysql-connector-java</artifactId>
-           <version>5.1.6</version>
-       </dependency>
-       <dependency>
-           <groupId>org.springframework.cloud</groupId>
-           <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
-       </dependency>
-       <!--服务完善与服务描述-->
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-starter-actuator</artifactId>
-       </dependency>
-       <!-- jaxb模块引用 java9以后需要自己引用 - start -->
-       <dependency>
-           <groupId>javax.xml.bind</groupId>
-           <artifactId>jaxb-api</artifactId>
-       </dependency>
-       <dependency>
-           <groupId>com.sun.xml.bind</groupId>
-           <artifactId>jaxb-impl</artifactId>
-           <version>2.3.0</version>
-       </dependency>
-       <dependency>
-           <groupId>org.glassfish.jaxb</groupId>
-           <artifactId>jaxb-runtime</artifactId>
-           <version>2.3.0</version>
-       </dependency>
-       <dependency>
-           <groupId>javax.activation</groupId>
-           <artifactId>activation</artifactId>
-           <version>1.1.1</version>
-       </dependency>
-       <!-- jaxb模块引用 java9以后需要自己引用 - end -->
-       <!--热部署-->
-       <dependency>
-           <groupId>org.springframework.boot</groupId>
-           <artifactId>spring-boot-devtools</artifactId>
-           <optional>true</optional>
-           <scope>true</scope>
-       </dependency>
-   </dependencies>
+    <dependencies>
+        <!--小辣椒依赖-->
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-core</artifactId>
+            <version>1.2.3</version>
+        </dependency>
+        <!--连接池依赖-->
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>1.0.31</version>
+        </dependency>
+        <!--mysql依赖-->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>5.1.6</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+        </dependency>
+        <!--服务完善与服务描述-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!-- jaxb模块引用 java9以后需要自己引用 - start -->
+        <dependency>
+            <groupId>javax.xml.bind</groupId>
+            <artifactId>jaxb-api</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.xml.bind</groupId>
+            <artifactId>jaxb-impl</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>2.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>javax.activation</groupId>
+            <artifactId>activation</artifactId>
+            <version>1.1.1</version>
+        </dependency>
+        <!-- jaxb模块引用 java9以后需要自己引用 - end -->
+        <!--热部署-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+            <scope>true</scope>
+        </dependency>
+    </dependencies>
     <dependencyManagement>
         <dependencies>
             <dependency>

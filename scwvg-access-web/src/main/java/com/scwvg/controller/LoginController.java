@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
  * version 0.1
  */
 @RestController
-@RequestMapping("/wvguser")
+@RequestMapping("/wvglogin")
 @Slf4j
 public class LoginController {
 
@@ -41,7 +41,7 @@ public class LoginController {
     @GetMapping("/vercode")
     public ResponseEntity<Response> vercode(String vercode, HttpServletRequest request){
         if(!CaptchaUtil.ver(vercode, request))
-            return ResponseEntity.ok().body(new Response(false ,"图形验证码输入有误~！"));
+            return ResponseEntity.ok().body(new Response(false ,"图形验证码输入有误！"));
         return ResponseEntity.ok().body(new Response(true ,"处理成功"));
     }
 

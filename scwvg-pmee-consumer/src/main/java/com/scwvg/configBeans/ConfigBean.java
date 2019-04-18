@@ -21,8 +21,10 @@ public class ConfigBean {
         return new RestTemplate();
     }
 */
+
     /**
      * 使用 Hystrix Dashboard 监控 Hystrix 服务
+     *
      * @return
      */
     @Bean

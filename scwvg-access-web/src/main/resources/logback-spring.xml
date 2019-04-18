@@ -38,7 +38,7 @@
             <!--文件输出路径
                 日志文件名带上时间(info.%d.log) %d 通配符
             -->
-            <fileNamePattern>E:/springBoot_sell/info.%d.log</fileNamePattern>
+            <fileNamePattern>D:/IntelliJ_IDEALog/springBoot_sell/info.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
 
@@ -62,7 +62,7 @@
             <!--文件输出路径
                 日志文件名带上时间(info.%d.log) %d 通配符
             -->
-            <fileNamePattern>E:/springBoot_sell/error.%d.log</fileNamePattern>
+            <fileNamePattern>D:/IntelliJ_IDEALog/springBoot_sell/error.%d.log</fileNamePattern>
         </rollingPolicy>
     </appender>
     <!--root 就是整个项目都适用 ，日志输出-->

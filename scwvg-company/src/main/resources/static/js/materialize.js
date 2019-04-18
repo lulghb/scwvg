@@ -25,7 +25,7 @@ var _get = function get(object, property, receiver) {
 };
 
 /*下啦菜单使用*/
-$(document).ready(function() {
+$(document).ready(function () {
     $(".dropdown-trigger").dropdown();
 });
 

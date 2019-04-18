@@ -15,8 +15,8 @@ import java.util.List;
  * @date 2019/3/30：16:29
  * 微服务负载接口
  **/
-@FeignClient(value = "SCWVG-PMEE-PROVIDER",fallbackFactory = FluxFallbackFactory.class)
+@FeignClient(value = "SCWVG-PMEE-PROVIDER", fallbackFactory = FluxFallbackFactory.class)
 public interface FluxClientService {
-    @RequestMapping(value = "/flux/provider/list",method = RequestMethod.GET)
+    @RequestMapping(value = "/flux/provider/list", method = RequestMethod.GET)
     public List<FluxEntity> getaFlux();
 }
