@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--注意单词不要写错了，毕竟提示不是很友好-->
+<configuration>
+    <!--定义控制台日志输出格式，注意引入类不要写错了-->
+    <appender name="consoleLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <!--日志在控制台打印的方式 ，下例：%d 代表日志输出的日期 ，%msg 代表日志输出的详细信息，%n代表换行-->
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </layout>
+    </appender>
+    <!--附加info格式日志文件，每天滚动输出-->
+    <appender name="fileInfoLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        设置过滤门槛只过滤 ERROR 级别的信息
+        <!--这里为什么和下面配置不一样，因为Erro比Info级别高，所以在其他文件也会被打印出来-->
+        <!--如果配置只打印info级别的信息，那么配置如下-->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <!--级别过滤 error级别-->
+            <level>ERROR</level>
+
+            <!--DENY, NEUTRAL, ACCEPT; 默认三种过滤协议方式，禁止，中立，接受，-->
+            <!--NEUTRAL 在这表示的含义就是，是否命中所描述，如果命中，就跳至fileErrorLog 附加标签体中匹配是否命中-->
+
+            <!--如果匹配到error级别错误，禁止打印-->
+            <onMatch>DENY</onMatch>
+            <!--否则没有匹配到error级别错误，就接受打印-->
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <!--注意这个文件配置和上面的区别-->
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动的策略,每天输出一个日志文件-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件输出路径
+                日志文件名带上时间(info.%d.log) %d 通配符
+            -->
+            <fileNamePattern>D:/IntelliJ_IDEALog/springBoot_sell/info.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+
+
+    <!--附加error格式日志文件，每天滚动输出-->
+    <appender name="fileErrorLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--设置过滤门槛只过滤 ERROR 级别的信息-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>
+                ERROR
+            </level>
+        </filter>
+        <!--注意这个文件配置和上面的区别-->
+        <encoder>
+            <pattern>
+                %d - %msg%n
+            </pattern>
+        </encoder>
+        <!--滚动的策略,每天输出一个日志文件-->
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!--文件输出路径
+                日志文件名带上时间(info.%d.log) %d 通配符
+            -->
+            <fileNamePattern>D:/IntelliJ_IDEALog/springBoot_sell/error.%d.log</fileNamePattern>
+        </rollingPolicy>
+    </appender>
+    <!--root 就是整个项目都适用 ，日志输出-->
+    <root level="info">
+        <!--引入指定的控制台日志格式-->
+        <appender-ref ref="consoleLog"/>
+        <!--指定在root 的 info 级别下引入info格式日志文件-->
+        <appender-ref ref="fileInfoLog"/>
+        <!--指定在root 的 info 级别下引入error格式日志文件-->
+        <appender-ref ref="fileErrorLog"/>
+    </root>
+</configuration>
