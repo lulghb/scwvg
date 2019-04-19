@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,6 +19,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @project: 黑龙江电信接入适配系统
@@ -115,12 +118,13 @@ public class WvgUser  implements UserDetails, Serializable {
     private  String wvgAccountRemarks;
 
     // 用户和权限角色，多对多映射关系配置
-    @ManyToMany(cascade = CascadeType.DETACH , fetch = FetchType.EAGER)
+    @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "wvg_role_user" ,
             joinColumns = @JoinColumn(name = "wvg_user_id",referencedColumnName = "wvg_user_id"),
             inverseJoinColumns = @JoinColumn(name = "wvg_role_id" , referencedColumnName = "wvg_role_id")
     )
-    private List<WvgRole> roleList;
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private Set<WvgRole> roleList;
 
     /** 
      * @Description: 需将 List<Authority> 转成 List<SimpleGrantedAuthority>，否则前端拿不到角色列表名称
