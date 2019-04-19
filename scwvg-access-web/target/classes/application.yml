@@ -1,25 +1,5 @@
 server:
   port: 8082
-spring:
-  thymeleaf:
-    encoding: UTF-8
-    cache: false #热部署静态文件，禁止缓存
-    mode: HTML5 #使用HTML5标准
-#配置数据�?
-  datasource:
-    username: root
-    password: '123456'
-    url: jdbc:mysql://localhost/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
-    driver-class-name: com.mysql.jdbc.Driver
-  jpa:
-#    hibernate:
-#      ddl-auto: update #自动更新建表
-    show-sql: true
-#    database-platform: org.hibernate.dialect.MySQLDialect # 配置數據庫方�?
-  #配置国际化校验的properties文件
-  messages:
-    basename: i18n/validation/ValidationMessages
-  #springboot之json中日期格式转换问�?
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
+  servlet:
+    session:
+      timeout: 10m
