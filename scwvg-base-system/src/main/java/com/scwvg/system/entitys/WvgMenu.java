@@ -62,6 +62,12 @@ public class WvgMenu implements Serializable {
     @Column(name = "wvg_menu_icon")
     private  String wvgMenuIcon;
 
+    //菜单排序
+    @Column(name = "wvg_menu_Order" , nullable = false,
+            columnDefinition = "int(3) DEFAULT 0 COMMENT '菜单排序'")
+    @NotEmpty(message = "WvgMenu.wvgMenuOrder.notnull")
+    private int wvgMenuOrder = 0;
+
     //菜单状态（0，根菜单   1，挂载  2，未挂载）
     @Column(name = "wvg_menu_state")
     @NotEmpty(message = "WvgMenu.wvgMenuState.notnull")

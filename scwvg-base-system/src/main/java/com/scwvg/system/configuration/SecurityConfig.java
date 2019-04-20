@@ -91,7 +91,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 4.1 session 会话超时无效跳转处理
 				.invalidSessionStrategy((request,response)->{
 					// TODO 待完善 跳转 url
-					request.getRequestDispatcher("/session/invalid")
+					request.getRequestDispatcher("/login")
 							.forward(request,response);
 				})
 				// 4.2 设置防止 session 篡改。即认证时，创建一个新http session，原session失效

@@ -23,6 +23,7 @@
 
 <div id="LAY_app">
   <div class="layui-layout layui-layout-admin">
+
     <div class="layui-header">
       <!-- 头部区域 -->
       <ul class="layui-nav layui-layout-left">
@@ -72,11 +73,11 @@
         </li>
         <li class="layui-nav-item" lay-unselect>
           <a href="javascript:;">
-            <cite>贤心</cite>
+            <cite><span data-sec-authorize="name"></span></cite>
           </a>
           <dl class="layui-nav-child">
             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
-            <dd><a lay-href="set/user/password.html">修改密码</a></dd>
+            <!--<dd><a lay-href="set/user/password.html">修改密码</a></dd>-->
             <hr>
             <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
           </dl>

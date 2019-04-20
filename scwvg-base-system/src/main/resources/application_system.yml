@@ -1,8 +1,8 @@
-server:
-  port: 8082
-  servlet:
-    session:
-      timeout: 10m
+#server:
+#  port: 8082
+#  servlet:
+#    session:
+#      timeout: 10m
 spring:
   thymeleaf:
     encoding: UTF-8
@@ -11,9 +11,10 @@ spring:
 #配置数据源
   datasource:
     username: root
-    password: lul@123456
-    url: jdbc:mysql://136.192.50.29:23306/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
-    driver-class-name: com.mysql.jdbc.Driver  #com.mysql.cj.jdbc.Driver
+    password: 123456
+    #url: jdbc:mysql://136.192.50.29:23306/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver # com.mysql.cj.jdbc.Driver #
     ################### druid 数据库连接池配置 ###########################
     type: com.alibaba.druid.pool.DruidDataSource
     # 初始连接池大小

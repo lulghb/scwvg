@@ -148,7 +148,7 @@ public class WvgUser  implements UserDetails, Serializable {
     }
     @Override
     public String getUsername() {
-        return this.wvgLoginName;
+        return this.wvgRealName;
     }
     /** 
      * @Description: 指示用户帐户是否已过期。过期帐户无法进行身份验证。重载默认是false,我们需要改成true

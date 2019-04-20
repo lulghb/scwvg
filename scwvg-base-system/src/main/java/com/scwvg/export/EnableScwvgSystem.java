@@ -1,6 +1,5 @@
-package com.scwvg.system.annotations;
+package com.scwvg.export;
 
-import com.scwvg.system.configuration.SystemAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 

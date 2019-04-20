@@ -1,4 +1,4 @@
-package com.scwvg.system.configuration;
+package com.scwvg.export;
 
 import org.springframework.context.annotation.ComponentScan;
 
