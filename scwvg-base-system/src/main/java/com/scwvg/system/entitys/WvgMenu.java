@@ -40,6 +40,10 @@ public class WvgMenu implements Serializable {
     @NotEmpty(message = "WvgMenu.wvgParentId.notnull")
     private  long wvgParentId = 0;
 
+    //顶级菜单ID
+    @Column(name = "wvg_top_id",columnDefinition = "int(11) DEFAULT 0 COMMENT '顶级菜单ID'")
+    private  long wvgTopId;
+
     //菜单名称
     @Column(name = "wvg_menu_name")
     @Size(min = 2,max = 30 , message = "WvgMenu.wvgMenuName.size")
@@ -74,11 +78,14 @@ public class WvgMenu implements Serializable {
     private  long wvgMenuState = 2;
 
     // 树级菜单序列字段
-    @Column(name = "wvg_seq",nullable = false ,
-            columnDefinition = "varchar(61) DEFAULT '.0.' COMMENT '树级菜单序列字段'")
-    @Size(min = 3 , max = 61)
-    @NotEmpty(message = "WvgMenu.wvgSeq.notnull")
-    private  String wvgSeq = ".0.";
+    @Column(name = "wvg_seq", columnDefinition = "varchar(512) COMMENT '树级菜单序列字段，格式: .0.1.2.3.4.'")
+    private  String wvgSeq;
+
+    // 树级菜单层级
+    @Column(name = "wvg_menu_level",nullable = false ,
+            columnDefinition = "int(2) DEFAULT 0 COMMENT '树级菜单层级'")
+    @NotEmpty(message = "WvgMenu.wvgMenuLevel.notnull")
+    private int wvgMenuLevel = 0;
 
     // 角色与菜单关系
     @ManyToMany(mappedBy = "menuList")

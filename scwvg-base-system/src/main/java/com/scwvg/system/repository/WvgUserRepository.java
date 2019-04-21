@@ -1,6 +1,7 @@
 package com.scwvg.system.repository;
 
 import com.scwvg.system.entitys.WvgUser;
+import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
@@ -26,4 +27,5 @@ public interface WvgUserRepository  extends JpaRepository<WvgUser,Long> {
      * @Date: 2019/4/14 
      */ 
     WvgUser findByWvgLoginName(String loginName);
+
 }

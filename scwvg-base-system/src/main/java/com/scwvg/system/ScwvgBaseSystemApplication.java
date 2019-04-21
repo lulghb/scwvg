@@ -3,6 +3,7 @@ package com.scwvg.system;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.stereotype.Component;
 
 /**
  * @project: 黑龙江电信接入适配系统
@@ -12,7 +13,6 @@ import org.springframework.context.annotation.ComponentScan;
  * version 0.1
  */
 @SpringBootApplication
-@ComponentScan(basePackages = {"com.scwvg.system","com.scwvg.system.configuration","com.scwvg.system.controller"})
 public class ScwvgBaseSystemApplication {
 
     public static void main(String[] args) {

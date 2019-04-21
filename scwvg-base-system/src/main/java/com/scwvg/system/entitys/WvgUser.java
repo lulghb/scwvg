@@ -76,8 +76,8 @@ public class WvgUser  implements UserDetails, Serializable {
     private  String wvgUserIphone;
 
     //账号有效期
-    @Column(name="wvg_account_data")
-    private  long wvgAccountData = 12;
+    @Column(name="wvg_account_date")
+    private  String wvgAccountDate;
 
     //用户密码
     @NotEmpty(message = "{WvgUser.wvgUserPassword.notnull}")
@@ -86,8 +86,8 @@ public class WvgUser  implements UserDetails, Serializable {
     private  String wvgUserPassword;
 
     //密码有效期
-    @Column(name="wvg_password_data")
-    private  long wvgPasswordData = 3;
+    @Column(name="wvg_password_date")
+    private  String wvgPasswordDate;
 
     //账号新增时间
     @Column(name="wvg_add_time")

@@ -1,7 +1,13 @@
 package com.scwvg.system.controller;
-
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 /**
@@ -21,23 +27,56 @@ public class AccessController {
      * @Date: 2019/4/14 
      */ 
     @GetMapping("/login")
-    public String accessMain(){
+    public String login(){
         return "/user/login";
     }
-
+    /**
+     * @Description:  用户退出登陆
+     * @Author: chen.baihoo
+     * @Date: 2019年4月20日
+     */
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request , HttpServletResponse response){
+        // 1. SecurityContextHolder 取出认证用户权限
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        // 2. 判断 是否存在，可能 session 失效
+        if(auth !=null){
+            // 3. 存在退出移除认证用户
+            new SecurityContextLogoutHandler().logout(request , response,auth);
+        }
+        return "redirect:/login?logout";
+    }
+    /** 
+     * @Description: 系统首页
+     * @Author: chen.baihoo
+     * @Date: 2019/4/20 
+     */ 
     @GetMapping("/index")
-    public String index(){
+    public String index(Model model){
         return "/index";
     }
-    
-    /**
-     * TODO 注意：console 为关键字不能做 url地址结尾转发
-     * @Description:
-     * @Author: chen.baihoo
-     * @Date: 2019/4/14 
-     */ 
-    @GetMapping("/home/console")
-    public String console(){
-        return "/home/wvg-console";
+
+    // 用户管理
+    @GetMapping("/admins/user/list")
+    public String adminsUserList(){
+        return "/admins/user/list";
+    }
+
+    // 角色管理
+    @GetMapping("/admins/role/list")
+    public String adminsRoleList(){
+        return "/admins/role/list";
+    }
+
+    // 菜单管理
+    @GetMapping("/admins/menu/list")
+    public String adminsMenuList(){
+        return "/admins/menu/list";
+    }
+
+    // 授权管理
+    @GetMapping("/admins/perm/list")
+    public String adminsPermList(){
+        return "/admins/perm/list";
     }
 }

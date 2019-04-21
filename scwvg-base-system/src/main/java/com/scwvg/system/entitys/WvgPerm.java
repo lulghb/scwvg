@@ -23,7 +23,7 @@ import java.util.List;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class WvgPerm implements Serializable{
+public class WvgPerm implements  Serializable{
 
 
     //功能权限主键

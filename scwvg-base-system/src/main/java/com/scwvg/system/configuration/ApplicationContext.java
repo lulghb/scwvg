@@ -1,6 +1,9 @@
 package com.scwvg.system.configuration;
 
+import com.github.pagehelper.PageHelper;
 import com.scwvg.system.convertor.ScwvgTrimString;
+import org.mybatis.spring.annotation.MapperScan;
+import org.mybatis.spring.mapper.MapperScannerConfigurer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.beans.factory.config.YamlPropertiesFactoryBean;
@@ -14,6 +17,8 @@ import org.springframework.core.convert.support.DefaultConversionService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import java.util.Properties;
+
 /**
  * @project: 黑龙江电信接入适配系统
  * @author: chen.baihoo
@@ -22,6 +27,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * version 0.1
  */
 @Configuration
+@MapperScan("com.scwvg.system.mapper") // mybatis 映射目录
 public class ApplicationContext implements WebMvcConfigurer {
 
     /**

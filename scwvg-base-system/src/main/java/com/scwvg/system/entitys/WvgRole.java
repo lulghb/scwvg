@@ -62,13 +62,13 @@ public class WvgRole implements GrantedAuthority {
     @ManyToMany(mappedBy = "roleList")
     private List<WvgUser> userList;
 
-    // 角色与菜单关系
+    // 角色与菜单关系,菜单为树结构要极其懒加载，最好人为控制
     @ManyToMany(cascade = CascadeType.DETACH)
     @JoinTable(name = "wvg_role_menu" ,
             joinColumns = @JoinColumn(name = "wvg_role_id",referencedColumnName = "wvg_role_id"),
             inverseJoinColumns = @JoinColumn(name = "wvg_menu_id" , referencedColumnName = "wvg_menu_id")
     )
-    @LazyCollection(LazyCollectionOption.FALSE)
+    @LazyCollection(LazyCollectionOption.EXTRA)
     private Set<WvgMenu> menuList;
 
     // 角色与功能权限关系

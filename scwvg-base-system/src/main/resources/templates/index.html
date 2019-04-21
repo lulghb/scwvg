@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
   <meta charset="utf-8">
   <title>黑龙江电信接入适配系统</title>
@@ -73,13 +73,14 @@
         </li>
         <li class="layui-nav-item" lay-unselect>
           <a href="javascript:;">
-            <cite><span data-sec-authorize="name"></span></cite>
+            <cite><span sec:authentication="name"></span></cite>
           </a>
           <dl class="layui-nav-child">
             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
             <!--<dd><a lay-href="set/user/password.html">修改密码</a></dd>-->
             <hr>
-            <dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>
+            <!--<dd layadmin-event="logout" style="text-align: center;"><a>退出</a></dd>-->
+            <dd style="text-align: center;"><a href="/logout" th:href="@{/logout}" lay-target="_top">退出</a></dd>
           </dl>
         </li>
 
@@ -96,7 +97,7 @@
     <div class="layui-side layui-side-menu">
       <div class="layui-side-scroll">
         <div class="layui-logo" lay-href="home/console.html">
-          <span>layuiAdmin</span>
+          <span>黑龙江电信接入适配系统</span>
         </div>
 
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="LAY-system-side-menu" lay-filter="layadmin-system-side-menu">
@@ -389,23 +390,31 @@
               </dd>
             </dl>
           </li>
-          <li data-name="user" class="layui-nav-item">
-            <a href="javascript:;" lay-tips="用户" lay-direction="2">
+
+          <!--系统管理菜单栏 只针对 系统管理员才显示-->
+          <li data-name="user" class="layui-nav-item"
+              sec:authorize="hasAuthority('ROLE_ADMIN')">
+            <a href="javascript:;" lay-tips="系统管理" lay-direction="2">
               <i class="layui-icon layui-icon-user"></i>
               <cite>用户</cite>
             </a>
             <dl class="layui-nav-child">
               <dd>
-                <a lay-href="user/user/list.html">网站用户</a>
+                <a lay-href="/admins/user/list">用户管理</a>
               </dd>
               <dd>
-                <a lay-href="user/administrators/list.html">后台管理员</a>
+                <a lay-href="/admins/role/list">角色管理</a>
               </dd>
               <dd>
-                <a lay-href="user/administrators/role.html">角色管理</a>
+                <a lay-href="/admins/menu/list">菜单管理</a>
+              </dd>
+              <dd>
+                <a lay-href="/admins/menu/list">授权管理</a>
               </dd>
             </dl>
           </li>
+          <!--//系统管理菜单栏 只针对 系统管理员才显示-->
+
           <li data-name="set" class="layui-nav-item">
             <a href="javascript:;" lay-tips="设置" lay-direction="2">
               <i class="layui-icon layui-icon-set"></i>
