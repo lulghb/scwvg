@@ -1,8 +1,6 @@
 package com.scwvg.system.configuration;
 
-import com.scwvg.system.handler.ScwvgAccessDeniedHandler;
-import com.scwvg.system.handler.ScwvgAuthenticationEntryPoint;
-import com.scwvg.system.service.impl.WvgUserServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -13,8 +11,14 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
 import org.springframework.web.filter.CharacterEncodingFilter;
+
+import com.scwvg.system.handler.ScwvgAccessDeniedHandler;
+import com.scwvg.system.handler.ScwvgAuthenticationEntryPoint;
+import com.scwvg.system.service.impl.WvgUserServiceImpl;
 
 /**
  * @project: 黑龙江电信接入适配系统
@@ -31,6 +35,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	 * @param KEY  启用 remember me ，需要不可重复，自定义加盐
 	 */
 	private static final String KEY="www.scwvg.com";
+	
+	@Autowired
+	private AuthenticationSuccessHandler authenticationSuccessHandler;
+	@Autowired
+	private AuthenticationFailureHandler authenticationFailureHandler;
 
 	/** 
 	 * @Description:  配置客户端，配置由SpringSecurity提供http安全请求
@@ -66,6 +75,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				//.defaultSuccessUrl("/index")
 				// 1.07  设置表单登陆错误，则跳转自定义得提示界面
 				.failureUrl("/wvglogin/login-error?secError=true")
+				// 登录成功处理
+				.successHandler(authenticationSuccessHandler)
+				// 登录失败处理
+				.failureHandler(authenticationFailureHandler)
 				// 1.08  设置启用 remember me
 				.and().rememberMe().key(KEY)
 				// 1.09  设置登陆退出操作
