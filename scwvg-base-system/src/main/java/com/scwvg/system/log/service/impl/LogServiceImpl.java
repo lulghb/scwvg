@@ -4,12 +4,14 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.Resource;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Predicate;
 import javax.persistence.criteria.Root;
 import javax.servlet.http.HttpServletRequest;
 
+import com.scwvg.system.log.annotation.Log;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.json.JSONObject;
@@ -112,7 +114,7 @@ public class LogServiceImpl implements LogService {
 	class Spec implements Specification<WvgOperationLog> {
 
 		private static final long serialVersionUID = 1953652405086636039L;
-		
+
 		private WvgOperationLog operationLog;
 
         public Spec(WvgOperationLog operationLog){
