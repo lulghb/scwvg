@@ -1,17 +1,11 @@
 package com.scwvg.system.log.service.impl;
 
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Predicate;
-import javax.persistence.criteria.Root;
-import javax.servlet.http.HttpServletRequest;
-
-import com.scwvg.system.log.annotation.Log;
+import com.scwvg.system.log.domain.WvgOperationLog;
+import com.scwvg.system.log.repository.LogRepository;
+import com.scwvg.system.log.service.LogService;
+import com.scwvg.system.utils.RequestHolder;
+import com.scwvg.system.utils.SecurityContextHolder;
+import lombok.extern.slf4j.Slf4j;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.json.JSONObject;
@@ -26,13 +20,14 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ObjectUtils;
 
-import com.scwvg.system.log.domain.WvgOperationLog;
-import com.scwvg.system.log.repository.LogRepository;
-import com.scwvg.system.log.service.LogService;
-import com.scwvg.system.utils.RequestHolder;
-import com.scwvg.system.utils.SecurityContextHolder;
-
-import lombok.extern.slf4j.Slf4j;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
+import javax.servlet.http.HttpServletRequest;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author: tangyl
