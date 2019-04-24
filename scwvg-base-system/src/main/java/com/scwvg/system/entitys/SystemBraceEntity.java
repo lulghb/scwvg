@@ -1,11 +1,9 @@
 package com.scwvg.system.entitys;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-
 import java.util.Date;
 
 /**
@@ -36,6 +34,8 @@ public class SystemBraceEntity {
     private String user_id;
     @Column(name = "res_gahter")
     private String res_gahter;
+    @Column(name = "res_position_content")
+    private String res_position_content;
     @Column(name = "res_createtime")
     private Date res_createtime;
 }
