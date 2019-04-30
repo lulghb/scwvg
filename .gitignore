@@ -1,8 +1,7 @@
-.idea
-.vscode
-.git
-*.iml
-*.bak
-rebel.xml
-target
-
+bin/
+target/
+lib/
+.settings
+.mvn
+.classpath
+.project
