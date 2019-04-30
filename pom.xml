@@ -13,7 +13,7 @@
         <module>scwvg-api</module>
         <module>scwvg-company</module>
         <module>scwvg-access-web</module>
-       <!-- <module>scwvg-access</module>-->
+        <module>scwvg-pon-network</module>
         <module>scwvg-pmee-6201</module>
         <module>scwvg-pmee-6202</module>
         <module>scwvg-pmee-6203</module>
@@ -65,6 +65,12 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
+        </dependency>
+        <!--spring secourity4依赖-->
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity4</artifactId>
+            <version>3.0.2.RELEASE</version>
         </dependency>
         <!-- jaxb模块引用 java9以后需要自己引用 - start -->
         <dependency>
