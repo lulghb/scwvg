@@ -19,6 +19,7 @@ import java.util.List;
 public class WvgSystemBraceImpl implements WvgSystemBraceService {
     @Autowired
     private WvgSystemBraceRepository systemBraceDao;
+
     @Override
     public List<SystemBraceEntity> queryBraceAll() {
         return systemBraceDao.findAll();
