@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgMenuMapper">
+    <select id="findAll" resultType="com.scwvg.entitys.scwvgponnetwork.WvgMenu">
+    	 SELECT
+			x.wvg_menu_id,
+			x.wvg_parent_id,
+			x.wvg_menu_name,
+			x.wvg_menu_url,
+			x.wvg_menu_type,
+			x.wvg_menu_type_name,
+			x.wvg_add_time,
+			x.wvg_updata_time,
+			x.wvg_menu_icon,
+			x.wvg_menu_state,
+			x.wvg_seq,
+		    x.wvg_user_id
+			FROM
+	wvg_menu x
+    </select>
+    <select id="wvg_user_id" parameterType="int" resultType="com.scwvg.entitys.scwvgponnetwork.WvgMenu">
+      SELECT
+            e.wvg_menu_id,
+			e.wvg_parent_id,
+			e.wvg_menu_name,
+			e.wvg_menu_url,
+			e.wvg_menu_type,
+			e.wvg_menu_type_name,
+			e.wvg_add_time,
+			e.wvg_updata_time,
+			e.wvg_menu_icon,
+			e.wvg_menu_state,
+			e.wvg_seq,
+		    e.wvg_user_id
+      FROM
+        wvg_user a
+        LEFT JOIN wvg_role_user b ON a.wvg_user_id = b.wvg_user_id
+        LEFT JOIN wvg_role c ON b.wvg_role_id = c.wvg_role_id
+        LEFT JOIN wvg_role_menu d ON d.wvg_role_id = c.wvg_role_id
+        LEFT JOIN wvg_menu e ON e.wvg_menu_id = d.wvg_menu_id
+        WHERE
+        a.wvg_user_id = #{wvg_user_id}
+    </select>
+</mapper>
