@@ -95,6 +95,12 @@
             <scope>system</scope>
             <systemPath>${pom.basedir}/lib/EasyCaptcha-1.5.0.jar</systemPath>
         </dependency>
+        <dependency>
+            <groupId>com.vaadin.external.google</groupId>
+            <artifactId>android-json</artifactId>
+            <version>0.0.20131108.vaadin1</version>
+            <scope>compile</scope>
+        </dependency>
         <!--//图片验证码 jar-->
     </dependencies>
     <build>
@@ -107,7 +113,7 @@
                 <configuration>
                     <verbose>true</verbose>
                     <fork>true</fork>
-                    <executable>C:/Program Files/Java/jdk1.8.0_151/bin/javac</executable>
+                    <executable>D:/jdk/JDK8_64/bin/javac</executable>
                     <source>1.8</source>
                     <target>1.8</target>
                     <encoding>UTF-8</encoding>
