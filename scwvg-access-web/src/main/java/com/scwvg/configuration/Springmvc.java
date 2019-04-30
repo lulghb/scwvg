@@ -1,11 +1,13 @@
 package com.scwvg.configuration;
 
 import com.scwvg.convertor.ScwvgTrimString;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.convert.ConversionService;
 import org.springframework.core.convert.support.DefaultConversionService;
@@ -50,7 +52,7 @@ public class Springmvc implements WebMvcConfigurer {
     @Autowired
     public MessageSource messageSource() {
     	//1. 创建国际化消息资源类
-        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+    	ReloadableResourceBundleMessageSource messageSource = new ReloadableResourceBundleMessageSource();
         //2. 设置国际化文件路径
         messageSource.setBasename(basename);
         return messageSource;

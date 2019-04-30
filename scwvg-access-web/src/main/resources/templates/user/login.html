@@ -93,7 +93,7 @@
             , router = layui.router()
             , search = router.search;
         form.render();
-        form.on('submit(LAY-user-login-submit)', function (obj) {
+        form.on('submit(LAY-user-login-submit)', function (obj) { 
             // 获取 CSRF Token
             var csrfToken = $("meta[name='_csrf']").attr("content");
             var csrfHeader = $("meta[name='_csrf_header']").attr("content");
@@ -103,7 +103,7 @@
                     request.setRequestHeader(csrfHeader, csrfToken);
                 }
             }).then(function (data) {
-                if(!data.success){
+                if(!data.success){ 
                     layer.msg(data.message, {offset: '26px', icon: 0, time: 3000});
                 }else{
                     $.ajax({url: "/login", type: 'POST', data:obj.field
@@ -115,8 +115,8 @@
                             // TODO  注意：这里不成功为全等于 false，不要修改为 (!$data.success)
                             if($data.success===false){
                                 layer.msg($data.message, {offset: '26px', icon: 0, time: 3000});
-                            }else{
-                                location.href = '/index'; //后台主页
+                            }else{ 
+                            	location.href = '/index';
                             }
                         }
                     })

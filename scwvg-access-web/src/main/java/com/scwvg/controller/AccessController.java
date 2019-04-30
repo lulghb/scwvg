@@ -38,7 +38,12 @@ public class AccessController {
      * @Date: 2019/4/14 
      */ 
     @GetMapping("/home/console")
-    public String console(){
+    public String console1(){
         return "/home/wvg-console";
+    }
+    
+    @GetMapping("/home/homepage1")
+    public String homepage1(){
+        return "/home/homepage1";
     }
 }

@@ -3,7 +3,6 @@ package com.scwvg.configuration;
 import com.scwvg.handler.ScwvgAccessDeniedHandler;
 import com.scwvg.handler.ScwvgAuthenticationEntryPoint;
 import com.scwvg.service.impl.WvgUserServiceImpl;
-import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -11,13 +10,10 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.csrf.CsrfFilter;
-import org.springframework.security.web.session.HttpSessionEventPublisher;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.util.Collections;
@@ -61,7 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 				// 1.01  设置允许访问的资源路径
 				.antMatchers(staticres).permitAll()
 				// 1.02  设置允许访问的资源路径必须相相应得权限,可以传数组（临时，部署上线放开）
-				.antMatchers("/admins/**").hasAnyAuthority("ROLE_ADMIN")
+//				.antMatchers("/admins/**").hasAnyAuthority("ROLE_ADMIN")
 				// 1.03  设置任何地址的访问均需验证权限
 				.anyRequest().authenticated()
 				// 1.04  设置基于 from 表单登陆校验
