@@ -4,13 +4,10 @@ import com.scwvg.entitys.Msg;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.io.Serializable;
-import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -24,7 +21,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class WvgUser implements UserDetails,Serializable {
+public class WvgUser implements Serializable {
     private Integer wvg_user_id;  //用户ID
     private String wvg_login_name;//用户登录名
     private String wvg_real_name;//用户真实姓名
@@ -43,86 +40,23 @@ public class WvgUser implements UserDetails,Serializable {
     private String wvg_login_ip;//账号登录原地址IP
     private Integer wvg_user_power;//用户权限（<0所有权> <1查询权><2新增权><3删除权><4修改权><5查询权and新增权><6新增and修改><7删除and修改><04增删改>）根据此字段在页面封装隐藏显示菜单
     private String wvg_account_remarks;//账号备注
+
+    /**
+     * 存储账号有效时间
+     */
+    private int Wvg_act_date;
+    /**
+     * 存储密码有效时间
+     */
+    private int Wvg_pwd_date;
     /**
      * 存储用户所属角色
      */
     private List<WvgRole> roleList;
 
-    /**
-     * 存储用户对应角色所属菜单（权限）
-     */
-    private List<WvgMenu> menuList;
-
     Msg msg =new Msg();
     boolean res=true;
-    /*权限*/
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
-    }
-    /*密码*/
-    @Override
-    public String getPassword() {
-        return this.wvg_user_password;
-    }
 
-    /*用户名*/
-    @Override
-    public String getUsername() {
-        return this.wvg_login_name;
-    }
-
-    /**
-     * 账号是否未过期
-     * @return true
-     */
-    @Override
-    public boolean isAccountNonExpired() {
-        /* 此处需要实现逻辑，账号有效期12个月转换成日期与账号创建时间比较*/
-
-        return true;
-    }
-
-    /**
-     * 账号是否未锁定
-     * @return
-     */
-    @Override
-    public boolean isAccountNonLocked() {
-        if(this.getWvg_account_type()!=0){
-            msg.setTitle("账号锁定！");
-            msg.setContent("您的账号已锁定！请联系管理员处理！");
-            return res=false;
-        }
-        return res;
-    }
-
-    /**
-     * 密码是否未过期
-     * @return
-     */
-    @Override
-    public boolean isCredentialsNonExpired() {
-        /**
-         * 当前时间-账号创建时间>=密码有效期：密码已过期
-         */
-        return false;
-    }
-
-    /**
-     * 账号是否激活
-     * @return
-     */
-    @Override
-    public boolean isEnabled() {
-        if(this.wvg_account_enabled !=1){
-            msg.setTitle("账号未启用！");
-            msg.setContent("您的账号未启用！请联系管理员处理！");
-            return res=false;
-
-        }
-        return res;
-    }
 
     /**
      * 对密码 BCrypt 动态加密
