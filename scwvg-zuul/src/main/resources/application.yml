@@ -11,7 +11,7 @@ eureka:
     instance-id: scwvg-zuul.com
     prefer-ip-address: true
 zuul:
-  prefix: /wvg            #前缀
+  prefix: /wvg        #前缀
   ignored-services: "*"  #屏蔽所有微服务真实名
   routes:
     scwvg.serviceId: scwvg-pmee-consumer   #访问此微服务
