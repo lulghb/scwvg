@@ -24,6 +24,7 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
     @Autowired
     private WvgAccessDecisionManager wvgAccessDecisionManager;
 
@@ -50,30 +51,35 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 "/tpl/**",
                 "/config.js/**",
         };
-        http
-                .authorizeRequests()
-                //访问：/home 无需登录认证权限
-                .antMatchers("/home").permitAll()
-                //其他所有资源都需要认证，登陆后访问
+
+       http.
+               authorizeRequests()
+                // 所有用户均可访问的资源
+                .antMatchers(staticres).permitAll()
+                // ROLE_USER的权限才能访问的资源
+                .antMatchers("/admin/**").hasRole("USER")
+                // 任何尚未匹配的URL只需要验证用户即可访问
                 .anyRequest().authenticated()
-                //登陆后之后拥有“ADMIN”权限才可以访问/hello方法，否则系统会出现“403”权限不足的提示
-                .antMatchers("/admins/**").hasAuthority("ADMIN")
-                .and().formLogin()
-                //指定登录页是”/login”
+                .and()
+                .formLogin()
+                // 指定登录页面,授予所有用户访问登录页面
                 .loginPage("/login")
-                .defaultSuccessUrl("/index")
-                .failureUrl("/login?error")
-                .permitAll()
+                //设置默认登录成功跳转页面,错误回到login界面
+                .defaultSuccessUrl("/index").failureUrl("/login?error").permitAll()
+                .and()
+                //开启cookie保存用户数据
+                .rememberMe()
+                //设置cookie有效期
+                .tokenValiditySeconds(60 * 60 * 24 * 7)
+                //设置cookie的私钥
+                .key("security")
                 .and()
                 .logout()
-                //退出登录后的默认网址是”/login”
-                .logoutSuccessUrl("/login")
-                .permitAll()
-                .invalidateHttpSession(true)
-                .and()
-                //登录后记住用户，下次自动登录,数据库中必须存在名为persistent_logins的表
-                .rememberMe()
-                .tokenValiditySeconds(1209600);
+                .permitAll();
+
+
+
+
         // 3. 解决中文乱码问题
         CharacterEncodingFilter filter = new CharacterEncodingFilter();
         // 3.1 设置字符集 UTF-8
@@ -101,4 +107,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
         //return (NoOpPasswordEncoder) NoOpPasswordEncoder.getInstance();
     }
+
 }

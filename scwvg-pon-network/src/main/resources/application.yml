@@ -7,7 +7,7 @@ mybatis:
 spring:
   thymeleaf:
     cache: false   #是否开启缓存
-    mode: LEGACYHTML5
+    mode: HTML5
   datasource:
       type: com.alibaba.druid.pool.DruidDataSource
       driver-class-name: com.mysql.jdbc.Driver
@@ -37,3 +37,5 @@ spring:
     #database: mysql
     #show-sql: true
 ######################jpa数据源end#########################
+  messages:
+    basename: i18n/validation/ValidationMessages
