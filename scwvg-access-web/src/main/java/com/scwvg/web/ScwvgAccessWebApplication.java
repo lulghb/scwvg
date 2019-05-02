@@ -1,6 +1,5 @@
 package com.scwvg.web;
-
-import com.scwvg.export.EnableScwvgSystem;
+import com.scwvg.zgy.export.EnableScwvgSystem;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

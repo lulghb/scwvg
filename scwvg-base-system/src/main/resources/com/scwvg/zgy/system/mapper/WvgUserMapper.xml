@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.zgy.system.mapper.WvgUserMapper">
+
+    <select id="queryWvgUser" parameterType="java.util.HashMap" resultType="com.scwvg.zgy.system.vo.UserVO">
+        <![CDATA[
+                SELECT
+                    /*用户ID*/
+                    F.wvg_user_id AS "wvgUserId",
+                    /*用户登录名*/
+                    F.wvg_login_name AS "wvgLoginName",
+                    /*用户真实姓名*/
+                    F.wvg_real_name AS "wvgRealName",
+                    /*用户证件类型*/
+                    F.wvg_id_type AS "wvgIdType",
+                    /*专业ID（wvg_spec_type专业表外键ID）*/
+                    F.wvg_spec_id AS "wvgSpecId",
+                    /*证件号*/
+                    F.wvg_id_number AS "wvgIdNumber",
+                    /*联系电话*/
+                    F.wvg_user_iphone AS "wvgUserIphone",
+                    /*用户密码*/
+                    F.wvg_user_password AS "wvgUserPassword",
+                    /*账号新增时间*/
+                    F.wvg_add_time AS "wvgAddTime",
+                    /*用户修改时间*/
+                    F.wvg_update_time AS "wvgUpdateTime",
+                    /*账号状态（0,活动   1,锁定）*/
+                    F.wvg_account_type AS "wvgAccountType",
+                    /*账号登录时间*/
+                    F.wvg_login_time AS "wvgLoginTime",
+                    /*账号登录原地址IP*/
+                    F.wvg_login_ip AS "wvgLoginIp",
+                    /*用户权限（<0所有权> <1查询权><2新增权><3删除权><4修改权><5查询权and新增权><6新增and修改><7删除and修改><04增删改>）根据此字段在页面封装隐藏显示菜单*/
+                    F.wvg_user_power AS "wvgUserPower",
+                    /*账号备注*/
+                    F.wvg_account_remarks AS "wvgAccountRemarks",
+                    /*账号有效期*/
+                    F.wvg_account_date AS "wvgAccountDate",
+                    /*密码有效期*/
+                    F.wvg_password_date AS "wvgPasswordDate"
+                FROM
+                    wvg_user F
+                where 1=1
+            ]]>
+        <if test="wvgLoginName != null">
+            and wvg_login_name like  concat('%', #{wvgLoginName} ,'%')
+        </if>
+        <if test="wvgRealName != null">
+            and wvg_real_name like  concat('%', #{wvgRealName} ,'%')
+        </if>
+    </select>
+    <select id="queryWvgUserWithCount" parameterType="java.util.HashMap" resultType="java.lang.Long">
+        <![CDATA[
+            SELECT
+                /*用户ID*/
+                count(F.wvg_user_id) AS count
+            FROM
+                wvg_user F
+            WHERE
+                1 = 1
+        ]]>
+        <if test="wvgLoginName != null">
+            and wvg_login_name like  concat('%', #{wvgLoginName} ,'%')
+        </if>
+        <if test="wvgRealName != null">
+            and wvg_real_name like  concat('%', #{wvgRealName} ,'%')
+        </if>
+    </select>
+</mapper>

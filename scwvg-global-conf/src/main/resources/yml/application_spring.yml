@@ -1,0 +1,67 @@
+# 全局所有 spring 的配置
+spring:
+  thymeleaf:
+    encoding: UTF-8
+    cache: false #热部署静态文件，禁止缓存
+    mode: HTML5 #使用HTML5标准
+#######################################################配置数据源###################################################
+  datasource:
+    username: root
+    password: gRNyw+5J421gfXx4HVPyf1kcrOD3FnXj8tFxPuO+TLaBtgRR3tXY+3x2z/y0VFpcrUdAbYoVDHWBs2Ms6/GYxQ==
+    #url: jdbc:mysql://136.192.50.29:23306/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    url: jdbc:mysql://localhost:3306/scwvg?serverTimezone=GMT%2B8&characterEncoding=utf-8&useSSL=false
+    driver-class-name: com.mysql.jdbc.Driver # com.mysql.cj.jdbc.Driver #
+    # druid 数据库连接池配置
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始连接池大小
+    initial-size: 2 #配置初始化大小
+    min-idle: 3
+    max-active: 20
+    max-wait: 60000 #获取连接等待超时时间
+    time-between-eviction-runs-millis: 60000 #间隔多久进行一次检测，检测需要关闭的空闲连接
+    min-evictable-idle-time-millis: 300000 #一个连接在池中最小生存的时间
+    validation-query: SELECT 'x'
+    test-while-idle: true
+    test-on-borrow: false
+    test-on-return: false
+    #打开PSCache，并指定每个连接上PSCache的大小。oracle设为	true，mysql设为false。分库分表较多推			荐设置为false
+    pool-prepared-statements: false
+    max-pool-prepared-statement-per-connection-size: 20
+    filters: stat,config #监控统计拦截的filters
+    #配置，并设置RSA公钥
+    #获取秘钥过程详见 https://github.com/alibaba/druid/wiki/%E4%BD%BF%E7%94%A8ConfigFilter
+    connectionProperties: config.decrypt=true;config.decrypt.key=MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBAJfGC5RrYTOkP0hHaImJ9IOE+ufax3oWUACOFXzWyOteqN4MIqAuYWobQ+W7COhSMMntIMF62NnetLvL3/rmXRUCAwEAAQ==
+  jpa:
+    hibernate:
+      ddl-auto: update #自动更新建表
+    show-sql: true
+    #database-platform: org.hibernate.dialect.MySQLDialect # 配置數據庫方言
+  #######################################################配置国际化校验的properties文件#################################
+  messages:
+    basename: i18n/validation/ValidationMessages
+  #######################################################springboot之json中日期格式转换问题#############################
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+ #######################################################Redis数据库索引（默认为0）######################################
+  redis:
+    database: 0
+    # Redis服务器地址
+    host: 192.168.1.18
+    #host: 192.168.43.227
+    # Redis服务器连接端口
+    port: 6379
+    # Redis服务器连接密码（默认为空）
+    password: baigle
+    # 连接池最大连接数（使用负值表示没有限制）
+    lettuce:
+      pool:
+        max-active: 200
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        #max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 10
+        # 连接池中的最小空闲连接
+        min-idle: 0
+    # 连接超时时间（毫秒）
+    timeout: 10000m

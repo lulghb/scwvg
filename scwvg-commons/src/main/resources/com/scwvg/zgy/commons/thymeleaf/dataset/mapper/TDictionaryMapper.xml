@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!--
+namespace 命名空间，为了对sql语句进行隔离，方便管理,
+namespace 命名空间, 路径全限定名
+ -->
+<mapper namespace="com.scwvg.zgy.commons.thymeleaf.dataset.mapper.TDictionaryMapper">
+
+    <!-- 1. 向数据库保存数据字典 -->
+    <insert id="insert"
+            parameterType="com.scwvg.zgy.commons.thymeleaf.dataset.TDictionary">
+        <!-- mySQL返回主键id -->
+        <selectKey keyProperty="id"
+                   order="AFTER"
+                   resultType="Double">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        <![CDATA[
+        INSERT INTO t_dictionary (
+            /*编号*/
+            id,
+            /*数据字典类型代码*/
+            dict_type_code,
+            /*数据字段类型名称*/
+            dict_type_name,
+            /*数据字典类型项代码*/
+            dict_id,
+            /*数据字典类型项名称*/
+            dict_name,
+            /*数据字典父类型代码*/
+            pdict_type_code,
+            /*数据字典父类型名称*/
+            pdict_type_name,
+            /*数据字典父类型项代码*/
+            pdict_id,
+            /*数据字典父类型项名称*/
+            pdict_name,
+            /*排序*/
+            sort,
+            /*是否启用*/
+            ENABLE,
+            /*是否删除*/
+            delete_flag
+        )
+        VALUES
+            (
+                #{td.id},
+                #{td.dictTypeCode},
+                #{td.dictTypeName},
+                #{td.dictId},
+                #{td.dictName},
+                #{td.pdictTypeCode},
+                #{td.pdictTypeName},
+                #{td.pdictId},
+                #{td.pdictName},
+                #{td.sort},
+                #{td.enable},
+                #{td.deleteFlag}
+            )
+      ]]>
+    </insert>
+    <!-- 2. 根据条件检索数据字典 -->
+    <select id="findTDictionary"
+            parameterType="java.util.HashMap"
+            resultType="com.scwvg.zgy.commons.thymeleaf.dataset.TDictionary">
+      <![CDATA[
+        SELECT
+            /*编号*/
+            q.id AS "id",
+            /*数据字典类型代码*/
+            q.dict_type_code AS "dictTypeCode",
+            /*数据字段类型名称*/
+            q.dict_type_name AS "dictTypeName",
+            /*数据字典类型项代码*/
+            q.dict_id AS "dictId",
+            /*数据字典类型项名称*/
+            q.dict_name AS "dictName",
+            /*数据字典父类型代码*/
+            q.pdict_type_code AS "pdictTypeCode",
+            /*数据字典父类型名称*/
+            q.pdict_type_name AS "pdictTypeName",
+            /*数据字典父类型项代码*/
+            q.pdict_id AS "pdictId",
+            /*数据字典父类型项名称*/
+            q.pdict_name AS "pdictName",
+            /*排序*/
+            q.sort AS "sort",
+            /*是否启用*/
+            q.ENABLE AS "enable",
+            /*是否删除*/
+            q.delete_flag AS "deleteFlag"
+        FROM
+            t_dictionary q
+        WHERE
+            q.ENABLE = 'Y'
+      ]]>
+        <if test="para.dictTypeCode !=null and para.dictTypeCode!=''">
+            <![CDATA[ AND q.`dict_type_code` = #{para.dictTypeCode}]]>
+        </if>
+        <if test="para.dictId !=null and para.dictId!=''">
+            <![CDATA[ AND q.`dict_id` = #{para.dictId}]]>
+        </if>
+        <if test="para.excludeId !=null and para.excludeId!=''">
+            <![CDATA[ AND q.`dict_id` NOT IN (${para.excludeId})]]>
+        </if>
+        <if test="para.pdictId !=null and para.pdictId!=''">
+            <![CDATA[ AND  q.`pdict_id` = #{para.pdictId}]]>
+        </if>
+        <if test="para.pdictTypeCode !=null and para.pdictTypeCode!=''">
+            <![CDATA[ AND q.`pdict_type_code` = #{para.pdictTypeCode}]]>
+        </if>
+        ORDER BY q.SORT
+    </select>
+    <!-- //根据条件检索数据字典 -->
+
+</mapper>

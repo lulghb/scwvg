@@ -60,3 +60,4 @@
     > 错误信息大概意思是 在我们的类中有个 isEnabled，还有 getEnabled 两个方法，jackson无法确定唯一的getter函数。 
  * 解决问题：
     字段去掉 **is** 打头
+    

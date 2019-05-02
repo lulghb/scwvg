@@ -30,11 +30,13 @@
             <scope>true</scope>
         </dependency>
 
+        <!-- start ##################################### scwvg 工程依赖包 ##################################### -->
         <dependency>
-            <groupId>com.scwvg</groupId>
+            <groupId>com.scwvg.zgy</groupId>
             <artifactId>scwvg-base-system</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <!-- end ##################################### scwvg 工程依赖包 ##################################### -->
     </dependencies>
     <build>
         <plugins>
