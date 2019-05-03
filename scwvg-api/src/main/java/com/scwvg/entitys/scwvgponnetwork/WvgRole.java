@@ -4,23 +4,21 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.io.Serializable;
-
 /**
  * @aothor: lul
  * @unit: 智谷园网络科技有限公司
  * @iphone:18482297774
- * @date：20192019/4/29
- * @Explain：
+ * @date：20192019/5/2
+ * @Explain：角色
  **/
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
-public class WvgRole implements Serializable {
-    private  Integer wvg_role_id  ;//角色ID
-    private  String wvg_role_name ;//角色名称
-    private  Integer wvg_role_type;//角色类型（0，全部（包括1和2），1，操作<增，删，改> 2，查询）
-    private  String wvg_add_time  ;//角色新增时间
-    private  Integer wvg_user_id  ;//新增人
+public class WvgRole extends BaseEntity<Long> {
+    private static final long serialVersionUID = -3802292814767103648L;
+    private long wvg_role_id;//	             角色ID
+    private String wvg_role_name;//          角色名称
+    private String wvg_role_description;//   角色描述
+    private long wvg_user_id;//			     新增人
 
 }

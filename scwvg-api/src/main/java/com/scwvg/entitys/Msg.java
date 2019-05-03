@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serializable;
+
 /**
  * @aothor: lul
  * @unit: 智谷园网络科技有限公司
@@ -14,8 +16,16 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class Msg {
-    private String title;  //消息标题
-    private String content;//信息主体
-    private String etraInfo;//其他信息
+public class Msg implements Serializable {
+    private static final long serialVersionUID = -4417715614021482064L;
+
+    private String code;
+    private String message;
+
+    /**
+     * code  状态码
+     * @param message		返回处理成功，还是失败得提示信息
+     */
+
+
 }
