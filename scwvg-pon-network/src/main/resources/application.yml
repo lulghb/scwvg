@@ -4,6 +4,9 @@ server:
 mybatis:
   mapper-locations: classpath:mapper/*.xml
   type-aliases-package: com.scwvg.entitys.scwvgponnetwork
+  #显示sql
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 spring:
   thymeleaf:
     cache: false   #是否开启缓存
@@ -33,9 +36,22 @@ spring:
       max-pool-prepared-statement-per-connection-size: 20
 ##########################mybatis数据源配置end###########################
 ######################jpa数据源#########################
-  #jpa:
-    #database: mysql
-    #show-sql: true
 ######################jpa数据源end#########################
   messages:
     basename: i18n/validation/ValidationMessages
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    joda-date-time-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+logging:
+  config: classpath:logback-admin.xml
+log:
+  level:
+    root: info
+    my: debug
+  file: logs/admin-server.log
+  maxsize: 30MB
+token:
+  expire:
+    seconds: 60 #7200
+  jwtSecret: (XIAO:)_$^11244^%$_(WEI:)_@@++--(LAO:)_++++_.sds_(SHI:)
