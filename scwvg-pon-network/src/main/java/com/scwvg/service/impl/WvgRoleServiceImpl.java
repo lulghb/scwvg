@@ -1,4 +1,4 @@
-package com.scwvg.impl;
+package com.scwvg.service.impl;
 
 import com.scwvg.entitys.scwvgponnetwork.WvgRole;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleMenu;

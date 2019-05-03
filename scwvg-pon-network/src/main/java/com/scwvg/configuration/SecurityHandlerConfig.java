@@ -49,6 +49,7 @@ public class SecurityHandlerConfig {
                 WvgLoginUser loginUser = (WvgLoginUser) authentication.getPrincipal();
 
                 Token token = wvgTokenService.saveToken(loginUser);
+                /*查询token返回前端*/
                 ResponseUtil.responseJson(response, HttpStatus.OK.value(), token);
             }
         };
@@ -109,7 +110,7 @@ public class SecurityHandlerConfig {
             @Override
             public void onLogoutSuccess(HttpServletRequest request, HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-                Msg msg = new Msg(HttpStatus.OK.value() + "", "退出成功");
+                Msg msg = new Msg(HttpStatus.OK.value() + "", "退出成功！");
 
                 String token = TokenFilter.getToken(request);
                 wvgTokenService.deleteToken(token);

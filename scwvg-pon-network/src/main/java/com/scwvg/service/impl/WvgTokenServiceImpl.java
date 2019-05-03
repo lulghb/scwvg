@@ -1,4 +1,4 @@
-package com.scwvg.impl;
+package com.scwvg.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.scwvg.entitys.scwvgponnetwork.Token;
