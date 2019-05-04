@@ -12,7 +12,7 @@ $.ajaxSetup({
 			layer.msg(message);
 		} else if (code == 401) {
 			localStorage.removeItem("token");
-			location.href = '/login.html';
+			location.href = '/login';
 		} else if (code == 403) {
 			console.log("未授权:" + message);
 			layer.msg('未授权');
