@@ -1,15 +1,19 @@
 <!DOCTYPE html>
-<html lang="en"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
-<head>
-  <meta charset="UTF-8">
-  <title>采集适配</title>
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-  <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <html lang="en"
+        xmlns:th="http://www.thymeleaf.org"
+        xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4" >
+  <head>
+    <meta charset="UTF-8">
+    <title>采集适配</title>
+    <meta name="renderer" content="webkit">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
 
+    <!--不缓存Session-->
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Cache-Control" content="no-cache">
+  <meta http-equiv="Expires" content="0">
 
 
   <!--登陆页面样式-->
@@ -142,25 +146,6 @@
             });
         });
     });
-
-   /* form.on('submit(LAY-user-login-submit)', function (obj) {
-        $(obj).attr("disabled", true);
-            $.ajax({
-                type : 'post',
-                url : '/login',
-                data : obj.field,
-                success : function(data) {
-                    localStorage.setItem("token", data.token);
-                    location.href = '/index';
-                },
-                error : function(xhr, textStatus, errorThrown) {
-                    var msg = xhr.responseText;
-                    var response = JSON.parse(msg);
-                    $("#info").html(response.message);
-                    $(obj).attr("disabled", false);
-                }
-            });
-    });*/
 </script>
 </body>
 </html>
