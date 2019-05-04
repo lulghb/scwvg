@@ -5,6 +5,7 @@ import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import com.scwvg.mappers.WvgMenuMapper;
 import com.scwvg.mappers.WvgUserMapper;
+import com.scwvg.service.WvgUserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -25,12 +26,12 @@ import java.util.List;
 @Service
 public class WvgUserDetailsServiceImpl implements UserDetailsService {
     @Autowired
-    WvgUserMapper userMapper;
+    WvgUserService userService;
     @Autowired
     WvgMenuMapper menuMapper;
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        WvgUser user=userMapper.querUserInfo(username);
+        WvgUser user=userService.querUserInfo(username);
         if(user ==null){
             throw new AuthenticationCredentialsNotFoundException("用户名不存在!");
         }else if(user.getWvg_act_date() !=1)

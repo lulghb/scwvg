@@ -21,7 +21,31 @@ public interface WvgUserMapper {
     public WvgUser getById(@Param("wvg_user_id") int wvg_user_id);
 
     /*根据用户名查询用户*/
-    public WvgUser querUserInfo(String wvg_user_name);
+    @Select("SELECT\n" +
+            "                a.wvg_user_id,\n" +
+            "                a.wvg_login_name,\n" +
+            "                a.wvg_real_name,\n" +
+            "                a.wvg_id_type,\n" +
+            "                a.wvg_spec_id,\n" +
+            "                a.wvg_id_number,\n" +
+            "                a.wvg_user_iphone,\n" +
+            "                a.wvg_account_enabled,\n" +
+            "                a.wvg_account_data,\n" +
+            "                a.wvg_user_password,\n" +
+            "                a.wvg_password_data,\n" +
+            "                a.wvg_add_time,\n" +
+            "                a.wvg_update_time,\n" +
+            "                a.wvg_account_type,\n" +
+            "                a.wvg_login_time,\n" +
+            "                a.wvg_login_ip,\n" +
+            "                date_add(now(),interval -a.wvg_account_data month)<a.wvg_add_time as wvg_act_date,\n" +
+            "                date_add(now(),interval -a.wvg_password_data month)<a.wvg_add_time as wvg_pwd_date,\n" +
+            "                a.wvg_account_remarks\n" +
+            "                FROM\n" +
+            "                wvg_user a\n" +
+            "                WHERE\n" +
+            "                a.wvg_login_name =#{wvg_user_name}")
+    public WvgUser querUserInfo(@Param("wvg_user_name") String wvg_user_name);
 
     /*根据ID修改密码*/
     @Update("update wvg_user x set x.wvg_user_password=#{wvg_user_password} " +
