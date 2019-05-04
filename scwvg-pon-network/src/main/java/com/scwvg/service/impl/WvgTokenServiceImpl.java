@@ -1,14 +1,14 @@
 package com.scwvg.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
-import com.scwvg.entitys.scwvgponnetwork.Token;
-import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
-import com.scwvg.entitys.scwvgponnetwork.WvgToken;
-import com.scwvg.mappers.WvgTokenMapper;
-import com.scwvg.service.WvgTokenService;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
+import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
+
+import javax.crypto.spec.SecretKeySpec;
+import javax.xml.bind.DatatypeConverter;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import javax.crypto.spec.SecretKeySpec;
-import javax.xml.bind.DatatypeConverter;
-import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import com.alibaba.fastjson.JSONObject;
+import com.scwvg.entitys.scwvgponnetwork.Token;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
+import com.scwvg.entitys.scwvgponnetwork.WvgToken;
+import com.scwvg.mappers.WvgTokenMapper;
+import com.scwvg.service.WvgTokenService;
+
+import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 
 /**
  * @aothor: lul
@@ -30,7 +33,7 @@ import java.util.UUID;
  * @iphone:18482297774
  * @date：20192019/5/2
  * @Explain：Token实现类目的是服务端存储用户状态，因为HTTP是无状态的，
- * 只能通过Session来进行管控，session是页面的东西，我们不可把控
+ * 只能通过Session来进行管控，session是页面的东西，我们不可把控 
  **/
 @Primary
 @Service
@@ -156,7 +159,9 @@ public class WvgTokenServiceImpl implements WvgTokenService {
 
         // 校验是否已过期
         if (token.getWvg_token_expireTime().getTime() > System.currentTimeMillis()) {
-            return JSONObject.parseObject(token.getWvg_token_val(), WvgLoginUser.class);
+        	JSONObject json = JSONObject.parseObject(token.getWvg_token_val());//authorities
+        	json.remove("authorities");
+        	return json.toJavaObject(WvgLoginUser.class);
         }
 
         return null;
@@ -182,6 +187,9 @@ public class WvgTokenServiceImpl implements WvgTokenService {
         Map<String,Object> jwtClaims=null;
         try {
             jwtClaims=Jwts.parser().setSigningKey(getKeyInstance()).parseClaimsJws(jwt).getBody();
+            if(jwtClaims != null) {
+            	return (String) jwtClaims.get(LOGIN_USER_KEY);
+            }
             return null;//此处获取需要关注，可能使用redis;
         }catch (ExpiredJwtException e){
             log.error("{}已过期", jwt);

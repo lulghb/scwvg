@@ -20,13 +20,13 @@ public interface WvgTokenMapper {
             "#{updateTime})")
     int save(WvgToken wvgToken);
 
-    @Select("select * t_token t_token t where t.wvg_token_id = #{wvg_token_id}")
+    @Select("select * from wvg_token t where t.wvg_token_id = #{wvg_token_id}")
     WvgToken getByTokenId(String wvg_token_id);
 
     @Update("update wvg_token t set t.wvg_token_expireTime = #{wvg_token_expireTime}, " +
-            "wvg_token_updateTime=#{UpdateTime}" +
-            "wvg_token_val=#{wvg_token_val}"+
-            " where t.wvg_token_id = #{wvg_token_id}")
+            "wvg_token_updateTime=#{updateTime}, " +
+            "wvg_token_val=#{wvg_token_val} "+
+            " where t.wvg_token_id = #{id}")
     int update(WvgToken model);
 
     @Delete("delete from t_token where t_token = #{t_token}")
