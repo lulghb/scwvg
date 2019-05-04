@@ -1,0 +1,126 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>日志详细信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<body>
+
+  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">用户名</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="username" id="username" class="layui-input" readonly="readonly">
+	    </div>
+	  </div>
+	  <div class="layui-inline">
+	    <label class="layui-form-label">描述</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="uriDesc" id="uriDesc" class="layui-input" readonly="readonly">
+	    </div>
+      </div>
+      <div class="layui-inline">
+	    <label class="layui-form-label">IP</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="requestIp" id="requestIp" class="layui-input" readonly="readonly">
+	    </div>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">请求资源</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="requestUri" id="requestUri" class="layui-input" readonly="readonly">
+	    </div>
+	  </div>
+	  <div class="layui-inline">
+	    <label class="layui-form-label">方法名称</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="methodName" id="methodName" class="layui-input" readonly="readonly">
+	    </div>
+      </div>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">请求参数</label>
+      <div class="layui-input-inline">
+        <input type="text" name="requestParams" id="requestParams" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <div class="layui-inline">
+        <label class="layui-form-label">开始时间</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="beginTime" id="beginTime" class="layui-input" readonly="readonly">
+	    </div>
+	  </div>
+	  <div class="layui-inline">
+	    <label class="layui-form-label">结束时间</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="endTime" id="endTime" class="layui-input" readonly="readonly">
+	    </div>
+      </div>
+      <div class="layui-inline">
+	    <label class="layui-form-label">请求耗时</label>
+	    <div class="layui-input-inline">
+	      <input type="text" name="useTime" id="useTime" class="layui-input" readonly="readonly">
+	    </div>
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+      <input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
+    </div>
+  </div>
+
+  <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <script th:inline="none">
+/*   layui.config({
+    base: '/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'form', 'upload'], function(){
+    var $ = layui.$
+    ,form = layui.form
+    ,upload = layui.upload ;
+    var id = getQueryString("logid");
+    upload.render({
+      elem: '#layuiadmin-upload-useradmin'
+      ,url: '/log/24'
+      ,accept: 'images'
+      ,method: 'get'
+      ,done: function(res){
+        $(this.item).prev("div").children("input").val(res.data.src)
+      }
+    });
+  }); */
+  
+  function getQueryString(name) { 
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+    var r = window.location.search.substr(1).match(reg); 
+    if (r != null) {
+      return unescape(r[2]);
+    }
+    return null; 
+  }
+  function method(data) {
+	  document.getElementById('username').value=data.username;
+	  document.getElementById('uriDesc').value=data.uriDesc;
+	  document.getElementById('requestIp').value=data.requestIp;
+	  document.getElementById('requestUri').value=data.requestUri;
+	  document.getElementById('methodName').value=data.methodName;
+	  document.getElementById('requestParams').value=data.requestParams;
+	  document.getElementById('beginTime').value=data.beginTime;
+	  document.getElementById('endTime').value=data.endTime;
+	  document.getElementById('useTime').value=data.useTime + "ms";
+  }
+  </script>
+</body>
+</html>

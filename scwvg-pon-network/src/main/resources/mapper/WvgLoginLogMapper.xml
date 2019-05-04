@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgLoginLogMapper">
+    
+    <resultMap id="resultWvgLoginLog" type="com.scwvg.entitys.scwvgponnetwork.WvgLoginLog">
+        <id column="web_log_id" property="web_log_id" />
+        <result column="wvg_login_name" property="username" />
+        <result column="web_log_ipaddess" property="loginIp" />
+        <result column="web_login_status" property="status" />
+        <result column="web_log_desc" property="desc" />
+        <result column="web_log_session" property="loginSession" />
+        <result column="web_log_time" property="loginTime" />
+    </resultMap>
+    
+    <!-- 保存操作日志 -->
+    <select id="save" parameterType="com.scwvg.entitys.scwvgponnetwork.WvgLoginLog">
+        INSERT INTO wvg_access_login_log(
+        					wvg_login_name, 
+        					web_log_ipaddess, 
+        					web_login_status,
+        					web_log_desc,
+        					web_log_session,
+        					web_log_time)
+					VALUES(#{username},
+							#{loginIp},
+							#{status},
+							#{desc},
+							#{loginSession},
+							#{loginTime})
+    </select>
+    
+    <!-- 查询操作日志 -->
+    <select id="queryByPage" parameterType="map" resultMap="resultWvgLoginLog">
+        SELECT web_log_id,
+        		wvg_login_name, 
+				web_log_ipaddess, 
+				web_login_status,
+				web_log_desc,
+				web_log_session,
+				web_log_time
+			FROM wvg_access_login_log
+		<where>
+		    <if test="username != null and username != ''">
+		        AND wvg_login_name = #{username}
+		    </if>
+		    <if test="beginTime != null and beginTime != ''">
+		        AND web_log_time <![CDATA[>=]]> #{beginTime}
+		    </if>
+		    <if test="endTime != null and endTime != ''">
+		        AND web_log_time <![CDATA[<]]> #{endTime}
+		    </if>
+		</where>
+		ORDER BY web_log_id DESC
+    </select>
+    
+    <!-- 查询操作日志详情 -->
+    <select id="get" parameterType="java.lang.Long" resultMap="resultWvgLoginLog">
+        SELECT web_log_id,
+        		wvg_login_name, 
+				web_log_ipaddess, 
+				web_login_status,
+				web_log_desc,
+				web_log_session,
+				web_log_time
+			FROM wvg_access_login_log
+		WHERE web_log_id = #{id}
+    </select>
+</mapper>

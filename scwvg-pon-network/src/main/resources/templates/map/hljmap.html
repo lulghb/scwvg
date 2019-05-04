@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ECharts">
+    <meta name="author" content="kener.linfeng@gmail.com">
+    <title>ECharts · Example</title>
+
+	<link rel="stylesheet" href="../../static/layui/css/layui.css" media="all" th:href="@{/layui/css/layui.css}">
+</head>
+
+<body style="background-image: url('../../style/res/back-ground.jpg'); background-size:100% 100%;-moz-background-size:100% 100%;}">
+<div style="display: block; padding: 10px;">
+	<!-- 告警展示 -->
+	<div id="left" class="left" style="height: 560px; width: 28%; position: relative; float: left;">
+		<div carousel-item id="LAY-index-olt-pie" style="height: 265px; border: 1px solid #0C4E19; padding: 5px;"></div>
+		<div carousel-item id="LAY-index-onu-pie" style="height: 265px; border: 1px solid #0C4E19; padding: 5px; margin-top: 5px;"></div>
+	</div>
+	
+	<!-- 地图展示 -->
+	<div id=LAY-index-map class="main" style="height: 560px; width: 43%; position: relative; float: left;margin-left: 5px;margin-right: 5px;"></div>
+	
+	<!-- 流量展示 -->
+	<div id="right" class="right" style="height: 560px; width: 28%; float: left;">
+		<div carousel-item id="LAY-index-nom" style="height: 265px; border: 1px solid #0C4E19; padding: 5px;"></div>
+		<div carousel-item id="LAY-index-other" style="height: 265px; border: 1px solid #0C4E19; padding: 5px; margin-top: 5px;"></div>
+	</div>
+</div>
+
+
+
+    <!-- Placed at the end of the document so the pages load faster -->
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>  
+  <script>
+  layui.config({
+    base: '/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'map/hljmap']);
+  </script>
+</body>
+</html>

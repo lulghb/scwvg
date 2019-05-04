@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgOperationLogMapper">
+    
+    <resultMap id="resultWvgOperationLog" type="com.scwvg.entitys.scwvgponnetwork.WvgOperationLog">
+        <id column="web_operation_id" property="id" />
+        <result column="wvg_login_name" property="username" />
+        <result column="uri_desc" property="uriDesc" />
+        <result column="request_ip" property="requestIp" />
+        <result column="request_uri" property="requestUri" />
+        <result column="method_name" property="methodName" />
+        <result column="params" property="requestParams" />
+        <result column="exception_info" property="exceptionInfo" />
+        <result column="begin_time" property="beginTime" />
+        <result column="end_time" property="endTime" />
+        <result column="use_time" property="useTime" />
+    </resultMap>
+    
+    <!-- 保存操作日志 -->
+    <select id="save" parameterType="com.scwvg.entitys.scwvgponnetwork.WvgOperationLog">
+        INSERT INTO wvg_access_operaction_log(
+        					wvg_login_name, 
+        					uri_desc, 
+        					request_ip, 
+        					request_uri,
+        					method_name,
+        					params,
+        					exception_info,
+        					begin_time,
+        					end_time,
+        					use_time)
+					VALUES(#{username},
+							#{uriDesc},
+							#{requestIp},
+							#{requestUri},
+							#{methodName},
+							#{requestParams},
+							#{exceptionInfo},
+							#{beginTime},
+							#{endTime},
+							#{useTime})
+    </select>
+    
+    <!-- 查询操作日志 -->
+    <select id="queryByPage" parameterType="map" resultMap="resultWvgOperationLog">
+        SELECT web_operation_id,
+        		wvg_login_name, 
+				uri_desc, 
+				request_ip, 
+				request_uri,
+				method_name,
+				params,
+				exception_info,
+				begin_time,
+				end_time,
+				use_time
+			FROM wvg_access_operaction_log
+		<where>
+		    <if test="username != null and username != ''">
+		        AND wvg_login_name = #{username}
+		    </if>
+		    <if test="beginTime != null and beginTime != ''">
+		        AND begin_time <![CDATA[>=]]> #{beginTime}
+		    </if>
+		    <if test="endTime != null and endTime != ''">
+		        AND end_time <![CDATA[<]]> #{endTime}
+		    </if>
+		</where>
+    </select>
+    
+    <!-- 查询操作日志详情 -->
+    <select id="get" parameterType="java.lang.Long" resultMap="resultWvgOperationLog">
+        SELECT web_operation_id,
+        		wvg_login_name, 
+				uri_desc, 
+				request_ip, 
+				request_uri,
+				method_name,
+				params,
+				exception_info,
+				begin_time,
+				end_time,
+				use_time
+			FROM wvg_access_operaction_log
+		WHERE web_operation_id = #{web_operation_id}
+    </select>
+</mapper>

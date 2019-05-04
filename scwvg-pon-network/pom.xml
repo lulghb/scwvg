@@ -20,6 +20,23 @@
         <jwt.version>0.9.0</jwt.version>
         <fastjson.version>1.2.47</fastjson.version>
     </properties>
+    
+    <repositories>
+    	<repository>
+    		<id>aliyun</id>
+    		<url>https://maven.aliyun.com/repository/public</url>
+    		<releases>
+    			<enabled>true</enabled>
+    		</releases>
+    	</repository>
+    	<repository>
+    		<id>mulesoft</id>
+    		<url>https://repository.mulesoft.org/nexus/content/repositories/public</url>
+    		<releases>
+    			<enabled>true</enabled>
+    		</releases>
+    	</repository>
+    </repositories>
 
     <dependencies>
         <dependency>
@@ -43,6 +60,12 @@
             <artifactId>mybatis-spring-boot-starter</artifactId>
             <version>2.0.0</version>
         </dependency>
+        <!-- 分页插件 -->
+        <dependency>
+		    <groupId>com.github.pagehelper</groupId>
+		    <artifactId>pagehelper-spring-boot-starter</artifactId>
+		    <version>1.2.10</version>
+		</dependency>
         <!--mysql依赖-->
         <dependency>
             <groupId>mysql</groupId>
@@ -91,8 +114,6 @@
             <groupId>com.github.whvcse</groupId>
             <artifactId>EasyCaptcha</artifactId>
             <version>1.5.0</version>
-            <scope>system</scope>
-            <systemPath>${pom.basedir}/lib/EasyCaptcha-1.5.0.jar</systemPath>
         </dependency>
         <!-- springSecurity 权限控制依赖 -->
         <dependency>

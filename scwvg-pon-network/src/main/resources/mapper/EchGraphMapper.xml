@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.EchGraphMapper">
+    <!-- 根据地市查询OLT -->
+    <select id="queryAllOLTByCity" parameterType="map" resultType="hashmap">
+        SELECT z.res_vendor_name as vendor_name, count(*) as num
+			FROM wvg_res_data x
+			LEFT JOIN wvg_city y ON x.city_id = y.city_id
+			LEFT JOIN wvg_res_vendor z on x.res_vendor_id=z.res_vendor_id
+			WHERE x.res_type_id = '1'
+			<if test="city_id != null and city_id != ''">
+				and y.city_id = #{city_id}
+			</if>
+			GROUP BY res_vendor_name
+    </select>
+    
+    <!-- 根据地市查询ONU -->
+    <select id="queryAllONUByCity" parameterType="map" resultType="hashmap">
+        SELECT if(x.res_onu_online_state = 0,"在线","离线") as status, count(*) AS num
+		FROM wvg_res_onu_data x
+		<if test="city_id != null and city_id != ''">
+			WHERE x.city_id = #{city_id}
+		</if>
+		GROUP BY x.res_onu_state
+    </select>
+    
+    <!-- 根据地市查询ONU -->
+    <select id="queryAllOLT" resultType="hashmap">
+        SELECT CONCAT(y.city_name, '市') as city_name, count(*) as num
+			FROM wvg_res_data x
+			LEFT JOIN wvg_city y ON x.city_id = y.city_id
+			LEFT JOIN wvg_res_vendor z on x.res_vendor_id=z.res_vendor_id
+		WHERE x.res_type_id = '1'
+		GROUP BY y.city_name
+    </select>
+</mapper>

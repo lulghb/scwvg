@@ -1,0 +1,174 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>赋值已知数据 - 数据表格</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+  <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+
+  <div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+      <a lay-href="">主页</a>
+      <a><cite>组件</cite></a>
+      <a><cite>数据表格</cite></a>
+      <a><cite>简单用法</cite></a>
+    </div>
+  </div>
+  
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+          	<div class="layui-form-item">
+	          <div class="layui-inline">
+	            <label class="layui-form-label">用户名</label>
+	            <div class="layui-input-block">
+	              <input type="text" name="username" placeholder="请输入" autocomplete="off" class="layui-input">
+	            </div>
+	          </div>
+	          <div class="layui-inline">
+                <label class="layui-form-label">开始时间</label>
+                <div class="layui-input-inline">
+                  <input type="text" class="layui-input" id="q_beginTime" name="q_beginTime" placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+              </div>
+              <div class="layui-inline">
+                <label class="layui-form-label">结束时间</label>
+                <div class="layui-input-inline">
+                  <input type="text" class="layui-input" id="q_endTime" name="q_endTime" placeholder="yyyy-MM-dd HH:mm:ss" readonly="readonly">
+                </div>
+              </div>
+	          <div class="layui-inline">
+	            <button class="layui-btn layuiadmin-btn-order" lay-submit lay-filter="LAY-app-order-search">
+	              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+	            </button>
+	          </div>
+	        </div>
+          </div>
+          <div class="layui-card-body">
+            <table class="layui-hide" id="test-table-data" lay-filter="test-table-data"></table>
+            <script type="text/html" id="test-table-data-barOperation">
+              <a class="layui-btn layui-btn-primary" lay-event="detail">查看</a>
+            </script>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <script th:inline="none">
+  layui.config({
+	    base: '/' //静态资源所在路径
+	  }).extend({
+	    index: 'lib/index' //主入口模块
+	  }).use(['index', 'table', 'laydate'], function(){
+	    var table = layui.table;
+	    var form = layui.form;
+	    var laydate = layui.laydate;
+	    
+	    // 开始时间
+	    laydate.render({
+          elem: '#q_beginTime'
+          ,type: 'datetime'
+        });
+	    // 结束时间
+	    laydate.render({
+          elem: '#q_endTime'
+          ,type: 'datetime'
+        });
+
+	    //展示已知数据
+	    table.render({
+	      elem: '#test-table-data'
+	      ,cols: [[ //标题栏
+	        {field: 'username', title: '用户名', width: 120}
+	        ,{field: 'loginIp', title: 'IP', width: 140}
+	        ,{field: 'status', title: '状态', width: 100, templet: function(d) {
+	        	if(d.status == "0") {
+	        		return "登陆成功"
+	        	} else {
+	        		return "登陆失败"
+	        	}
+	        }}
+	        ,{field: 'desc', title: '失败原因', width: 255},
+	        ,{field: 'loginSession', title: '会话', width: 250}
+	        ,{field: 'loginTime', title: '登陆时间', width: 160}
+	      ]]
+	      ,url: '/lonlog/list?token=' + localStorage.getItem("token")
+	      ,request: {
+	    	  pageName: 'pageNum',
+	    	  limitName: 'pageSize',
+	    	  size: 10,
+	    	  page: 0
+	      }
+	      ,parseData: function(res){ //res 即为原始返回的数据
+            return {
+                success:true,
+                data: res.items, //解析数据列表
+                count:res.totalNum
+            };
+          }
+	   	  ,page: {
+	   		  page: 0
+	   	  },
+		  response: {
+	        statusName: 'success' //规定数据状态的字段名称，默认：code
+	        ,statusCode: true //规定成功的状态码，默认：0
+	      }
+	      //,skin: 'line' //表格风格
+	      ,even: true
+	      //,page: true //是否显示分页
+	      //,limits: [5, 7, 10]
+	      //,limit: 5 //每页默认显示的数量
+	    });
+	    
+	    //监听搜索
+	    form.on('submit(LAY-app-order-search)', function(data){
+	      var field = data.field;
+	      
+	      //执行重载
+	      table.reload('test-table-data', {
+	        where: field
+	      });
+	    });
+	    
+	    //监听行工具事件
+	    table.on('tool(test-table-data)', function(obj){
+	      var data = obj.data;
+	      if(obj.event === 'detail'){
+	        layer.open({
+	          title: '日志详细信息',
+	  	      type: 2,
+	  	      //title: title, //不显示标题栏
+	  	      closeBtn: 2,
+	  	      area: ['95%', '95%'],
+	  	      shade: 0.8,
+	  	      id: (new Date()).valueOf(), //设定一个id，防止重复弹出 时间戳1280977330748
+	  	      //btn: ['保存', '取消'],
+	  	      btnAlign: 'r',
+	  	      moveType: 1, //拖拽模式，0或者1
+	  	      content: '/log/detail?logid=' + data.id,
+	          success: function(layero, index){
+	  		    var body = layer.getChildFrame('body', index);
+	  			var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：
+	  			iframeWin.method(data);
+	  		  }
+	  	        
+	  	     }); 
+	      }
+	    });
+
+	    
+	  });
+  </script>
+</body>
+</html>
