@@ -1,7 +1,9 @@
 initMenu();
 function initMenu(){
+    var token=localStorage.getItem("token");
+    alert("获取到的是："+token);
 	 $.ajax({  
-	     url:"/permissions/current",  
+	     url:"/menu/current?token="+token,
 	     type:"get",  
 	     async:false,
 	     success:function(data){
