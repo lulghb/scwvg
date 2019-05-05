@@ -250,8 +250,8 @@ layui.define(function(exports){
 	  		  	    		name: 'OLT设备',
 	  		  	    		type: 'pie',
 	  		  	    		selectedMode: 'single',
-	  		  	    		radius: '35%',
-	  		  	    		center: ['45%', '65%'],
+	  		  	    		radius: '30%',
+	  		  	    		center: ['40%', '65%'],
 	  		  	    		data: oltPieData,
 	  		  	    		textStyle: {
 	  		  	    			color: "white"
@@ -307,8 +307,8 @@ layui.define(function(exports){
 	  		  	    		name: 'OLT设备',
 	  		  	    		type: 'pie',
 	  		  	    		selectedMode: 'single',
-	  		  	    		radius: '35%',
-	  		  	    		center: ['45%', '65%'],
+	  		  	    		radius: '30%',
+	  		  	    		center: ['40%', '65%'],
 	  		  	    		data: onuPieData
 	  		  	    	}
 	  		  	    ]
