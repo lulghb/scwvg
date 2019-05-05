@@ -66,6 +66,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         String [] staticres = new String[]{
+                "/",
                 "/capctha/**",
                 "/index",
                 "/users/current",
@@ -83,6 +84,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/user/**",
                 "/config.js/**",
                 "/page/**",
+                "/favicon.ico",
         };
         http.csrf().disable();
         // 基于token，所以不需要session

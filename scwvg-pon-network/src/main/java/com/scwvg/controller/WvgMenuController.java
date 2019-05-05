@@ -27,6 +27,9 @@ public class WvgMenuController {
     @GetMapping("/current")
     public List<WvgMenu> menuCurrent() {
         WvgLoginUser loginUser = UserUtil.getLoginUser();
+        /**
+         * 查询出当前登录用户的菜单
+         */
         List<WvgMenu> list = loginUser.getMenuList();
         /**
          * 查询出根节点菜单
@@ -35,16 +38,20 @@ public class WvgMenuController {
                 .collect(Collectors.toList());
 
         setChild(wvgMenus);
-
         /*过滤出wvg_pert_id=0的菜单（根菜单）*/
         return wvgMenus.stream().filter(p -> p.getWvg_parent_id().equals(0L)).collect(Collectors.toList());
     }
 
+    /**
+     * 筛选出叶节点对应的根节点
+     * @param permissions
+     */
     private void setChild(List<WvgMenu> permissions) {
         permissions.parallelStream().forEach(per -> {
-            List<WvgMenu> child = permissions.stream().filter(p -> p.getWvg_parent_id().equals(per.getId()))
+            List<WvgMenu> child = permissions.stream().filter(p -> p.getWvg_parent_id().equals(per.getWvg_menu_id()))
                     .collect(Collectors.toList());
-            per.setMenuChild(child);
+            System.out.println();
+            per.setChild(child);
         });
     }
 }

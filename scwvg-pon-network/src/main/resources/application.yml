@@ -53,5 +53,5 @@ log:
   maxsize: 30MB
 token:
   expire:
-    seconds: 60 #7200
+    seconds: 120 #单位为秒数
   jwtSecret: (XIAO:)_$^11244^%$_(WEI:)_@@++--(LAO:)_++++_.sds_(SHI:)

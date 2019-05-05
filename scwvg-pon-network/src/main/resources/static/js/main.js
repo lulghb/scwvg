@@ -12,6 +12,7 @@ function initMenu(){
 	    	 }
 	    	 var menu = $("#menu");
 	    	 $.each(data, function(i,item){
+                /* alert("一级菜单名称："+item.wvg_menu_name);*/
 	             var a = $("<a href='javascript:;'></a>");
 	             
 	             var css = item.wvg_menu_css;
@@ -36,6 +37,7 @@ function initMenu(){
 	             var child2 = item.child;
 	             if(child2 != null && child2.length > 0){
 	            	 $.each(child2, function(j,item2){
+                         alert("二级菜单名称："+item2.wvg_menu_name);
 	            		 var ca = $("<a href='javascript:;'></a>");
                          ca.attr("data-url", item2.wvg_menu_url);
                          ca.attr("lay-id", item2.wvg_menu_id);

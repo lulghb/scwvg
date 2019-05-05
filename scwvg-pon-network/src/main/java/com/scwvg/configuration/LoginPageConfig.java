@@ -21,4 +21,9 @@ public class LoginPageConfig {
     public String index() {
         return "/index";
     }
+
+    @RequestMapping("/")
+    public String main() {
+        return "/index";
+    }
 }
