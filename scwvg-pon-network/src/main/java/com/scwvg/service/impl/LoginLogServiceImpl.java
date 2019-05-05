@@ -4,8 +4,10 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.scwvg.utils.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -17,7 +19,6 @@ import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 import com.scwvg.mappers.WvgLoginLogMapper;
 import com.scwvg.service.LoginLogService;
 import com.scwvg.utils.RequestHolder;
-import com.scwvg.utils.SecurityContextHolder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -38,7 +39,7 @@ public class LoginLogServiceImpl implements LoginLogService {
 
 	@Override
 	public void save(ProceedingJoinPoint joinPoint, WvgLoginLog loginLog) {
-		UserDetails userDetails = SecurityContextHolder.getUserDetails();
+		UserDetails userDetails = UserUtil.getLoginUser();
         if(userDetails != null) {
         	HttpServletRequest request = RequestHolder.getHttpServletRequest();
         	loginLog.setUsername(userDetails.getUsername());

@@ -4,10 +4,11 @@ import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
+import com.scwvg.utils.UserUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,7 +20,6 @@ import com.scwvg.entitys.scwvgponnetwork.WvgOperationLog;
 import com.scwvg.mappers.WvgOperationLogMapper;
 import com.scwvg.service.LogService;
 import com.scwvg.utils.RequestHolder;
-import com.scwvg.utils.SecurityContextHolder;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -56,9 +56,9 @@ public class LogServiceImpl implements LogService {
             params += "}";
         }
         if(!"login".equals(signature.getName())){
-            UserDetails userDetails = SecurityContextHolder.getUserDetails();
-            if(userDetails != null) {
-            	username = userDetails.getUsername();
+            WvgLoginUser loginUser = UserUtil.getLoginUser();
+            if(loginUser != null) {
+            	username = loginUser.getUsername();
             }
         } else {
             try {
