@@ -6,13 +6,13 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.scwvg.entitys.scwvgponnetwork.WvgOperationLog;
@@ -62,7 +62,7 @@ public class LogServiceImpl implements LogService {
             }
         } else {
             try {
-                JSONObject jsonObject = new JSONObject(String.valueOf(argValues[0]));
+                JSONObject jsonObject = JSONObject.parseObject(String.valueOf(argValues[0]));
                 username = jsonObject.get("user").toString();
             }catch (Exception e){
                 e.printStackTrace();
