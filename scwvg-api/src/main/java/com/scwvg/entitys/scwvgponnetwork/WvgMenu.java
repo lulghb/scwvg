@@ -22,7 +22,7 @@ public class WvgMenu extends BaseEntity<Long>{
     private Long wvg_parent_id;    //父级菜单ID',
     private String wvg_menu_name;   //菜单名称',
     private String wvg_menu_url;    //菜单地址',
-    private char wvg_menu_type;     //菜单类型(L根节点，M树节点，N叶子节点)',
+    private String wvg_menu_type;     //菜单类型(L根节点，M树节点，N叶子节点)',
     private String wvg_menu_type_name;//菜单类型名称（根节点，树节点，叶子节点）',
     private String wvg_authority;    //权限标识',
     private Date wvg_add_time; //菜单新增时间',
