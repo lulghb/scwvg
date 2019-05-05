@@ -48,43 +48,84 @@ layui.define(function(exports){
     ,carousel = layui.carousel
     ,echarts = layui.echarts;
     
+    var mapData = null;
+    $.ajax({
+		type: "GET",
+		url: "/ech/queryAllOLT?token=" + localStorage.getItem("token"),
+		async: false,
+		data: {},
+		dataType: "html",
+		success: function(result) {
+			mapData = JSON.parse(result);
+		}
+	});
+    
     var echartsApp = [], options = [
       //今日流量趋势
       {
         title: {
-          text: '今日流量趋势',
+          text: '黑龙江省市地图',
           x: 'center',
           textStyle: {
-            fontSize: 14
+            fontSize: 20
           }
         },
         tooltip : {
-          trigger: 'axis'
+          trigger: 'item'
         },
         legend: {
-          data:['','']
+          orient: 'vertical',
+	      x: 'left',
+	      data:['告警'],
+	      show: false,
+	      textStyle: {
+	        color: "white"
+	      }
         },
-        xAxis : [{
-          type : 'category',
-          boundaryGap : false,
-          data: ['06:00','06:30','07:00','07:30','08:00','08:30','09:00','09:30','10:00','11:30','12:00','12:30','13:00','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00','19:30','20:00','20:30','21:00','21:30','22:00','22:30','23:00','23:30']
-        }],
-        yAxis : [{
-          type : 'value'
-        }],
-        series : [{
-          name:'PV',
-          type:'line',
-          smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data: [111,222,333,444,555,666,3333,33333,55555,66666,33333,3333,6666,11888,26666,38888,56666,42222,39999,28888,17777,9666,6555,5555,3333,2222,3111,6999,5888,2777,1666,999,888,777]
-        },{
-          name:'UV',
-          type:'line',
-          smooth:true,
-          itemStyle: {normal: {areaStyle: {type: 'default'}}},
-          data: [11,22,33,44,55,66,333,3333,5555,12666,3333,333,666,1188,2666,3888,6666,4222,3999,2888,1777,966,655,555,333,222,311,699,588,277,166,99,88,77]
-        }]
+        dataRange: {
+          min: 0,
+          max: 1000,
+          color:['#003266','#1a8bff'],
+          text:['高','低'],           // 文本，默认为数值文本
+          calculable : true,
+          show: false
+        },
+        series : [
+            {
+                name: 'OLT设备',
+                type: 'map',
+                mapType: '黑龙江',
+                hoverable: true,
+                roam:false,
+                selectedMode : 'single',
+                itemStyle:{
+                    normal: {
+                    	borderColor: '#87cefa',
+                    	borderWidth: 1,
+                    	label: {
+                    		show: true,
+                    		textStyle: {
+	                      		color: 'white'
+	                      	},
+                    	}
+                    },
+                    emphasis: {
+                    	borderColor: '#1e90ff',
+                    	borderWidth: 1,
+                    	color: '#3399ff',
+                    	textStyle: {
+                    		color: 'white',
+                    		fontSize: '20px'
+                    	},
+                    	label: {
+                    		show: true
+                    	}
+                    }
+                },
+                data: mapData
+            },
+            
+        ]
       },
       
       //访客浏览器分布
@@ -147,8 +188,165 @@ layui.define(function(exports){
       }
     ]
     ,elemDataView = $('#LAY-index-dataview').children('div')
+    ,loadOther = function(city_id, city_name) {
+		    	var oltPieData = null;
+		    	var oltVendor = null;
+		    	var onuPieData = null;
+		    	$.ajax({
+		    		type: "GET",
+		    		url: "/ech/queryAll?token=" + localStorage.getItem("token"),
+		    		async: false,
+		    		data: {"city_id": city_id},
+		    		dataType: "html",
+		    		success: function(result) {
+		    			result = JSON.parse(result);
+		    			oltPieData = result.olt;
+		    			onuPieData = result.onu;
+		    			oltVendor = result.olt_vendor;
+		    		}
+		    	});
+		    	
+		    	// 全省OLT设备饼图
+	  		    var echOltPip = [], oltPipOp = [
+	  		      {
+	  		    	title : {
+	  		  	        text: city_name,
+	  		  	        subtext: 'OLT设备',
+	  		  	        x:'center',
+	  		  	        textStyle: {
+	  		  	        	fontSize: '14',
+	  		  	        }
+	  		  	    },
+	  		  	    tooltip : {
+	  		  	        trigger: 'item',
+	  		  	        formatter: "{b} : {c} <br/>比例 : {d}%",
+		  		  	    textStyle: {
+	  		  	        }
+	  		  	    },
+	  		  	    legend: {
+	  		  	        orient : 'vertical',
+	  		  	        x : 'left',
+	  		  	        data:[
+	  		  	        	{name: '华为', textStyle: {}},
+	  		  	        	{name: '中兴', textStyle: {}},
+	  		  	        	{name: '烽火', textStyle: {}}],
+	  		  	        textStyle: {
+	  	  	            }
+	  		  	    },
+	  		  	    calculable: true,
+	  		  	    itemStyle : {
+	  		              normal : {
+	  		                  label : {
+	  		                      position : 'inner'
+	  		                  },
+	  		                  labelLine : {
+	  		                      show : true
+	  		                  },
+	  		                  color: 'white'
+	  		              }
+	  		          },
+	  		  	    series: [
+	  		  	    	{
+	  		  	    		name: 'OLT设备',
+	  		  	    		type: 'pie',
+	  		  	    		selectedMode: 'single',
+	  		  	    		radius: '35%',
+	  		  	    		center: ['45%', '65%'],
+	  		  	    		data: oltPieData,
+	  		  	    		textStyle: {
+	  		  	    			color: "white"
+	  		  	    		}
+	  		  	    	}
+	  		  	    ]
+	  		      }
+	  		    ]
+	  		    ,elemOltPip = $('#LAY-index-olt-pie')
+	  		    ,rendeOltPip = function(index){
+	  		      echOltPip[index] = echarts.init(elemOltPip[index], layui.echartsTheme);
+	  		      echOltPip[index].setOption(oltPipOp[index]);
+	  		      window.onresize = echOltPip[index].resize;
+	  		    };
+	  		    if(!elemOltPip[0]) return;
+	  		    rendeOltPip(0);
+	  		    
+	  		    //标准折线图
+	  		    var echOnuPip = [], oltOnuOp = [
+	  		      {
+	  		    	title : {
+	  		  	        text: city_name,
+	  		  	        subtext: 'ONU设备',
+	  		  	        x:'center',
+	  		  	        textStyle: {
+	  		  	        	fontSize: '14',
+	  		  	        }
+	  		  	    },
+	  		  	    tooltip : {
+	  		  	        trigger: 'item',
+	  		  	        formatter: "{b} : {c}<br/>比例 : {d}%"
+	  		  	    },
+	  		  	    legend: {
+	  		  	        orient : 'vertical',
+	  		  	        x : 'left',
+	  		  	        data:['在线','离线'],
+	  		  	        textStyle: {
+	  	  	            }
+	  		  	    },
+	  		  	    calculable: true,
+	  		  	    itemStyle : {
+	  		              normal : {
+	  		                  label : {
+	  		                      position : 'inner'
+	  		                  },
+	  		                  labelLine : {
+	  		                      show : true
+	  		                  }
+	  		              }
+	  		          },
+	  		  	    series: [
+	  		  	    	{
+	  		  	    		name: 'OLT设备',
+	  		  	    		type: 'pie',
+	  		  	    		selectedMode: 'single',
+	  		  	    		radius: '35%',
+	  		  	    		center: ['45%', '65%'],
+	  		  	    		data: onuPieData
+	  		  	    	}
+	  		  	    ]
+	  		      }
+	  		    ]
+	  		    ,elemOnuPip = $('#LAY-index-onu-pie')
+	  		    ,rendeOnuPip = function(index){
+	  		      echOnuPip[index] = echarts.init(elemOnuPip[index], layui.echartsTheme);
+	  		      echOnuPip[index].setOption(oltOnuOp[index]);
+	  		      window.onresize = echOnuPip[index].resize;
+	  		    };
+	  		    if(!elemOnuPip[0]) return;
+	  		    rendeOnuPip(0);
+		    }
     ,renderDataView = function(index){
-      echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
+      if(index == 0) {
+    	echartsApp[index] = echarts.init(elemDataView[index].children[1], layui.echartsTheme);
+    	loadOther('all', '全省');
+    	echartsApp[index].on("mapSelected", function(d) {
+	    	  var selected = d.selected;
+	    	  var sel = null;
+	    	  for(var select in selected) {
+	    		  if(selected[select]) {
+	    			  sel = select;
+	    		  }
+	    	  }
+	    	  
+	    	  if(sel) {
+	    		  // 加载地市数据
+	    		  loadOther(sel, sel);
+	    	  } else {
+	    		  // 加载全省数据
+	    		  loadOther("all", "全省");
+	    	  }
+	      });
+      } else {
+    	echartsApp[index] = echarts.init(elemDataView[index], layui.echartsTheme);
+      }
       echartsApp[index].setOption(options[index]);
       //window.onresize = echartsApp[index].resize;
       admin.resize(function(){

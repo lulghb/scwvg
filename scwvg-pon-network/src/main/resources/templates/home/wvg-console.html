@@ -18,9 +18,9 @@
 <body>
   
   <div class="layui-fluid">
-    <div class="layui-row layui-col-space15">
-      <div class="layui-col-md8">
-        <div class="layui-row layui-col-space15">
+    <div class="layui-row layui-col-space5">
+      <div class="layui-col-md9">
+        <div class="layui-row layui-col-space5">
           <div class="layui-col-md6">
             <div class="layui-card">
               <div class="layui-card-header">快捷方式</div>
@@ -188,7 +188,14 @@
                 
                 <div class="layui-carousel layadmin-carousel layadmin-dataview" data-anim="fade" lay-filter="LAY-index-dataview">
                   <div carousel-item id="LAY-index-dataview">
-                    <div><i class="layui-icon layui-icon-loading1 layadmin-loading"></i></div>
+                    <div style="position: relative; float: left;">
+                    	<div id=LAY-index-left class="left" style="height: 432px; width: 30%; position: relative; float: left;margin-left: 5px;margin-right: 5px;">
+                    		<div carousel-item id="LAY-index-olt-pie" style="height: 210px; padding: 5px;"></div>
+							<div carousel-item id="LAY-index-onu-pie" style="height: 210px; padding: 5px; margin-top: 5px;"></div>
+                    	</div>
+                    	<div id=LAY-index-map class="LAY-index-map" style="height: 432px; width: 65%; position: relative; float: left;margin-left: 5px;margin-right: 5px;"></div>
+                    	<i class="layui-icon layui-icon-loading1 layadmin-loading"></i>
+                    </div>
                     <div></div>
                     <div></div>
                   </div>
@@ -216,7 +223,7 @@
         </div>
       </div>
       
-      <div class="layui-col-md4">
+      <div class="layui-col-md3">
         <div class="layui-card">
           <div class="layui-card-header">版本信息</div>
           <div class="layui-card-body layui-text">

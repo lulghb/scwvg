@@ -50,5 +50,14 @@ public class PageController {
 	public String lonlog_detail() {
 		return "log/login/list";
 	}
+	
+	/**
+	 * 登录日志页面
+	 * @return
+	 */
+	@GetMapping("/console")
+	public String console() {
+		return "home/wvg-console";
+	}
 
 }

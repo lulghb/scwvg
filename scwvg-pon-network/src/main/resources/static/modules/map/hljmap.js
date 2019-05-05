@@ -34,7 +34,7 @@ layui.define(function(exports){
 		    var mapData = null;
 		    $.ajax({
 	    		type: "GET",
-	    		url: "http://localhost:8086/ech/queryAllOLT?token=" + localStorage.getItem("token"),
+	    		url: "/ech/queryAllOLT?token=" + localStorage.getItem("token"),
 	    		async: false,
 	    		data: {},
 	    		dataType: "html",
@@ -68,7 +68,7 @@ layui.define(function(exports){
 		          dataRange: {
 		              min: 0,
 		              max: 1000,
-		              color:['orange','yellow'],
+		              color:['#003266','#1a8bff'],
 		              text:['高','低'],           // 文本，默认为数值文本
 		              calculable : true,
 		              show: false
@@ -86,15 +86,18 @@ layui.define(function(exports){
 		                      	borderColor: '#87cefa',
 		                      	borderWidth: 1,
 		                      	label: {
-		                      		show: true
+		                      		show: true,
+		                      		textStyle: {
+			                      		color: 'white'
+			                      	},
 		                      	}
 		                      },
 		                      emphasis: {
 		                      	borderColor: '#1e90ff',
 		                      	borderWidth: 1,
-		                      	color: '#E788C3',
+		                      	color: '#3399ff',
 		                      	textStyle: {
-		                      		color: '#fff',
+		                      		color: 'white',
 		                      		fontSize: '20px'
 		                      	},
 		                      	label: {
@@ -116,7 +119,7 @@ layui.define(function(exports){
 		    	var onuPieData = null;
 		    	$.ajax({
 		    		type: "GET",
-		    		url: "http://localhost:8086/ech/queryAll?token=" + localStorage.getItem("token"),
+		    		url: "/ech/queryAll?token=" + localStorage.getItem("token"),
 		    		async: false,
 		    		data: {"city_id": city_id},
 		    		dataType: "html",
