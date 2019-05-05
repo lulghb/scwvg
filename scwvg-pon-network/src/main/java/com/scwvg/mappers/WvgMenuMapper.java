@@ -18,15 +18,8 @@ public interface WvgMenuMapper {
     @Select("select * from wvg_menu x order by x.wvg_parent_id")
     public List<WvgMenu> queryAll();
     /*通过用户ID查找所属菜单*/
-    @Select("SELECT\n" +
-            "\tx.*\n" +
-            "FROM\n" +
-            "\twvg_menu x\n" +
-            "INNER JOIN wvg_role_menu y ON x.wvg_menu_id = y.wvg_menu_id\n" +
-            "INNER JOIN wvg_role r ON r.wvg_role_id=y.wvg_role_id\n" +
-            "INNER JOIN wvg_role_user ru on ru.wvg_role_id = r.wvg_role_id\n" +
-            "INNER JOIN wvg_user u on u.wvg_user_id = ru.wvg_user_id\n" +
-            "where u.wvg_user_id=#{wvg_user_id}")
+    @Select("SELECT x.* FROM wvg_menu x INNER JOIN wvg_role_menu y ON x.wvg_menu_id = y.wvg_menu_id " +
+            "INNER JOIN wvg_role_user ru on ru.wvg_role_id= y.wvg_role_id WHERE ru.wvg_user_id=#{wvg_user_id}")
     public List<WvgMenu> queryMenuByUserId(Long wvg_user_id);
 
     /*通过角色查找菜单*/

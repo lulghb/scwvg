@@ -1,28 +1,27 @@
 initMenu();
 function initMenu(){
     var token=localStorage.getItem("token");
-    alert("获取到的是："+token);
 	 $.ajax({  
 	     url:"/menu/current?token="+token,
 	     type:"get",  
 	     async:false,
 	     success:function(data){
 	    	 if(!$.isArray(data)){
-	    		 location.href='/login.html';
+	    		 location.href='/login';
 	    		 return;
 	    	 }
 	    	 var menu = $("#menu");
 	    	 $.each(data, function(i,item){
 	             var a = $("<a href='javascript:;'></a>");
 	             
-	             var css = item.css;
+	             var css = item.wvg_menu_css;
 	             if(css!=null && css!=""){
 	            	 a.append("<i aria-hidden='true' class='fa " + css +"'></i>");
 	             }
-	             a.append("<cite>"+item.name+"</cite>");
-	             a.attr("lay-id", item.id);
+	             a.append("<cite>"+item.wvg_menu_name+"</cite>");
+	             a.attr("lay-id", item.wvg_menu_id);
 	             
-	             var href = item.href;
+	             var href = item.wvg_menu_url;
 	             if(href != null && href != ""){
 	                a.attr("data-url", href);
 	             }
@@ -38,15 +37,15 @@ function initMenu(){
 	             if(child2 != null && child2.length > 0){
 	            	 $.each(child2, function(j,item2){
 	            		 var ca = $("<a href='javascript:;'></a>");
-                         ca.attr("data-url", item2.href);
-                         ca.attr("lay-id", item2.id);
+                         ca.attr("data-url", item2.wvg_menu_url);
+                         ca.attr("lay-id", item2.wvg_menu_id);
                          
-                         var css2 = item2.css;
+                         var css2 = item2.wvg_menu_css;
                          if(css2!=null && css2!=""){
                         	 ca.append("<i aria-hidden='true' class='fa " + css2 +"'></i>");
                          }
                          
-                         ca.append("<cite>"+item2.name+"</cite>");
+                         ca.append("<cite>"+item2.wvg_menu_name+"</cite>");
                          
                          var dd = $("<dd></dd>");
                          dd.append(ca);
@@ -95,32 +94,13 @@ function showLoginInfo(){
 		}
 	});
 }
-
-showUnreadNotice();
-function showUnreadNotice(){
-	$.ajax({
-		type : 'get',
-		url : '/notices/count-unread',
-		success : function(data) {
-			$("[unreadNotice]").each(function(){
-				if(data>0){
-					$(this).html("<span class='layui-badge'>"+data+"</span>");
-				}else{
-					$(this).html("");
-				}
-			});
-			
-		}
-	});
-}
-
 function logout(){
 	$.ajax({
 		type : 'get',
 		url : '/logout',
 		success : function(data) {
 			localStorage.removeItem("token");
-			location.href='/login.html';
+			location.href='/login';
 		}
 	});
 }

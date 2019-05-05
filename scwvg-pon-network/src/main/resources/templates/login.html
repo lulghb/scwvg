@@ -86,7 +86,6 @@
         parent.location.href = '/login';
     }
     var token = localStorage.getItem("token");  //取出token
-
     if (token != null && token.trim().length != 0) {
         $.ajax({
             type : 'get',
