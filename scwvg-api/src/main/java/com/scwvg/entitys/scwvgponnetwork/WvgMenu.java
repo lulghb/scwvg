@@ -31,6 +31,6 @@ public class WvgMenu extends BaseEntity<Long>{
     private Integer wvg_menu_state;  //菜单状态（0，根菜单   1，挂载  2，未挂载）',
     private Integer wvg_user_id;   //创建人',
 
-    private List<WvgMenu> menuChild; //下级菜单集合
+    private List<WvgMenu> child; //下级菜单集合
 
 }
