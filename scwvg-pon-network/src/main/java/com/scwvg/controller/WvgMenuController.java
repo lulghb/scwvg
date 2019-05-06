@@ -31,26 +31,26 @@ public class WvgMenuController {
          * 查询出当前登录用户的菜单
          */
         List<WvgMenu> list = loginUser.getMenuList();
-        /**
-         * 查询出根节点菜单
+      /**
+         * 查询出菜单
          */
-        final List<WvgMenu> wvgMenus = list.stream().filter(l -> l.getWvg_menu_type().equals("L"))
-                .collect(Collectors.toList());
+        List<WvgMenu>  wvgMenus = list.stream().collect(Collectors.toList());
 
         setChild(wvgMenus);
         /*过滤出wvg_pert_id=0的菜单（根菜单）*/
-        return wvgMenus.stream().filter(p -> p.getWvg_parent_id().equals(0L)).collect(Collectors.toList());
+
+        List<WvgMenu> tmp = wvgMenus.stream().filter(p -> p.getWvg_parent_id().equals(0L)).collect(Collectors.toList());
+        return tmp;
     }
 
     /**
      * 筛选出叶节点对应的根节点
-     * @param permissions
+     * @param wvgMenus
      */
-    private void setChild(List<WvgMenu> permissions) {
-        permissions.parallelStream().forEach(per -> {
-            List<WvgMenu> child = permissions.stream().filter(p -> p.getWvg_parent_id().equals(per.getWvg_menu_id()))
+    private void setChild(List<WvgMenu> wvgMenus) {
+        wvgMenus.parallelStream().forEach(per -> {
+            List<WvgMenu> child = wvgMenus.stream().filter(p -> p.getWvg_parent_id()==(per.getWvg_menu_id()))
                     .collect(Collectors.toList());
-            System.out.println();
             per.setChild(child);
         });
     }
