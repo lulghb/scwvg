@@ -10,24 +10,23 @@ function initMenu(){
 	    		 location.href='/login';
 	    		 return;
 	    	 }
+
 	    	 var menu = $("#menu");
 	    	 $.each(data, function(i,item){
-                /* alert("一级菜单名称："+item.wvg_menu_name);*/
 	             var a = $("<a href='javascript:;'></a>");
-	             
 	             var css = item.wvg_menu_css;
-	             if(css!=null && css!=""){
-	            	 a.append("<i aria-hidden='true' class='fa " + css +"'></i>");
-	             }
+                 if(css!=null && css!=""){
+                     a.append("<i aria-hidden='true' class='layui-icon " + css +"'></i>");
+                 }
 	             a.append("<cite>"+item.wvg_menu_name+"</cite>");
 	             a.attr("lay-id", item.wvg_menu_id);
 	             
 	             var href = item.wvg_menu_url;
 	             if(href != null && href != ""){
-	                a.attr("data-url", href);
+	                a.attr("lay-href", href);
 	             }
 	             
-	             var li = $("<li class='layui-nav-item'></li>");
+	             var li = $("<li data-name=\"home\" class=\"layui-nav-item layui-nav-itemed\"></li>");
 	             if (i == 0) {
 	            	 li.addClass("layui-nav-itemed");
 	             }
@@ -37,9 +36,8 @@ function initMenu(){
 	             var child2 = item.child;
 	             if(child2 != null && child2.length > 0){
 	            	 $.each(child2, function(j,item2){
-                         alert("二级菜单名称："+item2.wvg_menu_name);
 	            		 var ca = $("<a href='javascript:;'></a>");
-                         ca.attr("data-url", item2.wvg_menu_url);
+                         ca.attr("lay-href", item2.wvg_menu_url);
                          ca.attr("lay-id", item2.wvg_menu_id);
                          
                          var css2 = item2.wvg_menu_css;
