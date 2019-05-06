@@ -276,7 +276,7 @@ html{background-color: #f2f2f2; color: #666;}
 
 
 /* 閲嶇疆杞挱鏍峰紡 */
-.layadmin-carousel{height: 185px !important; background-color: #fff;}
+.layadmin-carousel{height: 95px !important; background-color: #fff;}
 .layadmin-carousel .layui-carousel-ind li{background-color: #e2e2e2;}
 .layadmin-carousel .layui-carousel-ind li:hover{background-color: #c2c2c2;}
 .layadmin-carousel .layui-carousel-ind li.layui-this{background-color: #999;}

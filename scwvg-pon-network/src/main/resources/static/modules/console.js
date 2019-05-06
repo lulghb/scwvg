@@ -221,6 +221,7 @@ layui.define(function(exports){
 	  		  	        trigger: 'item',
 	  		  	        formatter: "{b} : {c} <br/>比例 : {d}%",
 		  		  	    textStyle: {
+		  		  	    	fontSize: '10'
 	  		  	        }
 	  		  	    },
 	  		  	    legend: {
@@ -242,8 +243,23 @@ layui.define(function(exports){
 	  		                  labelLine : {
 	  		                      show : true
 	  		                  },
-	  		                  color: 'white'
-	  		              }
+	  		                  color: 'white',
+		  		              textStyle: {
+		  		            	  fontSize: '12'
+		                      },
+	  		              },
+	  		            emphasis: {
+	                    	borderColor: '#1e90ff',
+	                    	borderWidth: 1,
+	                    	color: '#3399ff',
+	                    	label: {
+	                    		show: true,
+	                    		textStyle: {
+		                    		color: 'white',
+		                    		fontSize: '12'
+		                    	},
+	                    	}
+	                    }
 	  		          },
 	  		  	    series: [
 	  		  	    	{
@@ -251,7 +267,7 @@ layui.define(function(exports){
 	  		  	    		type: 'pie',
 	  		  	    		selectedMode: 'single',
 	  		  	    		radius: '30%',
-	  		  	    		center: ['40%', '65%'],
+	  		  	    		center: ['45%', '65%'],
 	  		  	    		data: oltPieData,
 	  		  	    		textStyle: {
 	  		  	    			color: "white"
@@ -282,7 +298,10 @@ layui.define(function(exports){
 	  		  	    },
 	  		  	    tooltip : {
 	  		  	        trigger: 'item',
-	  		  	        formatter: "{b} : {c}<br/>比例 : {d}%"
+	  		  	        formatter: "{b} : {c}<br/>比例 : {d}%",
+		  		  	    textStyle: {
+	  		  	        	fontSize: '10',
+	  		  	        }
 	  		  	    },
 	  		  	    legend: {
 	  		  	        orient : 'vertical',
@@ -308,7 +327,7 @@ layui.define(function(exports){
 	  		  	    		type: 'pie',
 	  		  	    		selectedMode: 'single',
 	  		  	    		radius: '30%',
-	  		  	    		center: ['40%', '65%'],
+	  		  	    		center: ['45%', '65%'],
 	  		  	    		data: onuPieData
 	  		  	    	}
 	  		  	    ]

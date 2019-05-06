@@ -2,8 +2,6 @@ package com.scwvg.service;
 
 import java.util.Map;
 
-import org.aspectj.lang.ProceedingJoinPoint;
-
 import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 
@@ -17,7 +15,7 @@ import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 **/
 public interface LoginLogService {
 	
-	public void save(ProceedingJoinPoint joinPoint, WvgLoginLog log);
+	public void save(WvgLoginLog log);
 	
 	public Page<WvgLoginLog> queryAll(Map<String, Object> params, Page<WvgLoginLog> page);
 	

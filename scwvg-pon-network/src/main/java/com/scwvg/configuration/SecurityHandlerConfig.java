@@ -1,11 +1,12 @@
 package com.scwvg.configuration;
 
-import com.scwvg.entitys.Msg;
-import com.scwvg.entitys.scwvgponnetwork.Token;
-import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
-import com.scwvg.filter.TokenFilter;
-import com.scwvg.service.WvgTokenService;
-import com.scwvg.utils.ResponseUtil;
+import java.io.IOException;
+import java.sql.Timestamp;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,10 +19,14 @@ import org.springframework.security.web.authentication.AuthenticationFailureHand
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.logout.LogoutSuccessHandler;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import com.scwvg.entitys.Msg;
+import com.scwvg.entitys.scwvgponnetwork.Token;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
+import com.scwvg.filter.TokenFilter;
+import com.scwvg.service.LoginLogService;
+import com.scwvg.service.WvgTokenService;
+import com.scwvg.utils.ResponseUtil;
 
 /**
  * @aothor: lul
@@ -34,6 +39,9 @@ import java.io.IOException;
 public class SecurityHandlerConfig {
     @Autowired
     private WvgTokenService wvgTokenService;
+    
+    @Autowired
+    private LoginLogService loginLogService;
     /**
      * 登陆成功，返回Token
      *
@@ -49,6 +57,13 @@ public class SecurityHandlerConfig {
                 WvgLoginUser loginUser = (WvgLoginUser) authentication.getPrincipal();
 
                 Token token = wvgTokenService.saveToken(loginUser);
+                
+                // 保存登录成功日志
+                WvgLoginLog loginLog = new WvgLoginLog();
+        		loginLog.setLoginTime(new Timestamp(System.currentTimeMillis()));
+        		loginLog.setStatus(0L);
+                loginLogService.save(loginLog);
+                
                 /*查询token返回前端*/
                 ResponseUtil.responseJson(response, HttpStatus.OK.value(), token);
             }
@@ -72,6 +87,14 @@ public class SecurityHandlerConfig {
                 } else {
                     msg = exception.getMessage();
                 }
+                
+                // 保存登录失败日志
+                WvgLoginLog loginLog = new WvgLoginLog();
+        		loginLog.setLoginTime(new Timestamp(System.currentTimeMillis()));
+        		loginLog.setStatus(1L);
+        		loginLog.setDesc(msg);
+        		loginLogService.save(loginLog);
+                
                 Msg msgMassge = new Msg(HttpStatus.UNAUTHORIZED.value() + "", msg);
                 ResponseUtil.responseJson(response, HttpStatus.UNAUTHORIZED.value(), msgMassge);
             }

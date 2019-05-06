@@ -66,6 +66,7 @@
 		        AND end_time <![CDATA[<]]> #{endTime}
 		    </if>
 		</where>
+		ORDER BY begin_time DESC
     </select>
     
     <!-- 查询操作日志详情 -->
