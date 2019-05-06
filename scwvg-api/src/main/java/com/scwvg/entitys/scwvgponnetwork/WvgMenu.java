@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class WvgMenu extends BaseEntity<Long>{
-    private Integer wvg_menu_id;      //菜单ID',
+    private Long wvg_menu_id;      //菜单ID',
     private Long wvg_parent_id;    //父级菜单ID',
     private String wvg_menu_name;   //菜单名称',
     private String wvg_menu_url;    //菜单地址',
