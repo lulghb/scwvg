@@ -27,7 +27,7 @@ public class WvgMenuServiceImpl implements WvgMenuService {
     @Override
     public void save(WvgMenu wvgMenu) {
         /*获取ID*/
-        int wvg_menu_id=querMaxMenuId();
+        Long wvg_menu_id=querMaxMenuId();
         wvgMenu.setWvg_menu_id(wvg_menu_id);
         wvgMenuMapper.insertMenu(wvgMenu);
         log.debug("新增菜单"+wvgMenu.getWvg_menu_name());
@@ -53,8 +53,8 @@ public class WvgMenuServiceImpl implements WvgMenuService {
      * 查询菜单表里最大的ID进行+1
      * @return
      */
-    public int querMaxMenuId(){
+    public Long querMaxMenuId(){
       int wvg_menu_id=wvgMenuMapper.queryMaxMenuID();
-      return wvg_menu_id+1;
+      return wvg_menu_id+1L;
     }
 }
