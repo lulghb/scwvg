@@ -27,8 +27,10 @@ public class WvgMenu extends BaseEntity<Long>{
     private String wvg_authority;    //权限标识',
     private Date wvg_add_time; //菜单新增时间',
     private Date wvg_updata_time;//修改时间',
+    private String wvg_menu_css; //菜单样式',
     private String wvg_menu_icon; //菜单图标',
     private Integer wvg_menu_state;  //菜单状态（0，根菜单   1，挂载  2，未挂载）',
+    private String wvg_menu_explain;  //对菜单功能进行说明
     private Integer wvg_user_id;   //创建人',
 
     private List<WvgMenu> child; //下级菜单集合
