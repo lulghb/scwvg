@@ -2,6 +2,7 @@ package com.scwvg.utils;
 
 import java.util.List;
 
+import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -44,5 +45,4 @@ public class PageInfo<T> {
         this.startIndex = (this.currentPage - 1) * this.pageSize;
         this.isMore = this.currentPage >= this.totalPage ? 0 : 1;
     }
-
 }

@@ -21,6 +21,16 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 
     private Date createTime = new Date();
     private Date updateTime = new Date();
+    //转换数据库里int转String的问题
+    private String changeStr;
+    //转换数据库里int转String的问题
+    private String changeStr1;
+    //转换数据库里int转String的问题
+    private String changeStr2;
+    //转换数据库里int转String的问题
+    private String changeStr4;
+    //转换数据库里int转String的问题
+    private String changeStr3;
 
     public ID getId() {
         return id;

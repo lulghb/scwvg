@@ -31,11 +31,12 @@ public class WvgUser extends BaseEntity<Long> implements Serializable  {
     private Integer wvg_account_enabled	;//账号是否激活（0未激活，1激活） ,
     private String wvg_user_password	;//用户密码 ,
     private Integer wvg_password_data	;//密码有效期 ,
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date wvg_add_time	 	    ;//账号新增时间 ,
-    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date wvg_update_time		;//账号修改时间 ,
-    private Integer wvg_account_type	;//账号状态（0,活动   1,锁定） ,
+    private Integer wvg_online_state	;//在线状态（0,在线   1,离线） ,
+    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private String wvg_login_time		;//账号登录时间 ,
     private String wvg_login_ip		    ;//账号登录原地址IP ,
     private String wvg_account_remarks	;//账号备注 ,
@@ -43,8 +44,5 @@ public class WvgUser extends BaseEntity<Long> implements Serializable  {
 
     private int wvg_act_date; //账号是否到期（1，不到期  0,到期）
     private int Wvg_pwd_date; //密码是否到期（1，不到期  0,到期）
-/*    *//*用户所属角色集合*//*
-    private List<Long> wvg_role_ids;
-    private List<WvgMenu> menuLists;*/
 
 }
