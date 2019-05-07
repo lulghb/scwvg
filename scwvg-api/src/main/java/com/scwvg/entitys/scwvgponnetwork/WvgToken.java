@@ -26,4 +26,6 @@ public class WvgToken extends BaseEntity<String> implements  Serializable {
      * WvgUser的json串
      */
     private String wvg_token_val;
+    /*用户ID*/
+    private Long wvg_user_id;
 }
