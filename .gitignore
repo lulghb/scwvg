@@ -1,6 +1,8 @@
 bin/
 target/
 lib/
+logs/
+.gitignore
 .settings
 .mvn
 .classpath
