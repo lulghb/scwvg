@@ -6,6 +6,8 @@ import com.scwvg.entitys.scwvgponnetwork.*;
 import com.scwvg.mappers.WvgUserMapper;
 import com.scwvg.service.WvgSpecTypeService;
 import com.scwvg.service.WvgUserService;
+import com.scwvg.utils.IpUtils;
+import com.scwvg.utils.RequestHolder;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
@@ -119,5 +122,13 @@ public class WvgUserServiceImpl implements WvgUserService {
         }
         userMapper.changePassword(user.getWvg_user_id(), passwordEncoder.encode(newPassword));
         log.debug("修改" + user.getUsername() + "的密码！");
+    }
+
+    @Override
+    public void upDateUsLoginTimeAndIp(WvgLoginUser loginUser) {
+        HttpServletRequest request = RequestHolder.getHttpServletRequest();
+        loginUser.setWvg_login_ip(IpUtils.getRequestIP(request));
+        loginUser.setWvg_online_state(0);
+        int res =userMapper.upDateUsLoginTimeAndIp(loginUser);
     }
 }

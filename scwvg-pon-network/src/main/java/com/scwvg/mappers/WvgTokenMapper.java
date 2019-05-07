@@ -25,7 +25,8 @@ public interface WvgTokenMapper {
     @Select("select * from wvg_token t where t.wvg_token_id = #{wvg_token_id}")
     WvgToken getByTokenId(String wvg_token_id);
 
-    @Update("update wvg_token t set t.wvg_token_expireTime = #{wvg_token_expireTime}, " +
+    @Update("update wvg_token t set wvg_user_id=#{wvg_user_id}," +
+            "t.wvg_token_expireTime = #{wvg_token_expireTime}, " +
             "wvg_token_updateTime=#{updateTime}, " +
             "wvg_token_val=#{wvg_token_val} " +
             " where t.wvg_token_id = #{id}")

@@ -2,6 +2,7 @@ package com.scwvg.service;
 
 import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 
@@ -21,6 +22,6 @@ public interface WvgUserService {
     WvgUser updateUser(WvgRoleUser roleUser);
     WvgUser querUserInfo(String username);
     void changePassword(String username, String oldPassword, String newPassword);
-
-
+    /*用户登录成功插入用户登录IP地址与登录时间*/
+    void upDateUsLoginTimeAndIp(WvgLoginUser loginUser);
 }

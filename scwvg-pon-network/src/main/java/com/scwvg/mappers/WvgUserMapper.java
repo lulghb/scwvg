@@ -1,6 +1,7 @@
 package com.scwvg.mappers;
 
 import com.github.pagehelper.Page;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import org.apache.ibatis.annotations.*;
 
@@ -16,6 +17,11 @@ import java.util.Map;
  **/
 @Mapper
 public interface WvgUserMapper {
+    @Update("update wvg_user set wvg_login_time=SYSDATE()," +
+            "wvg_login_ip=#{wvg_login_ip}," +
+            "wvg_online_state=#{wvg_online_state} " +
+            "where wvg_user_id=#{wvg_user_id}")
+    public int upDateUsLoginTimeAndIp(WvgLoginUser loginUser);
 
     /*根据ID查询用户信息*/
     @Select("select * from wvg_user where wvg_user_id=#{wvg_user_id}")

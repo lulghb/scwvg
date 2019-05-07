@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.scwvg.service.WvgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,6 +43,9 @@ public class SecurityHandlerConfig {
     
     @Autowired
     private LoginLogService loginLogService;
+
+    @Autowired
+    private WvgUserService  userService;
     /**
      * 登陆成功，返回Token
      *
@@ -57,6 +61,7 @@ public class SecurityHandlerConfig {
                 WvgLoginUser loginUser = (WvgLoginUser) authentication.getPrincipal();
 
                 Token token = wvgTokenService.saveToken(loginUser);
+                userService.upDateUsLoginTimeAndIp(loginUser);
                 
                 // 保存登录成功日志
                 WvgLoginLog loginLog = new WvgLoginLog();

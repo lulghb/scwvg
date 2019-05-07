@@ -90,6 +90,7 @@ public class WvgTokenServiceImpl implements WvgTokenService {
         loginUser.setExpireTime(loginUser.getLoginTime() + expireSeconds * 1000);
 
         WvgToken token = tokenMapper.getByTokenId(loginUser.getToken());
+        token.setWvg_user_id(loginUser.getWvg_user_id());
         token.setUpdateTime(new Date());
         token.setWvg_token_expireTime(new Date(loginUser.getExpireTime()));
         token.setWvg_token_val(JSONObject.toJSONString(loginUser));
@@ -123,8 +124,6 @@ public class WvgTokenServiceImpl implements WvgTokenService {
             WvgLoginUser loginUser = toLoginUser(model);
             if (loginUser != null) {
                 tokenMapper.delete(uuid);
-                //使用唐老师的注解接口进行入库logService.save(loginUser.getId(), "退出", true, null);
-
                 return true;
             }
         }
