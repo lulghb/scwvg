@@ -26,7 +26,7 @@ function initMenu(){
 	                a.attr("lay-href", href);
 	             }
 	             
-	             var li = $("<li data-name=\"home\" class=\"layui-nav-item layui-nav-itemed\"></li>");
+	             var li = $("<li data-name=\"home\" class=\"layui-nav-item\"></li>");
 	             if (i == 0) {
 	            	 li.addClass("layui-nav-itemed");
 	             }
@@ -151,23 +151,7 @@ layui.use(['layer', 'element'], function() {
 	       }  
 	       active["tabAdd"].call(this);  
 	       resize();  
-	   });  
-	     
-	   //iframe自适应  
-	   function resize(){  
-	       var $content = $('.admin-nav-card .layui-tab-content');  
-	       $content.height($(this).height() - 147);  
-	       $content.find('iframe').each(function() {  
-	           $(this).height($content.height());  
-	       });  
-	   }  
-	   $(window).on('resize', function() {  
-	       var $content = $('.admin-nav-card .layui-tab-content');  
-	       $content.height($(this).height() - 147);  
-	       $content.find('iframe').each(function() {  
-	           $(this).height($content.height());  
-	       });  
-	   }).resize();  
+	   });
 	   
 	   //toggle左侧菜单  
 	   $('.admin-side-toggle').on('click', function() {

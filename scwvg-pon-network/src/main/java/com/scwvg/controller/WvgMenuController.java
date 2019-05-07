@@ -5,11 +5,15 @@ import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Collections;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -23,6 +27,22 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/menu")
 public class WvgMenuController {
+    /**
+     * 校验权限
+     *
+     * @return
+     */
+    @GetMapping("/owns")
+    @ApiOperation(value = "校验当前用户的权限")
+    public Set<String> ownsWvgMenu() {
+        List<WvgMenu> wvgMenus = UserUtil.getLoginUser().getMenuList();
+        if (CollectionUtils.isEmpty(wvgMenus)) {
+            return Collections.emptySet();
+        }
+
+        return wvgMenus.parallelStream().filter(p -> !StringUtils.isEmpty(p.getWvg_authority()))
+                .map(WvgMenu::getWvg_authority).collect(Collectors.toSet());
+    }
     @ApiOperation(value = "当前登录用户拥有的菜单")
     @GetMapping("/current")
     public List<WvgMenu> menuCurrent() {

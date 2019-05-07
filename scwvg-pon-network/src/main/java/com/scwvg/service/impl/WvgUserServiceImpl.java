@@ -1,9 +1,10 @@
 package com.scwvg.service.impl;
 
-import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
-import com.scwvg.entitys.scwvgponnetwork.WvgRoleUser;
-import com.scwvg.entitys.scwvgponnetwork.WvgUser;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.scwvg.entitys.scwvgponnetwork.*;
 import com.scwvg.mappers.WvgUserMapper;
+import com.scwvg.service.WvgSpecTypeService;
 import com.scwvg.service.WvgUserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -26,10 +28,43 @@ import java.util.List;
 public class WvgUserServiceImpl implements WvgUserService {
     private static final Logger log = LoggerFactory.getLogger("WvgUserServiceImpl");
     @Autowired
+    private WvgSpecTypeService specTypeService;
+    @Autowired
     private WvgUserMapper userMapper; //用户操作mapper注入进来
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; //密码动态加密
+
+    /**
+     * 查找所有用户信息
+     *
+     * @param params
+     * @param page
+     * @return
+     */
+    @Override
+    public Page<WvgUser> queryAllUsers(Map<String, Object> params, Page<WvgUser> page) {
+        int zhSpecId;
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        Page<WvgUser> wvgUsers = userMapper.queryAllUserByPage(params);
+
+        for (int i = 0; i < wvgUsers.size(); i++) {
+            zhSpecId = wvgUsers.get(i).getWvg_spec_id();
+            String spec_name = specTypeService.queryAllSpec(zhSpecId);
+            wvgUsers.get(i).setChangeStr(spec_name);
+            if (wvgUsers.get(i).getWvg_online_state() == 1) {
+                wvgUsers.get(i).setChangeStr1("离线");
+            } else {
+                wvgUsers.get(i).setChangeStr1("在线");
+            }
+            if (wvgUsers.get(i).getWvg_account_enabled() == 1) {
+                wvgUsers.get(i).setChangeStr2("已激活");
+            } else {
+                wvgUsers.get(i).setChangeStr2("未激活");
+            }
+        }
+        return wvgUsers;
+    }
 
     /**
      * 新增用户
@@ -66,6 +101,7 @@ public class WvgUserServiceImpl implements WvgUserService {
         saveRoleUserIds(roleUser.getWvg_user_id(), roleUser.getRoleIds());
         return roleUser;
     }
+
     /*根据用户名查询用户*/
     @Override
     public WvgUser querUserInfo(String username) {
@@ -75,13 +111,13 @@ public class WvgUserServiceImpl implements WvgUserService {
     @Override
     public void changePassword(String username, String oldPassword, String newPassword) {
         WvgLoginUser user = (WvgLoginUser) userMapper.querUserInfo(username);
-        if(user ==null){
+        if (user == null) {
             throw new IllegalArgumentException("用户不存在!请咨询系统供应商！");
         }
-        if(!passwordEncoder.matches(oldPassword,user.getPassword())){
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
             throw new IllegalArgumentException("旧密码错误!请咨询系统供应商！");
         }
-        userMapper.changePassword(user.getWvg_user_id(),passwordEncoder.encode(newPassword));
-        log.debug("修改"+user.getUsername()+"的密码！");
+        userMapper.changePassword(user.getWvg_user_id(), passwordEncoder.encode(newPassword));
+        log.debug("修改" + user.getUsername() + "的密码！");
     }
 }

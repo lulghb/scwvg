@@ -28,7 +28,7 @@
 							#{loginSession},
 							#{loginTime})
     </select>
-    
+
     <!-- 查询操作日志 -->
     <select id="queryByPage" parameterType="map" resultMap="resultWvgLoginLog">
         SELECT web_log_id,

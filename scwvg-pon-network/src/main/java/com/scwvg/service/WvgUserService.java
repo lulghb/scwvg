@@ -1,7 +1,11 @@
 package com.scwvg.service;
 
+import com.github.pagehelper.Page;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
+
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -11,8 +15,12 @@ import com.scwvg.entitys.scwvgponnetwork.WvgUser;
  * @Explain：
  **/
 public interface WvgUserService {
+    /*查找所有用户*/
+    Page<WvgUser> queryAllUsers(Map<String,Object> params, Page<WvgUser> page);
     WvgUser saveUser(WvgRoleUser roleUsers);
     WvgUser updateUser(WvgRoleUser roleUser);
     WvgUser querUserInfo(String username);
     void changePassword(String username, String oldPassword, String newPassword);
+
+
 }

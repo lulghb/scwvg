@@ -1,5 +1,6 @@
 package com.scwvg.mappers;
 
+import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import org.apache.ibatis.annotations.*;
 
@@ -35,7 +36,7 @@ public interface WvgUserMapper {
             "                a.wvg_password_data,\n" +
             "                a.wvg_add_time,\n" +
             "                a.wvg_update_time,\n" +
-            "                a.wvg_account_type,\n" +
+            "                a.wvg_online_state,\n" +
             "                a.wvg_login_time,\n" +
             "                a.wvg_login_ip,\n" +
             "                date_add(now(),interval -a.wvg_account_data month)<a.wvg_add_time as wvg_act_date,\n" +
@@ -106,4 +107,6 @@ public interface WvgUserMapper {
     public int saveUserRoles(@Param("wvg_user_id") Long userId, @Param("roleIds") List<Long> roleIds);
     /*修改用户信息*/
     public int updateUserInfo(WvgUser user);
+
+    public Page<WvgUser> queryAllUserByPage(Map<String, Object> params);
 }

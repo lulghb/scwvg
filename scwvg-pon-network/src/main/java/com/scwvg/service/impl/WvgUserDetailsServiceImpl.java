@@ -44,9 +44,6 @@ public class WvgUserDetailsServiceImpl implements UserDetailsService {
         else if(user.getWvg_account_enabled() !=1){
             throw new UsernameNotFoundException("您的账号未启用！请联系统供应商处理！");
         }
-        else if(user.getWvg_account_type()!=0){
-            throw new UsernameNotFoundException("您的账号未启用！请联系统供应商处理！");
-        }
         WvgLoginUser loginUser= new WvgLoginUser();
         BeanUtils.copyProperties(user,loginUser);
 

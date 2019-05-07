@@ -54,5 +54,58 @@
         </set>
         where x.wvg_user_id = #{wvg_user_id}
     </update>
+    <resultMap id="resultWvgUser" type="com.scwvg.entitys.scwvgponnetwork.WvgUser">
+        <id column="wvg_user_id" property="wvg_user_id"/>
+        <result column="wvg_login_name" property="wvg_login_name"/>
+        <result column="wvg_real_name" property="wvg_real_name"/>
+        <result column="wvg_id_type" property="wvg_id_type"/>
+        <result column="wvg_spec_id" property="wvg_spec_id"/>
+        <result column="wvg_id_number" property="wvg_id_number"/>
+        <result column="wvg_user_iphone" property="wvg_user_iphone"/>
+        <result column="wvg_account_data" property="wvg_account_data"/>
+        <result column="wvg_account_enabled" property="wvg_account_enabled"/>
+        <result column="wvg_user_password" property="wvg_user_password"/>
+        <result column="wvg_password_data" property="wvg_password_data"/>
+        <result column="wvg_add_time" property="wvg_add_time"/>
+        <result column="wvg_update_time" property="wvg_update_time"/>
+        <result column="wvg_online_state" property="wvg_online_state"/>
+        <result column="wvg_login_time" property="wvg_login_time"/>
+        <result column="wvg_login_ip" property="wvg_login_ip"/>
+        <result column="wvg_account_remarks" property="wvg_account_remarks"/>
+
+    </resultMap>
+    <select id="queryAllUserByPage" parameterType="map" resultMap="resultWvgUser">
+        SELECT
+        u.wvg_user_id,
+        u.wvg_login_name,
+        u.wvg_real_name,
+        u.wvg_id_type,
+        u.wvg_id_number,
+        u.wvg_user_iphone,
+        u.wvg_spec_id,
+        u.wvg_account_data,
+        wvg_account_enabled,
+        wvg_user_password,
+        wvg_password_data,
+        wvg_add_time,
+        wvg_update_time,
+        wvg_online_state,
+        wvg_login_time,
+        wvg_login_ip,
+        wvg_account_remarks
+        FROM
+        wvg_user u
+        LEFT JOIN wvg_spec_type s ON u.wvg_spec_id = s.spec_id
+        where 1=1
+        <if test="wvg_login_name != null and wvg_login_name != ''">
+            AND wvg_login_name = #{wvg_login_name}
+        </if>
+        <if test="wvg_real_name != null and wvg_real_name != ''">
+            AND wvg_real_name = #{wvg_real_name}
+        </if>
+        <if test="wvg_user_iphone != null and wvg_user_iphone != ''">
+            AND wvg_user_iphone = #{wvg_user_iphone}
+        </if>
+    </select>
 </mapper>
 

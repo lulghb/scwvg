@@ -60,4 +60,12 @@ public class PageController {
 		return "home/wvg-console";
 	}
 
+	/**
+	 * 用户管理
+	 * @return
+	 */
+	@GetMapping("/user/getUserList")
+	public String userList(){
+		return "/user/user/list";
+	}
 }
