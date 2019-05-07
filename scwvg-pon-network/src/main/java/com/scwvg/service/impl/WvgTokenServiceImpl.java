@@ -68,6 +68,7 @@ public class WvgTokenServiceImpl implements WvgTokenService {
 
         WvgToken token = new WvgToken();
         token.setId(loginUser.getToken());
+        token.setWvg_user_id(loginUser.getWvg_user_id());
         token.setCreateTime(new Date());  //创建时间
         token.setUpdateTime(new Date());  //修改时间
         token.setWvg_token_expireTime(new Date(loginUser.getExpireTime()));
@@ -75,9 +76,6 @@ public class WvgTokenServiceImpl implements WvgTokenService {
         System.out.println(token);
         tokenMapper.save(token);
 
-        /**
-         * 登录日志(暂时预留，使用唐老师的注解日志管理)
-         */
         String  jwtToken=createJWTToken(loginUser);
         return new Token(jwtToken,loginUser.getLoginTime());
     }

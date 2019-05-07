@@ -12,10 +12,12 @@ import org.apache.ibatis.annotations.*;
  **/
 @Mapper
 public interface WvgTokenMapper {
-    @Insert("insert into wvg_token(wvg_token_id, wvg_token_val," +
+    @Insert("insert into wvg_token(wvg_token_id," +
+            "wvg_user_id," +
+            "wvg_token_val," +
             "wvg_token_expireTime," +
             "wvg_token_addTime, wvg_token_updateTime) " +
-            "values (#{id}, #{wvg_token_val}, " +
+            "values (#{id},#{wvg_user_id}, #{wvg_token_val}, " +
             "#{wvg_token_expireTime}, #{createTime}," +
             "#{updateTime})")
     int save(WvgToken wvgToken);
@@ -25,7 +27,7 @@ public interface WvgTokenMapper {
 
     @Update("update wvg_token t set t.wvg_token_expireTime = #{wvg_token_expireTime}, " +
             "wvg_token_updateTime=#{updateTime}, " +
-            "wvg_token_val=#{wvg_token_val} "+
+            "wvg_token_val=#{wvg_token_val} " +
             " where t.wvg_token_id = #{id}")
     int update(WvgToken model);
 
