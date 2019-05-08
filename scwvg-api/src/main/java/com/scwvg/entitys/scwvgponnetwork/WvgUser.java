@@ -24,6 +24,7 @@ public class WvgUser extends BaseEntity<Long> implements Serializable  {
     private String wvg_login_name		;//用户登录名 ,
     private String wvg_real_name		;//用户真实姓名 ,
     private String wvg_id_type			;//用户证件类型 ,
+    private Integer wvg_city_id         ;//用户所属地市
     private Integer wvg_spec_id			;//专业ID（wvg_spec_type专业表外键ID） ,
     private String wvg_id_number		;//证件号 ,
     private String wvg_user_iphone		;//联系电话 ,
