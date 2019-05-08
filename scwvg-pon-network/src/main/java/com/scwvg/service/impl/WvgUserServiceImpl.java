@@ -48,6 +48,7 @@ public class WvgUserServiceImpl implements WvgUserService {
     @Override
     public Page<WvgUser> queryAllUsers(Map<String, Object> params, Page<WvgUser> page) {
         int zhSpecId;
+        String city_name;
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
         Page<WvgUser> wvgUsers = userMapper.queryAllUserByPage(params);
 
@@ -55,6 +56,9 @@ public class WvgUserServiceImpl implements WvgUserService {
             zhSpecId = wvgUsers.get(i).getWvg_spec_id();
             String spec_name = specTypeService.queryAllSpec(zhSpecId);
             wvgUsers.get(i).setChangeStr(spec_name);
+            int city_id=wvgUsers.get(i).getWvg_city_id();
+            city_name=userMapper.queryCityByCityId(city_id);
+            wvgUsers.get(i).setChangeStr3(city_name);
             if (wvgUsers.get(i).getWvg_online_state() == 1) {
                 wvgUsers.get(i).setChangeStr1("离线");
             } else {
@@ -122,6 +126,12 @@ public class WvgUserServiceImpl implements WvgUserService {
         }
         userMapper.changePassword(user.getWvg_user_id(), passwordEncoder.encode(newPassword));
         log.debug("修改" + user.getUsername() + "的密码！");
+    }
+
+    @Override
+    public void updateLgIpAndlgDateAndlgonlineState(WvgLoginUser user) {
+       int res = userMapper.updateLgIpAndlgDateAndlgonlineState(user);
+       log.debug(res==1? "清空用户登录相关信息成功！":"清空用户登录相关信息失败！");
     }
 
     @Override

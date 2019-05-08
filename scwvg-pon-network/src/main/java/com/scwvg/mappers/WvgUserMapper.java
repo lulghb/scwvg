@@ -33,6 +33,7 @@ public interface WvgUserMapper {
             "                a.wvg_login_name,\n" +
             "                a.wvg_real_name,\n" +
             "                a.wvg_id_type,\n" +
+            "                a.wvg_city_id,\n" +
             "                a.wvg_spec_id,\n" +
             "                a.wvg_id_number,\n" +
             "                a.wvg_user_iphone,\n" +
@@ -73,6 +74,7 @@ public interface WvgUserMapper {
             "wvg_login_name,\n" +
             "wvg_real_name,\n" +
             "wvg_id_type,\n" +
+            "wvg_city_id,\n" +
             "wvg_spec_id,\n" +
             "wvg_id_number,\n" +
             "wvg_user_iphone,\n" +
@@ -115,4 +117,12 @@ public interface WvgUserMapper {
     public int updateUserInfo(WvgUser user);
 
     public Page<WvgUser> queryAllUserByPage(Map<String, Object> params);
+
+    /*token刷新或者过期或者用户未登录先进行删除登录IP，登录时间，登录状态*/
+    @Update("update wvg_user set wvg_login_time=#{wvg_login_time}," +
+            "wvg_login_ip=#{wvg_login_ip},wvg_online_state=#{wvg_online_state}")
+    int updateLgIpAndlgDateAndlgonlineState(WvgLoginUser user);
+    /*通过属地ID查找属地名*/
+    @Select("select city_name from wvg_city where city_id=#{city_id}")
+    public String queryCityByCityId(int city_id);
 }

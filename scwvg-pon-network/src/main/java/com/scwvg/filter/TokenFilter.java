@@ -2,6 +2,8 @@ package com.scwvg.filter;
 
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.service.WvgTokenService;
+import com.scwvg.service.WvgUserService;
+import com.scwvg.utils.UserUtil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -29,6 +31,8 @@ public class TokenFilter extends OncePerRequestFilter {
 
     @Autowired
     private WvgTokenService tokenService;
+
+    private WvgUserService userService;
     @Autowired
     private UserDetailsService userDetailsService;
     private static final Long MINUTES_10 = 10 * 60 * 1000L;
@@ -36,9 +40,10 @@ public class TokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
+        WvgLoginUser loginUser = null;
         String token = getToken(request);
         if (StringUtils.isNotBlank(token)) {
-            WvgLoginUser loginUser = tokenService.getLoginUser(token);
+            loginUser = tokenService.getLoginUser(token);
             if (loginUser != null) {
                 loginUser = checkLoginTime(loginUser);
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser,
@@ -68,6 +73,9 @@ public class TokenFilter extends OncePerRequestFilter {
             loginUser = (WvgLoginUser) userDetailsService.loadUserByUsername(loginUser.getUsername());
             loginUser.setToken(token);
             tokenService.refresh(loginUser);
+            /*删除用户表里的登录时间，登录IP，是否在线标识*/
+           /* userService.updateLgIpAndlgDateAndlgonlineState(loginUser);*/
+
         }
         return loginUser;
     }

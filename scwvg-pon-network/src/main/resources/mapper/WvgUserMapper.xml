@@ -82,6 +82,7 @@
         u.wvg_id_type,
         u.wvg_id_number,
         u.wvg_user_iphone,
+        u.wvg_city_id,
         u.wvg_spec_id,
         u.wvg_account_data,
         wvg_account_enabled,

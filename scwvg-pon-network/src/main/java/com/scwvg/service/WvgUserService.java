@@ -22,6 +22,9 @@ public interface WvgUserService {
     WvgUser updateUser(WvgRoleUser roleUser);
     WvgUser querUserInfo(String username);
     void changePassword(String username, String oldPassword, String newPassword);
+    /*用户tonke过期或者其他的需要重新登录时，先进行删除用户表的字段*/
+    void updateLgIpAndlgDateAndlgonlineState(WvgLoginUser user);
     /*用户登录成功插入用户登录IP地址与登录时间*/
     void upDateUsLoginTimeAndIp(WvgLoginUser loginUser);
+
 }
