@@ -23,6 +23,7 @@
         <module>scwvg-eureka-7601</module>
         <module>scwvg-eureka-7602</module>
         <module>scwvg-eureka-7603</module>
+        <module>scwvg-tools</module>
     </modules>
     <!--Spring Boot配置-->
     <parent>
