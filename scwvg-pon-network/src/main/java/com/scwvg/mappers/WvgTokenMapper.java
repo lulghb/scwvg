@@ -32,6 +32,6 @@ public interface WvgTokenMapper {
             " where t.wvg_token_id = #{id}")
     int update(WvgToken model);
 
-    @Delete("delete from t_token where t_token = #{t_token}")
+    @Delete("delete from wvg_token where wvg_token_id = #{wvg_token_id}")
     int delete(String id);
 }

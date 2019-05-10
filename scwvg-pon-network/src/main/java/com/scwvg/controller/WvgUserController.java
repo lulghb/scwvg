@@ -2,6 +2,7 @@ package com.scwvg.controller;
 
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
+import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
@@ -49,7 +50,7 @@ public class WvgUserController {
     @GetMapping("/userList")
     @ApiOperation(value = "用户列表")
     @Log("用户列表查询")
-    @PreAuthorize("hasAuthority('sys:user:list')")
+    @PreAuthorize("hasAuthority('users:query:list')")
     public @ResponseBody PageInfo<WvgUser> queryAllUsers(WvgUser wvgUser, Page<WvgUser> page) {
         Map<String, Object> params = new HashMap<>();
         params.put("wvg_login_name", wvgUser.getWvg_login_name());
@@ -60,5 +61,12 @@ public class WvgUserController {
         pageInfo.setTotalPage(queryAllUser.getPages());
         pageInfo.setItems(queryAllUser.getResult());
         return pageInfo;
+    }
+    @GetMapping("/{id}")
+    @Log("用户退出，踢用户下线")
+    @PreAuthorize("hasAuthority('users:quit')")
+    public Msg offlineUser(){
+        Msg msg =new Msg();
+        return msg;
     }
 }

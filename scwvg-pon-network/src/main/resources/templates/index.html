@@ -46,13 +46,11 @@
         </li>
       </ul>
       <ul class="layui-nav layui-layout-right" lay-filter="layadmin-layout-right">
-
         <li class="layui-nav-item" lay-unselect>
           <a lay-href="app/message/index.html" layadmin-event="message" lay-text="消息中心">
             <i class="layui-icon layui-icon-notice"></i>
-
             <!-- 如果有新消息，则显示小圆点 -->
-            <span class="layui-badge-dot"></span>
+          <!--  <span class="layui-badge-dot"></span>-->
           </a>
         </li>
         <li class="layui-nav-item layui-hide-xs" lay-unselect>
@@ -70,15 +68,15 @@
             <i class="layui-icon layui-icon-screen-full"></i>
           </a>
         </li>
-        <li class="layui-nav-item" lay-unselect>
+        <li class="layui-nav-item" lay-unselect id="userInfo">
           <a href="javascript:;">
-            <cite>贤心</cite>
+
           </a>
           <dl class="layui-nav-child">
             <dd><a lay-href="set/user/info.html">基本资料</a></dd>
             <dd><a lay-href="set/user/password.html">修改密码</a></dd>
             <hr>
-            <dd layadmin-event="logout" onclick="logout()" style="text-align: center;"><a>退出</a></dd>
+            <dd layadmin-event="userlogout" onclick="logout()" style="text-align: center;"><a>退出</a></dd>
           </dl>
         </li>
 
@@ -94,8 +92,8 @@
     <!-- 侧边菜单 -->
     <div class="layui-side layui-side-menu" id="admin-side">
       <div class="layui-side-scroll">
-        <div class="layui-logo" lay-href="home/wvg-console.html">
-          <span>layuiAdmin</span>
+        <div class="layui-logo" id="loginName" lay-href="home/wvg-console.html">
+          <i aria-hidden='true' class='layui-icon layui-icon-face-smile'></i>
         </div>
         <ul class="layui-nav layui-nav-tree" lay-shrink="all" id="menu" lay-filter="layadmin-system-side-menu">
           <li data-name="resManger" class="layui-nav-item">

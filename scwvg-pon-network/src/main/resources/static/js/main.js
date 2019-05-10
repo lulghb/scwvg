@@ -10,7 +10,6 @@ function initMenu(){
 	    		 location.href='/login';
 	    		 return;
 	    	 }
-
 	    	 var menu = $("#menu");
 	    	 $.each(data, function(i,item){
 	             var a = $("<a href='javascript:;'></a>");
@@ -62,7 +61,7 @@ function initMenu(){
 	 });
 }
 
-// 登陆用户头像昵称
+// 登陆用户昵称
 showLoginInfo();
 function showLoginInfo(){
 	$.ajax({
@@ -70,27 +69,12 @@ function showLoginInfo(){
 		url : '/users/current',
 		async : false,
 		success : function(data) {
-			$(".admin-header-user span").text(data.nickname);
-			
-			var pro = window.location.protocol;
-			var host = window.location.host;
-			var domain = pro + "//" + host;
-			
-			var sex = data.sex;
-			var url = data.headImgUrl;
-			if(url == null || url == ""){
-				if(sex == 1){
-					url = "/img/avatars/sunny.png";
-				} else {
-					url = "/img/avatars/1.png";
-				}
-				
-				url = domain + url;
-			} else {
-				url = domain + "/statics" + url;
-			}
-			var img = $(".admin-header-user img");
-			img.attr("src", url);
+			//菜单上方用户真实名
+            var loginName =$("#loginName");
+            loginName.append("<span>"+data.wvg_real_name+"</span>");
+            //登录名
+            var user_login_name=$("#userInfo");
+            user_login_name.append("<cite>"+data.wvg_login_name+"</cite>");
 		}
 	});
 }
@@ -100,7 +84,7 @@ function logout(){
 		url : '/logout',
 		success : function(data) {
 			localStorage.removeItem("token");
-			location.href='/login';
+            location.href = '/login';
 		}
 	});
 }

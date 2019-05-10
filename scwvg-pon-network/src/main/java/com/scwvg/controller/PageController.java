@@ -66,6 +66,6 @@ public class PageController {
 	 */
 	@GetMapping("/user/getUserList")
 	public String userList(){
-		return "/user/user/list";
+		return "user/userManager";
 	}
 }
