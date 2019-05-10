@@ -89,9 +89,8 @@
           </div>
           <div class="layui-col-md6">
             <div class="layui-card">
-              <div class="layui-card-header">待办事项</div>
+              <div class="layui-card-header">厂家支撑</div>
               <div class="layui-card-body" style="padding: 0px 0px;">
-
                 <div class="layui-carousel layadmin-carousel layadmin-backlog">
                   <div carousel-item>
                     <ul class="layui-row layui-col-space10">
@@ -167,8 +166,13 @@
             <div class="layui-card">
               <div class="layui-tab layui-tab-brief layadmin-latestData">
                 <ul class="layui-tab-title">
-                  <li class="layui-this">今日热搜</li>
-                  <li>今日热帖</li>
+                  <li>今日新增用户量</li>
+                  <li>今日严重告警量</li>
+                  <li>今日流量拥塞量</li>
+                  <li>配置规范率TOP</li>
+                  <li>开通成功率TOP</li>
+                  <li>光纤距离TOP </li>
+
                 </ul>
                 <div class="layui-tab-content">
                   <div class="layui-tab-item layui-show">
@@ -176,6 +180,15 @@
                   </div>
                   <div class="layui-tab-item">
                     <table id="LAY-index-topCard"></table>
+                  </div>
+                  <div class="layui-tab-item">
+                    <table id="LAY-index-topCard1"></table>
+                  </div>
+                  <div class="layui-tab-item">
+                    <table id="LAY-index-topCard2"></table>
+                  </div>
+                  <div class="layui-tab-item">
+                    <table id="LAY-index-topCard3"></table>
                   </div>
                 </div>
               </div>
@@ -198,31 +211,18 @@
                   <td>当前版本</td>
                   <td>
                     <script type="text/html" template>
-                      v{{ layui.admin.v }}
-                      <a href="http://fly.layui.com/docs/3/" target="_blank" style="padding-left: 15px;">更新日志</a>
+                      【vs1.1】
+                      <a href="http://fly.layui.com/docs/3/" target="_blank" style="padding-left: 15px;">敬请期待系统上线</a>
                     </script>
                   </td>
                 </tr>
                 <tr>
-                  <td>基于框架</td>
+                  <td>功能说明</td>
                   <td>
                     <script type="text/html" template>
-                      layui-v{{ layui.v }}
+                      基于大数据动态可视化数据展现，一站式管理PON网络。轻松解决日常运维工作。
                     </script>
                  </td>
-                </tr>
-                <tr>
-                  <td>主要特色</td>
-                  <td>零门槛 / 响应式 / 清爽 / 极简</td>
-                </tr>
-                <tr>
-                  <td>获取渠道</td>
-                  <td style="padding-bottom: 0;">
-                    <div class="layui-btn-container">
-                      <a href="http://www.layui.com/admin/" target="_blank" class="layui-btn layui-btn-danger">获取授权</a>
-                      <a href="http://fly.layui.com/download/layuiAdmin/" target="_blank" class="layui-btn">立即下载</a>
-                    </div>
-                  </td>
                 </tr>
               </tbody>
             </table>
@@ -262,9 +262,9 @@
           <div class="layui-card-body">
             <div class="layui-carousel layadmin-carousel layadmin-news" data-autoplay="true" data-anim="fade" lay-filter="news">
               <div carousel-item>
-                <div><a href="http://fly.layui.com/docs/2/" target="_blank" class="layui-bg-red">layuiAdmin 快速上手文档</a></div>
+              <!--  <div><a href="http://fly.layui.com/docs/2/" target="_blank" class="layui-bg-red">layuiAdmin 快速上手文档</a></div>
                 <div><a href="http://fly.layui.com/vipclub/list/layuiadmin/" target="_blank" class="layui-bg-green">layuiAdmin 会员讨论专区</a></div> 
-                <div><a href="http://www.layui.com/admin/#get" target="_blank" class="layui-bg-blue">获得 layui 官方后台模板系统</a></div>
+                <div><a href="http://www.layui.com/admin/#get" target="_blank" class="layui-bg-blue">获得 layui 官方后台模板系统</a></div>-->
               </div>
             </div>
           </div>
@@ -272,18 +272,37 @@
 
         <div class="layui-card">
           <div class="layui-card-header">
-            作者心语
+            意见反馈
             <i class="layui-icon layui-icon-tips" lay-tips="要支持的噢" lay-offset="5"></i>
           </div>
-          <div class="layui-card-body layui-text layadmin-text">
-            <p>一直以来，layui 秉承无偿开源的初心，虔诚致力于服务各层次前后端 Web 开发者，在商业横飞的当今时代，这一信念从未动摇。即便身单力薄，仍然重拾决心，埋头造轮，以尽可能地填补产品本身的缺口。</p>
-            <p>在过去的一段的时间，我一直在寻求持久之道，已维持你眼前所见的一切。而 layuiAdmin 是我们尝试解决的手段之一。我相信真正有爱于 layui 生态的你，定然不会错过这一拥抱吧。</p>
-            <p>子曰：君子不用防，小人防不住。请务必通过官网正规渠道，获得 <a href="http://www.layui.com/admin/" target="_blank">layuiAdmin</a>！</p>
-            <p>—— 贤心（<a href="http://www.layui.com/" target="_blank">layui.com</a>）</p>
+          <div class="layui-card-body">
+          <form class="layui-form" action="">
+              <div class="layui-input-index">
+                <input type="text" name="title" required  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+              </div>
+              <div class="layui-input-index">
+                <select name="city" lay-verify="required">
+                  <option value="1">投诉</option>
+                  <option value="2">意见</option>
+                  <option value="3">建议</option>
+                  <option value="4">表扬</option>
+                  <option value="5">问题</option>
+                </select>
+            </div>
+            <div class="layui-form-item layui-form-text">
+              <div class="layui-input-index">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+              </div>
+            </div>
+            <div class="layui-form-item">
+              <div class="layui-input-block">
+                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+              </div>
+            </div>
+          </form>
           </div>
         </div>
       </div>
-      
     </div>
   </div>
 

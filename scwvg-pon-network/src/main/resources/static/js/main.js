@@ -72,9 +72,9 @@ function showLoginInfo(){
 			//菜单上方用户真实名
             var loginName =$("#loginName");
             loginName.append("<span>"+data.wvg_real_name+"</span>");
-            //登录名
-            var user_login_name=$("#userInfo");
-            user_login_name.append("<cite>"+data.wvg_login_name+"</cite>");
+            //右上角登录用户名
+            var userInfo=$("#userInfo");
+            userInfo.append("<cite>"+data.wvg_login_name+"</cite>")
 		}
 	});
 }
