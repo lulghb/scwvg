@@ -136,4 +136,6 @@ public interface WvgUserMapper {
             "WHERE\n" +
             "\twvg_user_id = #{wvg_user_id}")
     public int updateUserOffline(@Param("wvg_user_id") Long wvg_user_id,@Param("wvg_online_state") int wvg_online_state);
+    @Select("select user_type_name from wvg_user_type where user_type_id=#{idType}")
+    public String queryIdName(int idType);
 }

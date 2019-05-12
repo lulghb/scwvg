@@ -48,18 +48,24 @@ public class WvgUserServiceImpl implements WvgUserService {
      */
     @Override
     public Page<WvgUser> queryAllUsers(Map<String, Object> params, Page<WvgUser> page) {
-        int zhSpecId;
         String city_name;
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
         Page<WvgUser> wvgUsers = userMapper.queryAllUserByPage(params);
 
         for (int i = 0; i < wvgUsers.size(); i++) {
-            zhSpecId = wvgUsers.get(i).getWvg_spec_id();
+            //用户专业转换
+            int zhSpecId = wvgUsers.get(i).getWvg_spec_id();
             String spec_name = specTypeService.queryAllSpec(zhSpecId);
             wvgUsers.get(i).setChangeStr(spec_name);
+            //用户属地转换
             int city_id=wvgUsers.get(i).getWvg_city_id();
             city_name=userMapper.queryCityByCityId(city_id);
             wvgUsers.get(i).setChangeStr3(city_name);
+            //用户证件类型转换
+            int idType=wvgUsers.get(i).getWvg_id_type();
+            String idName=userMapper.queryIdName(idType);
+            wvgUsers.get(i).setChangeStr4(idName);
+
             if (wvgUsers.get(i).getWvg_online_state() == 1) {
                 wvgUsers.get(i).setChangeStr1("离线");
             } else {
