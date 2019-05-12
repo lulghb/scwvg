@@ -71,7 +71,29 @@ layui.define(function(exports){
           }
         },
         tooltip : {
-          trigger: 'item'
+          trigger: 'item',
+          formatter: function (params,ticket,callback) {
+              console.log(params);
+              var seriesName = params.seriesName;
+              var values = params.data.valueMap;
+              var seriesNameArray = seriesName.split(" ");
+              var res = "";
+              for (var i = 0; i < seriesNameArray.length - 1; i++) {
+            	  if(i == 0) {
+            		  res += seriesNameArray[i] + ' : ' + values[i];
+            	  } else {
+            		  res += '<br/>' + seriesNameArray[i] + ' : ' + values[i];
+            	  }
+              }
+//              setTimeout(function (){
+//                  // 仅为了模拟异步回调
+//                  callback(ticket, res);
+//              }, 1000)
+              return res;
+          },
+          textStyle: {
+        	  fontSize: '10'
+          }
         },
         legend: {
           orient: 'vertical',
@@ -124,7 +146,94 @@ layui.define(function(exports){
                 },
                 data: mapData
             },
-            
+            {
+                name: 'ONU设备',
+                type: 'map',
+                mapType: '黑龙江',
+                hoverable: true,
+                roam:false,
+                selectedMode : 'single',
+                itemStyle:{
+                    normal: {
+                    	borderColor: '#87cefa',
+                    	borderWidth: 1,
+                    	label: {
+                    		show: true
+                    	}
+                    },
+                    emphasis: {
+                    	borderColor: '#1e90ff',
+                    	borderWidth: 1,
+                    	color: '#E788C3',
+                    	textStyle: {
+                    		color: '#fff',
+                    		fontSize: '20px'
+                    	},
+                    	label: {
+                    		show: false
+                    	}
+                    }
+                },
+                data:[ 
+					{name: "齐齐哈尔市", value: Math.round(Math.random()*1000)},
+					{name: "牡丹江市", value: Math.round(Math.random()*1000)},
+					{name: '大兴安岭地区',value: Math.round(Math.random()*1000)},
+					{name: '鸡西市',value: Math.round(Math.random()*1000)},
+					{name: '佳木斯市',value: Math.round(Math.random()*1000)},
+					{name: '双鸭山市',value: Math.round(Math.random()*1000)},
+					{name: '大庆市',value: Math.round(Math.random()*1000)},
+					{name: '鹤岗市',value: Math.round(Math.random()*1000)},
+					{name: '黑河市',value: Math.round(Math.random()*1000)},
+					{name: '哈尔滨市',value: Math.round(Math.random()*1000)},
+					{name: '绥化市',value: Math.round(Math.random()*1000)},
+					{name: '七台河市',value: Math.round(Math.random()*1000)},
+					{name: '伊春市',value: Math.round(Math.random()*1000)},
+                ],
+            },
+            {
+                name: '告警',
+                type: 'map',
+                mapType: '黑龙江',
+                hoverable: true,
+                roam:false,
+                selectedMode : 'single',
+                itemStyle:{
+                    normal: {
+                    	borderColor: '#87cefa',
+                    	borderWidth: 1,
+                    	label: {
+                    		show: true
+                    	}
+                    },
+                    emphasis: {
+                    	borderColor: '#1e90ff',
+                    	borderWidth: 1,
+                    	color: '#E788C3',
+                    	textStyle: {
+                    		color: '#fff',
+                    		fontSize: '20px'
+                    	},
+                    	label: {
+                    		show: false
+                    	}
+                    }
+                },
+                data:[ 
+					{name: "齐齐哈尔市", value: Math.round(Math.random()*1000)},
+					{name: "牡丹江市", value: Math.round(Math.random()*1000)},
+					{name: '大兴安岭地区',value: Math.round(Math.random()*1000)},
+					{name: '鸡西市',value: Math.round(Math.random()*1000)},
+					{name: '佳木斯市',value: Math.round(Math.random()*1000)},
+					{name: '双鸭山市',value: Math.round(Math.random()*1000)},
+					{name: '大庆市',value: Math.round(Math.random()*1000)},
+					{name: '鹤岗市',value: Math.round(Math.random()*1000)},
+					{name: '黑河市',value: Math.round(Math.random()*1000)},
+					{name: '哈尔滨市',value: Math.round(Math.random()*1000)},
+					{name: '绥化市',value: Math.round(Math.random()*1000)},
+					{name: '七台河市',value: Math.round(Math.random()*1000)},
+					{name: '伊春市',value: Math.round(Math.random()*1000)},
+                ],
+            },
         ]
       },
       
@@ -219,9 +328,9 @@ layui.define(function(exports){
 	  		  	    },
 	  		  	    tooltip : {
 	  		  	        trigger: 'item',
-	  		  	        formatter: "{b} : {c} <br/>比例 : {d}%",
+	  		  	        formatter: "{b}: {c} <br/>比例: {d}%",
 		  		  	    textStyle: {
-		  		  	    	fontSize: '10'
+		  		  	    	fontSize: '8'
 	  		  	        }
 	  		  	    },
 	  		  	    legend: {
@@ -280,6 +389,10 @@ layui.define(function(exports){
 	  		    ,rendeOltPip = function(index){
 	  		      echOltPip[index] = echarts.init(elemOltPip[index], layui.echartsTheme);
 	  		      echOltPip[index].setOption(oltPipOp[index]);
+	  		      echOltPip[index].on("pieSelected", function(param) {
+		  			  // 跳转到资源列表页面
+		  			  $("#toOlt")[0].click();
+		  		  });
 	  		      window.onresize = echOltPip[index].resize;
 	  		    };
 	  		    if(!elemOltPip[0]) return;
@@ -298,17 +411,10 @@ layui.define(function(exports){
 	  		  	    },
 	  		  	    tooltip : {
 	  		  	        trigger: 'item',
-	  		  	        formatter: "{b} : {c}<br/>比例 : {d}%",
+	  		  	        formatter: "{b}: {c}<br/>比例: {d}%",
 		  		  	    textStyle: {
-	  		  	        	fontSize: '10',
+	  		  	        	fontSize: '8',
 	  		  	        }
-	  		  	    },
-	  		  	    legend: {
-	  		  	        orient : 'vertical',
-	  		  	        x : 'left',
-	  		  	        data:['在线','离线'],
-	  		  	        textStyle: {
-	  	  	            }
 	  		  	    },
 	  		  	    calculable: true,
 	  		  	    itemStyle : {
@@ -337,10 +443,81 @@ layui.define(function(exports){
 	  		    ,rendeOnuPip = function(index){
 	  		      echOnuPip[index] = echarts.init(elemOnuPip[index], layui.echartsTheme);
 	  		      echOnuPip[index].setOption(oltOnuOp[index]);
+	  		      echOnuPip[index].on("pieSelected", function(param) {
+//	  		    	  var selected = param.selected;
+//	  		    	  var serie;
+//	  		    	  for (var idx in selected) {
+//	  		    		  if (selected[idx]) {
+//	  		    			  serie = option.series[idx];
+//	  		    			alert(serie);
+//	  		    		  }
+//	  		    	  }
+	  		    	  // 跳转到资源列表页面
+	  		    	  $("#toOnu")[0].click();
+	  		      });
 	  		      window.onresize = echOnuPip[index].resize;
 	  		    };
 	  		    if(!elemOnuPip[0]) return;
 	  		    rendeOnuPip(0);
+	  		    
+	  		    //标准折线图
+	  		    var echOltAlarmPip = [], oltAlarmOp = [
+	  		      {
+	  		    	title : {
+	  		  	        text: city_name,
+	  		  	        subtext: '告警',
+	  		  	        x:'center',
+	  		  	        textStyle: {
+	  		  	        	fontSize: '14',
+	  		  	        }
+	  		  	    },
+	  		  	    tooltip : {
+	  		  	        trigger: 'item',
+	  		  	        formatter: "{b}: {c}<br/>比例: {d}%",
+		  		  	    textStyle: {
+	  		  	        	fontSize: '8',
+	  		  	        }
+	  		  	    },
+	  		  	    calculable: true,
+	  		  	    series: [
+	  		  	    	{
+	  		  	    		name: '告警',
+	  		  	    		type: 'pie',
+	  		  	    		selectedMode: 'single',
+	  		  	    		radius: '30%',
+	  		  	    		center: ['45%', '65%'],
+		  		  	    	
+	  		  	    		data: [
+		  		  	    		{name: "齐齐哈尔", value: Math.round(Math.random()*1000)},
+		  						{name: "牡丹江", value: Math.round(Math.random()*1000)},
+		  						{name: '大兴安岭',value: Math.round(Math.random()*1000)},
+		  						{name: '鸡西市',value: Math.round(Math.random()*1000)},
+		  						{name: '佳木斯',value: Math.round(Math.random()*1000)},
+		  						{name: '双鸭山',value: Math.round(Math.random()*1000)},
+		  						{name: '大庆',value: Math.round(Math.random()*1000)},
+		  						{name: '鹤岗',value: Math.round(Math.random()*1000)},
+		  						{name: '黑河',value: Math.round(Math.random()*1000)},
+		  						{name: '哈尔滨',value: Math.round(Math.random()*1000)},
+		  						{name: '绥化',value: Math.round(Math.random()*1000)},
+		  						{name: '七台河',value: Math.round(Math.random()*1000)},
+		  						{name: '伊春',value: Math.round(Math.random()*1000)},
+	  		  	    		]
+	  		  	    	},
+	  		  	    ]
+	  		      }
+	  		    ]
+	  		    ,elemOltAlarmPip = $('#LAY-index-olt-alarm-pie')
+	  		    ,rendeOltAlarmPip = function(index){
+	  		      echOltAlarmPip[index] = echarts.init(elemOltAlarmPip[index], layui.echartsTheme);
+	  		      echOltAlarmPip[index].setOption(oltAlarmOp[index]);
+	  		      echOltAlarmPip[index].on("pieSelected", function(param) {
+		  			  // 跳转到资源列表页面
+		  			  $("#toAm")[0].click();
+		  		  });
+	  		      window.onresize = echOltAlarmPip[index].resize;
+	  		    };
+	  		    if(!elemOltAlarmPip[0]) return;
+	  		      rendeOltAlarmPip(0);
 		    }
     ,renderDataView = function(index){
       if(index == 0) {

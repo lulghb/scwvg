@@ -142,14 +142,17 @@
                     <div style="position: relative; float: left;">
                     	<div id=LAY-index-left class="left" style="height: 432px; width: 24%; position: relative; float: left;margin-left: 5px;margin-right: 5px;">
                     		<!-- OLT设备 -->
+                    		<a id="toOlt" lay-href="page/res/list#/onu=false" style="display: none">资源列表</a>
                     		<div carousel-item id="LAY-index-olt-pie" style="height: 200px; padding: 5px;"></div>
 							<!-- ONU设备 -->
+							<a id="toOnu" lay-href="page/res/list#/onu=true" style="display: none">资源列表</a>
 							<div carousel-item id="LAY-index-onu-pie" style="height: 200px; padding: 5px; margin-top: 5px;"></div>
                     	</div>
                     	<!-- 地图 -->
                     	<div id=LAY-index-map class="LAY-index-map" style="height: 432px; width: 48.2%; position: relative; float: left;margin-left: 5px;margin-right: 5px;"></div>
                     	<div id=LAY-index-right class="right" style="height: 432px; width: 24%; position: relative; float: left;margin-left: 5px;margin-right: 5px;">
                     		<!-- 告警 -->
+                    		<a id="toAm" lay-href="page/am/list" style="display: none">告警查询</a>
                     		<div carousel-item id="LAY-index-olt-alarm-pie" style="height: 200px; padding: 5px;"></div>
 							<!-- 流量 -->
 							<div carousel-item id="LAY-index-olt-flux-pie" style="height: 200px; padding: 5px; margin-top: 5px;"></div>

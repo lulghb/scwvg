@@ -23,13 +23,12 @@ layui.extend({
     //遍历页签选项卡
     var matchTo
     ,tabs = $('#LAY_app_tabsheader>li')
-    ,path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '');
-    
+    ,path = url.replace(/(^http(s*):)|(\?[\s\S]*$)/g, '')
+    ,spUrl = url.split('#')[0];
     tabs.each(function(index){
       var li = $(this)
       ,layid = li.attr('lay-id');
-      
-      if(layid === url){
+      if(layid.split('#')[0] === spUrl){
         matchTo = true;
         tabsPage.index = index;
       }

@@ -137,7 +137,7 @@ public class ESql {
 	 * @return
 	 * @throws Exception
 	 */
-	public List<Map<String, Object>> queryForListGroup(String sql,  int r) throws Exception {
+	public List<Map<String, Object>> queryForListGroup(String sql, int r) throws Exception {
 		return this.support.queryForListGroup(sql, r);
 	}
 	

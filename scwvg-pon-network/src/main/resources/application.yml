@@ -27,7 +27,7 @@ spring:
       time-between-eviction-runs-millis: 60000
       #一个连接在池中最小生存的时间
       min-evictable-idle-time-millis: 300000
-      validation-query: SELECT ‘x’
+      validation-query: SELECT 1
       test-while-idle: true
       test-on-borrow: false
       test-on-return: false
@@ -55,3 +55,7 @@ token:
   expire:
     seconds: 1800 #单位为秒数
   jwtSecret: (XIAO:)_$^11244^%$_(WEI:)_@@++--(LAO:)_++++_.sds_(SHI:)
+####ES查询服务
+wvg:
+  es:
+    addr: http://localhost:8087
