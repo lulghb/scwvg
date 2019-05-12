@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/scwvg.iml" filepath="$PROJECT_DIR$/scwvg.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-access-web/scwvg-access-web.iml" filepath="$PROJECT_DIR$/scwvg-access-web/scwvg-access-web.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-api/scwvg-api.iml" filepath="$PROJECT_DIR$/scwvg-api/scwvg-api.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-company/scwvg-company.iml" filepath="$PROJECT_DIR$/scwvg-company/scwvg-company.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-dashboard/scwvg-dashboard.iml" filepath="$PROJECT_DIR$/scwvg-dashboard/scwvg-dashboard.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-eureka-7601/scwvg-eureka-7601.iml" filepath="$PROJECT_DIR$/scwvg-eureka-7601/scwvg-eureka-7601.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-eureka-7602/scwvg-eureka-7602.iml" filepath="$PROJECT_DIR$/scwvg-eureka-7602/scwvg-eureka-7602.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-eureka-7603/scwvg-eureka-7603.iml" filepath="$PROJECT_DIR$/scwvg-eureka-7603/scwvg-eureka-7603.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-pmee-6201/scwvg-pmee-6201.iml" filepath="$PROJECT_DIR$/scwvg-pmee-6201/scwvg-pmee-6201.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-pmee-6202/scwvg-pmee-6202.iml" filepath="$PROJECT_DIR$/scwvg-pmee-6202/scwvg-pmee-6202.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-pmee-6203/scwvg-pmee-6203.iml" filepath="$PROJECT_DIR$/scwvg-pmee-6203/scwvg-pmee-6203.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-pmee-consumer/scwvg-pmee-consumer.iml" filepath="$PROJECT_DIR$/scwvg-pmee-consumer/scwvg-pmee-consumer.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-auth/scwvg-sys-auth.iml" filepath="$PROJECT_DIR$/scwvg-sys-auth/scwvg-sys-auth.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-commons/scwvg-sys-commons.iml" filepath="$PROJECT_DIR$/scwvg-sys-commons/scwvg-sys-commons.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-components/scwvg-sys-components.iml" filepath="$PROJECT_DIR$/scwvg-sys-components/scwvg-sys-components.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-conf/scwvg-sys-conf.iml" filepath="$PROJECT_DIR$/scwvg-sys-conf/scwvg-sys-conf.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-content/scwvg-sys-content.iml" filepath="$PROJECT_DIR$/scwvg-sys-content/scwvg-sys-content.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-content/scwvg-sys-dict.iml" filepath="$PROJECT_DIR$/scwvg-sys-content/scwvg-sys-dict.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-sys-home/scwvg-sys-home.iml" filepath="$PROJECT_DIR$/scwvg-sys-home/scwvg-sys-home.iml" />
+      <module fileurl="file://$PROJECT_DIR$/scwvg-zuul/scwvg-zuul.iml" filepath="$PROJECT_DIR$/scwvg-zuul/scwvg-zuul.iml" />
+    </modules>
+  </component>
+</project>

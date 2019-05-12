@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CompilerConfiguration">
+    <annotationProcessing>
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="scwvg-access-web" />
+        <module name="scwvg-api" />
+        <module name="scwvg-base-system" />
+        <module name="scwvg-commons" />
+        <module name="scwvg-company" />
+        <module name="scwvg-dashboard" />
+        <module name="scwvg-eureka-7601" />
+        <module name="scwvg-eureka-7602" />
+        <module name="scwvg-eureka-7603" />
+        <module name="scwvg-global-conf" />
+        <module name="scwvg-pmee-6201" />
+        <module name="scwvg-pmee-6202" />
+        <module name="scwvg-pmee-6203" />
+        <module name="scwvg-pmee-consumer" />
+        <module name="scwvg-sys-auth" />
+        <module name="scwvg-sys-commons" />
+        <module name="scwvg-sys-components" />
+        <module name="scwvg-sys-conf" />
+        <module name="scwvg-sys-content" />
+        <module name="scwvg-sys-dict" />
+        <module name="scwvg-sys-home" />
+        <module name="scwvg-zuul" />
+      </profile>
+    </annotationProcessing>
+    <bytecodeTargetLevel>
+      <module name="scwvg" target="1.8" />
+      <module name="scwvg-access-web" target="1.8" />
+      <module name="scwvg-api" target="1.8" />
+      <module name="scwvg-base-system" target="1.8" />
+      <module name="scwvg-commons" target="1.8" />
+      <module name="scwvg-company" target="1.8" />
+      <module name="scwvg-dashboard" target="1.8" />
+      <module name="scwvg-eureka-7601" target="1.8" />
+      <module name="scwvg-eureka-7602" target="1.8" />
+      <module name="scwvg-eureka-7603" target="1.8" />
+      <module name="scwvg-global-conf" target="1.8" />
+      <module name="scwvg-pmee-6201" target="1.8" />
+      <module name="scwvg-pmee-6202" target="1.8" />
+      <module name="scwvg-pmee-6203" target="1.8" />
+      <module name="scwvg-pmee-consumer" target="1.8" />
+      <module name="scwvg-sys-auth" target="1.8" />
+      <module name="scwvg-sys-commons" target="1.8" />
+      <module name="scwvg-sys-components" target="1.8" />
+      <module name="scwvg-sys-conf" target="1.8" />
+      <module name="scwvg-sys-content" target="1.8" />
+      <module name="scwvg-sys-dict" target="1.8" />
+      <module name="scwvg-sys-home" target="1.8" />
+      <module name="scwvg-zuul" target="1.8" />
+    </bytecodeTargetLevel>
+  </component>
+</project>

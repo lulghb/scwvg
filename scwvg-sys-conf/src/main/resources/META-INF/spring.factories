@@ -1,0 +1,9 @@
+# auto configuration ◊‘∂Ø≈‰÷√
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
+  com.scwvg.sys.conf.SysConfig,\
+  com.scwvg.sys.components.configuration.ScwvgDataSourceConfig,\
+  com.scwvg.sys.components.configuration.ApplicationContextTransactional,\
+  com.scwvg.sys.components.configuration.ApplicationContext,\
+  com.scwvg.sys.auth.configuration.SecurityConfig,\
+  com.scwvg.sys.commons.configuration.CommonsConfig,\
+  com.scwvg.sys.content.configuration.ContentConfig
