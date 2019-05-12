@@ -1,6 +1,7 @@
 package com.scwvg.service;
 
 import com.github.pagehelper.Page;
+import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginLog;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleUser;
@@ -26,5 +27,6 @@ public interface WvgUserService {
     void updateLgIpAndlgDateAndlgonlineState(WvgLoginUser user);
     /*用户登录成功插入用户登录IP地址与登录时间*/
     void upDateUsLoginTimeAndIp(WvgLoginUser loginUser);
+    Msg userOffline(Long wvg_user_id);
 
 }

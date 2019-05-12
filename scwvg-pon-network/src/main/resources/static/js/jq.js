@@ -14,8 +14,8 @@ $.ajaxSetup({
 			localStorage.removeItem("token");
 			location.href = '/login';
 		} else if (code == 403) {
-			console.log("未授权:" + message);
-			layer.msg('未授权');
+			console.log("没有权限操作！:" + message);
+			layer.msg('没有权限操作！');
 		} else if (code == 500) {
 			layer.msg('系统错误：' + message);
 		}

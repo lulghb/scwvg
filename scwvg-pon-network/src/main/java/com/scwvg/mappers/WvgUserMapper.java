@@ -125,4 +125,15 @@ public interface WvgUserMapper {
     /*通过属地ID查找属地名*/
     @Select("select city_name from wvg_city where city_id=#{city_id}")
     public String queryCityByCityId(int city_id);
+    /*剔除用户下线*/
+    @Delete("delete from  wvg_token where wvg_user_id=#{wvg_user_id}")
+    public int userOffline(Long wvg_user_id);
+    /*修改用户在线状态*/
+    @Update("UPDATE wvg_user\n" +
+            "SET wvg_login_time = Now(),\n" +
+            " wvg_online_state = #{wvg_online_state},\n" +
+            " wvg_login_ip = ''\n" +
+            "WHERE\n" +
+            "\twvg_user_id = #{wvg_user_id}")
+    public int updateUserOffline(@Param("wvg_user_id") Long wvg_user_id,@Param("wvg_online_state") int wvg_online_state);
 }

@@ -2,6 +2,7 @@ package com.scwvg.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.*;
 import com.scwvg.mappers.WvgUserMapper;
 import com.scwvg.service.WvgSpecTypeService;
@@ -140,5 +141,24 @@ public class WvgUserServiceImpl implements WvgUserService {
         loginUser.setWvg_login_ip(IpUtils.getRequestIP(request));
         loginUser.setWvg_online_state(0);
         int res =userMapper.upDateUsLoginTimeAndIp(loginUser);
+    }
+    //剔除用户下线
+    @Override
+    public Msg userOffline(Long wvg_user_id) {
+        Msg msg=new Msg();
+        int res;
+        res= userMapper.userOffline(wvg_user_id);
+       if(res==1){
+           int wvg_online_state=1;
+           res= userMapper.updateUserOffline(wvg_user_id,wvg_online_state);
+           if(res==1){
+               msg.setMessage("用户已踢下线！");
+           }
+           return msg;
+       }
+       else {
+           msg.setMessage("剔下线失败！");
+           return msg;
+       }
     }
 }

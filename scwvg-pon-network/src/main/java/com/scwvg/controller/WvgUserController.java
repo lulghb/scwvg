@@ -12,13 +12,13 @@ import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -62,11 +62,11 @@ public class WvgUserController {
         pageInfo.setItems(queryAllUser.getResult());
         return pageInfo;
     }
-    @GetMapping("/{id}")
+    @GetMapping("/quit/{wvg_user_id}")
     @Log("用户退出，踢用户下线")
     @PreAuthorize("hasAuthority('users:quit')")
-    public Msg offlineUser(){
-        Msg msg =new Msg();
-        return msg;
+    public Msg offlineUser(@PathVariable Long wvg_user_id){
+        return wvgUserService.userOffline(wvg_user_id);
     }
+
 }

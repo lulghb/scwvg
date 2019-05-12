@@ -57,10 +57,10 @@
     </div>
 </div>
 <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
-<script type="text/javascript" src="js/jquery-2.1.1.min.js"></script>
-<script type="text/javascript" src="js/jq.js"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
 <script th:inline="none">
-    var toke=localStorage.getItem("token");
+    var token=localStorage.getItem("token");
     layui.config({
         base:"/"
     }).extend({
@@ -90,7 +90,7 @@
                 {field: 'wvg_login_ip', title: '账号登录IP', width: 160},
                 {field: 'wvg_account_remarks', title: '说明', width: 160},
                 {fixed: 'right', title: '操作', toolbar: '#operation', width: 150}]],
-            url: '/users/userList?token=' +toke,
+            url: '/users/userList?token=' +token,
             //分页
             request:{
                 pageName: 'pageNum',
@@ -129,22 +129,36 @@
         });
 
         //监听事件
-        table.on('toolbar(LAY-user-manage)', function(obj){
+        table.on('tool(LAY-user-manage)', function(obj){
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值
-            var tr = obj.tr; //获得当前行 tr 的DOM对象
-
             if(layEvent=='detail')
             {
+                if(data.changeStr1=='离线'){
+                    layer.open({
+                        title: '用户不在线提示！'
+                        ,content: '当前用户不在线，无法踢下线！'
+                    });
+                    return;
+                }
                 layer.confirm('确定踢出该用户下线吗？', function(index){
                     layer.close(index);
-                    //向服务端发送删除指令
+                    Offline(data.wvg_user_id);
                 });
             }else if(layEvent=='edit'){
                lay.msg('编辑用户吗!');
             }
        });
     });
+function Offline(wvg_user_id) {
+    $.ajax({
+        url:'/users/quit/'+wvg_user_id,
+        success:function (data) {
+            layer.msg(data.message);
+        },
+    })
+}
+
 </script>
 </body>
 </html>

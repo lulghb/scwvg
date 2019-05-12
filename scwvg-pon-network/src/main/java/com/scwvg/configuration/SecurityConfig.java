@@ -86,6 +86,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/page/**",
                 "/favicon.ico",
                 "/img/*",
+                "/static/**",
+                "/js/*",
         };
         http.csrf().disable();
         // 基于token，所以不需要session
