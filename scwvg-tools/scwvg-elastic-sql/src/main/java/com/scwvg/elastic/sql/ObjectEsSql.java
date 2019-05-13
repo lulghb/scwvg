@@ -107,7 +107,7 @@ public class ObjectEsSql implements WvgEsSql {
 
 	@Override
 	public List<Map<String, Object>> queryForListGroup(String sql) throws Exception {
-		return queryForListGroup(sql,  200);
+		return queryForListGroup(sql, 200);
 	}
 
 	@SuppressWarnings({ "rawtypes", "unchecked" })
@@ -117,8 +117,9 @@ public class ObjectEsSql implements WvgEsSql {
 		
 		WvgAggregationQueryAction aqa = (WvgAggregationQueryAction) WvgEsActionFactory.create(client, sql);
 		SearchRequestBuilder srb = aqa.explain(r);
-		if (r != Integer.MIN_VALUE)
-			srb.setFrom(0);
+		
+		srb.setFrom(0);
+		
 		SearchResponse sr = srb.get();
 		Mapp parent = null;
 		List<Mapp> mapps = new ArrayList<>();

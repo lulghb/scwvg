@@ -1,0 +1,403 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>赋值已知数据 - 数据表格</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+  <link rel="stylesheet" href="../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+
+  <div class="layui-card layadmin-header">
+    <div class="layui-breadcrumb" lay-filter="breadcrumb">
+      <a lay-href="">主页</a>
+      <a><cite>组件</cite></a>
+      <a><cite>数据表格</cite></a>
+      <a><cite>简单用法</cite></a>
+    </div>
+  </div>
+  
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-tab layui-tab-brief layadmin-latestData">
+            <ul class="layui-tab-title">
+              <li>OLT资源管理</li>
+              <li>ONU资源管理</li>
+            </ul>
+            <div class="layui-tab-content" style="padding: 0px;">
+              <div class="layui-tab-item layui-show">
+		          <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+		          	<div class="layui-form-item">
+			          <div class="layui-inline">
+			            <label class="layui-form-label">属地</label>
+			            <div class="layui-input-inline layui-form" lay-filter="city_id">
+				            <select id="city_id" name="city_id" lay-verify="">
+							  <option value="">请选择</option>
+							</select>
+						</div>
+			          </div>
+			          <div class="layui-inline">
+			            <label class="layui-form-label">区域</label>
+			            <div class="layui-input-inline">
+				            <select name="res_area" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="0">市区</option>
+							  <option value="1">县城</option>
+							  <option value="2">乡镇</option>
+							</select>
+						</div>
+			          </div>
+			          <div class="layui-inline">
+		                <label class="layui-form-label">专业</label>
+		                <div class="layui-input-inline">
+				            <select name="city" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="2">接入网</option>
+							</select>
+						</div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">设备层次</label>
+		                <div class="layui-input-inline">
+		                	<select name="res_type_id" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="1">OLT</option>
+							  <option value="2">ONU</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">厂商</label>
+		                <div class="layui-input-inline">
+		                	<select name="res_vendor_id" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="1">华为</option>
+							  <option value="2">中兴</option>
+							  <option value="3">烽火</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">蓄电池</label>
+		                <div class="layui-input-inline">
+		                	<select name="isno_battery" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="是">是</option>
+							  <option value="否">否</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">动环</label>
+		                <div class="layui-input-inline">
+		                	<select name="isno_dynamicring" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="是">是</option>
+							  <option value="否">否</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">名称</label>
+		                <div class="layui-input-inline">
+		                	<input type="text" name="res_name" placeholder="请输入" autocomplete="off" class="layui-input">
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">设备IP</label>
+		                <div class="layui-input-inline">
+		                	<input type="text" name="res_ip" placeholder="请输入" autocomplete="off" class="layui-input">
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">SNMP状态</label>
+		                <div class="layui-input-inline">
+		                	<select name="snmp_state" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="0">正常</option>
+							  <option value="1">SNMP异常</option>
+							  <option value="2">PING异常</option>
+							  <option value="3">未知异常</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">Telnet状态</label>
+		                <div class="layui-input-inline">
+		                	<select name="telnet_state" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="0">正常</option>
+							  <option value="1">TELNET异常</option>
+							  <option value="2">未知异常</option>
+							</select>
+		                </div>
+		              </div>
+			          <div class="layui-inline">
+			            <button class="layui-btn layuiadmin-btn-order" lay-submit lay-filter="LAY-olt-search">
+			              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+			            </button>
+			          </div>
+			        </div>
+		          </div>
+		          <div class="layui-card-body">
+		            <table class="layui-hide" id="olt-table-data" lay-filter="olt-table-data"></table>
+		          </div>
+              </div>
+              <div class="layui-tab-item">
+		          <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+		          	<div class="layui-form-item">
+			          <div class="layui-inline">
+			            <label class="layui-form-label">属地</label>
+			            <div class="layui-input-inline layui-form" lay-filter="onu_city_id">
+				            <select id="onu_city_id" name="city_id" lay-verify="">
+							  <option value="">请选择</option>
+							</select>
+						</div>
+			          </div>
+			          <div class="layui-inline">
+			            <label class="layui-form-label">OLT-IP</label>
+			            <div class="layui-input-inline">
+				            <input type="text" name="res_olt_ip" placeholder="请输入" autocomplete="off" class="layui-input">
+						</div>
+			          </div>
+			          <div class="layui-inline">
+		                <label class="layui-form-label">OLT名称</label>
+		                <div class="layui-input-inline">
+				            <input type="text" name="res_olt_name" placeholder="请输入" autocomplete="off" class="layui-input">
+						</div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">PON口</label>
+		                <div class="layui-input-inline">
+		                	<input type="text" name="res_pon_id" placeholder="请输入" autocomplete="off" class="layui-input">
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">PON状态</label>
+		                <div class="layui-input-inline">
+		                	<select name="res_pon_state" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="1">在位</option>
+							  <option value="0">不在位</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">ONU-IP</label>
+		                <div class="layui-input-inline">
+		                	<input type="text" name="res_onu_ip" placeholder="请输入" autocomplete="off" class="layui-input">
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">LOID</label>
+		                <div class="layui-input-inline">
+		                	<input type="text" name="res_onu_loid" placeholder="请输入" autocomplete="off" class="layui-input">
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">在线状态</label>
+		                <div class="layui-input-inline">
+		                	<select name="res_onu_online_state" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="0">在线</option>
+							  <option value="1">断电</option>
+							  <option value="2">断纤</option>
+							  <option value="3">光功率异常</option>
+							  <option value="4">未知异常</option>
+							</select>
+		                </div>
+		              </div>
+		              <div class="layui-inline">
+		                <label class="layui-form-label">采集状态</label>
+		                <div class="layui-input-inline">
+		                	<select name="res_onu_state" lay-verify="">
+							  <option value="">请选择</option>
+							  <option value="1">新增</option>
+							  <option value="2">修改</option>
+							  <option value="3">删除</option>
+							</select>
+		                </div>
+		              </div>
+			          <div class="layui-inline">
+			            <button class="layui-btn layuiadmin-btn-order" lay-submit lay-filter="LAY-onu-search">
+			              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+			            </button>
+			          </div>
+			        </div>
+		          </div>
+		          <div class="layui-card-body">
+		            <table class="layui-hide" id="onu-table-data" lay-filter="olt-table-data"></table>
+		          </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" th:inline="none">
+layui.config({
+    base: '/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function() {
+	  var $ = layui.$
+	  var router = layui.router();
+	  if(router.search.onu == "true") {
+		  $($(".layui-tab-title")[0].children[0]).removeClass("layui-this");
+		  $($(".layui-tab-title")[0].children[1]).addClass("layui-this");
+		  $($(".layui-tab-content")[0].children[0]).removeClass("layui-show");
+		  $($(".layui-tab-content")[0].children[1]).addClass("layui-show");
+	  } else {
+		  $($(".layui-tab-title")[0].children[1]).removeClass("layui-this");
+		  $($(".layui-tab-title")[0].children[0]).addClass("layui-this");
+		  $($(".layui-tab-content")[0].children[1]).removeClass("layui-show");
+		  $($(".layui-tab-content")[0].children[0]).addClass("layui-show");
+	  }
+	  var table = layui.table;
+	  var form = layui.form;
+	  
+	  $.ajax({
+		  url: '/res/getCity?token=' + localStorage.getItem("token"),
+		  dataType: 'json',
+		  success: function(result) {
+			  $.each(result, function(index, item) {
+				  $('#city_id').append(new Option(item.city_name,item.city_id));
+				  $('#onu_city_id').append(new Option(item.city_name,item.city_id));
+			  });
+			  form.render('select', 'city_id');
+			  form.render('select', 'onu_city_id');
+		  }
+	  });
+	  
+	  table.render({
+		  elem: '#olt-table-data',
+		  cols: [[
+			  {field: 'city_name', title: '属地', width: 120},
+			  {field: 'res_name', title: '设备名称', width: 350},
+			  {field: 'res_ip', title: 'IP', width: 140},
+			  {field: 'res_vendor_name', title: '厂家', width: 80},
+			  {field: 'res_model', title: '型号', width: 100},
+			  {field: 'res_os_version', title: 'MIB版本', width: 100},
+			  {field: 'snmp_read', title: 'SNMP读口令', width: 150},
+			  {field: 'snmp_write', title: 'SNMP写口令', width: 150},
+			  {field: 'res_state', title: '状态', width: 100},
+			  {field: 'snmp_state', title: 'SNMP状态', width: 100},
+			  {field: 'telnet_state', title: 'TELNET状态', width: 100},
+			  {field: 'isno_kba', title: '设备验收', width: 100},
+			  {field: 'up_model', title: '上联口模式', width: 100},
+			  {field: 'double_couplet', title: '双上联', width: 130},
+			  {field: 'up_manner', title: '上联方式', width: 200},
+			  {field: 'isno_battery', title: '蓄电池', width: 100},
+			  {field: 'isno_dynamicring', title: '动环情况', width: 100},
+			  {field: 'zd_name', title: '站点名称', width: 200},
+			  {field: 'res_area', title: '区域', width: 100},
+			  {field: 'res_address', title: '地址', width: 100},
+			  {field: 'res_addtime', title: '添加时间', width: 100},
+		  ]],
+	  	  url: '/res/list?token=' + localStorage.getItem("token"),
+	  	  request: {
+	    	  pageName: 'pageNum',
+	    	  limitName: 'pageSize',
+	    	  size: 10,
+	    	  page: 0
+	      },
+	      page: {
+	    	  page: 0
+	      },
+	      parseData: function(res) {
+	    	  return {
+	    		  success: true,
+	    		  data: res.items, //解析数据列表
+	              count:res.totalNum
+	    	  };
+	      },
+	      response: {
+	    	  statusName: 'success',
+	    	  statusCode: true
+	      },
+	      toolbar: 'default',
+	      even: true
+	  });
+	  
+	  table.render({
+		  elem: '#onu-table-data',
+		  cols: [[
+			  {field: 'city_name', title: '属地', width: 120},
+			  {field: 'res_olt_ip', title: 'OLT-IP', width: 140},
+			  {field: 'res_olt_name', title: 'OLT名称', width: 350},
+			  {field: 'res_pon_id', title: 'PON口', width: 80},
+			  {field: 'res_pon_state', title: 'PON口状态', width: 100},
+			  {field: 'res_onu_ip', title: 'ONU-IP', width: 100},
+			  {field: 'res_ont_id', title: 'ONT-ID', width: 80},
+			  {field: 'res_onu_loid', title: 'LOID', width: 150},
+			  {field: 'res_onu_mac', title: 'MAC', width: 150},
+			  {field: 'res_onu_sn', title: 'SN', width: 150},
+			  {field: 'res_onu_online_state', title: '状态', width: 80},
+			  {field: 'res_onu_model', title: '型号', width: 120},
+			  {field: 'res_vendor_name', title: '厂家', width: 80},
+			  {field: 'res_onu_name', title: '名称', width: 130},
+			  {field: 'res_onu_type', title: '类型', width: 80},
+			  {field: 'res_olt_model', title: 'OLT型号', width: 120},
+			  {field: 'res_hardev_version', title: '硬件版本', width: 120},
+			  {field: 'res_soft_version', title: '软件版本', width: 120},
+			  {field: 'res_onu_state', title: '采集状态', width: 100},
+			  {field: 'res_add_date', title: '新增时间', width: 180},
+			  {field: 'res_update_date', title: '修改时间', width: 180},
+			  {field: 'res_delete_date', title: '删除时间', width: 180},
+		  ]],
+	  	  url: '/res_onu/list?token=' + localStorage.getItem("token"),
+	  	  request: {
+	    	  pageName: 'pageNum',
+	    	  limitName: 'pageSize',
+	    	  size: 10,
+	    	  page: 0
+	      },
+	      page: {
+	    	  page: 0
+	      },
+	      parseData: function(res) {
+	    	  return {
+	    		  success: true,
+	    		  data: res.items, //解析数据列表
+	              count:res.totalNum
+	    	  };
+	      },
+	      response: {
+	    	  statusName: 'success',
+	    	  statusCode: true
+	      },
+	      toolbar: 'default',
+	      even: true
+	  });
+	  
+	form.on('submit(LAY-olt-search)', function(data){
+		var field = data.field; 
+		//执行重载
+		table.reload('olt-table-data', {
+	        where: field
+	    });
+	});
+	
+	form.on('submit(LAY-onu-search)', function(data){
+		var field = data.field; 
+		//执行重载
+		table.reload('onu-table-data', {
+	        where: field
+	    });
+	});
+	
+  });
+
+</script>
+</body>
+</html>

@@ -28,7 +28,7 @@ public interface WvgEsSql {
 	
 	List<Map<String, Object>> queryForListGroup(String sql) throws Exception;
 	
-	List<Map<String, Object>> queryForListGroup(String sql,  int r) throws Exception;
+	List<Map<String, Object>> queryForListGroup(String sql, int r) throws Exception;
 	
 	void setClient(Client client);
 

@@ -1,0 +1,145 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>日志详细信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+</head>
+<body>
+
+  <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">属地</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="REGION" id="REGION" class="layui-input" readonly="readonly">
+	    </div>
+	</div>
+	<div class="layui-form-item">
+	    <label class="layui-form-label">运营分局</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="BRANCH_NAME" id="BRANCH_NAME" class="layui-input" readonly="readonly">
+	    </div>
+	</div>
+	<div class="layui-form-item">
+	    <label class="layui-form-label">专业</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="SPECIALTY" id="SPECIALTY" class="layui-input" readonly="readonly">
+	    </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">IP</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="IPADDRESS" id="IPADDRESS" class="layui-input" readonly="readonly">
+	    </div>
+	</div>
+	<div class="layui-form-item">
+	    <label class="layui-form-label">告警对象OLT名称</label>
+	    <div class="layui-input-block">
+	      <input type="text" name="OSS_DEV_NAME" id="OSS_DEV_NAME" class="layui-input" readonly="readonly">
+	    </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">告警名称</label>
+      <div class="layui-input-block">
+        <input type="text" name="ALARMNAME" id="ALARMNAME" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">厂家信息</label>
+      <div class="layui-input-block">
+        <input type="text" name="LOCATIONINFO" id="LOCATIONINFO" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">告警级别</label>
+      <div class="layui-input-block">
+        <input type="text" name="PERCEIVEDSEVERITY" id="PERCEIVEDSEVERITY" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">设备类型</label>
+      <div class="layui-input-block">
+        <input type="text" name="NECLASS" id="NECLASS" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">清除标志</label>
+      <div class="layui-input-block">
+        <input type="text" name="CLEARANCEREPORTFLAG" id="CLEARANCEREPORTFLAG" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">割接标识位</label>
+      <div class="layui-input-block">
+        <input type="text" name="RENOVATE_FLAG" id="RENOVATE_FLAG" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">设备别名</label>
+      <div class="layui-input-block">
+        <input type="text" name="EQUIPMENTNAME_ALIAS" id="EQUIPMENTNAME_ALIAS" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">处理建议</label>
+      <div class="layui-input-block">
+        <input type="text" name="REPAIRACTIONADVICE" id="REPAIRACTIONADVICE" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">告警正文</label>
+      <div class="layui-input-block">
+        <textarea placeholder="请输入内容" name="ADDITIONALTEXT" id="ADDITIONALTEXT" class="layui-textarea" readonly="readonly"></textarea>
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">告警说明</label>
+      <div class="layui-input-block">
+        <input type="text" name="ALARMTEXT" id="ALARMTEXT" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">告警时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="EVENTTIME" id="EVENTTIME" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+    <div class="layui-form-item">
+      <label class="layui-form-label">发送时间</label>
+      <div class="layui-input-block">
+        <input type="text" name="SEND_TIME" id="SEND_TIME" class="layui-input" readonly="readonly">
+      </div>
+    </div>
+
+    <div class="layui-form-item layui-hide">
+      <input type="button" lay-submit lay-filter="LAY-user-front-submit" id="LAY-user-front-submit" value="确认">
+    </div>
+  </div>
+
+  <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <script th:inline="none">
+  
+  function getQueryString(name) { 
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)", "i"); 
+    var r = window.location.search.substr(1).match(reg); 
+    if (r != null) {
+      return unescape(r[2]);
+    }
+    return null; 
+  }
+  function method(data) {
+	  for(var key in data) {
+		  var label = document.getElementById(key);
+		  if(label && data[key] ) {
+			  label.value=data[key];
+		  }
+	  }
+  }
+  </script>
+</body>
+</html>

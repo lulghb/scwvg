@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgResOnuDataMapper">
+    
+    <!-- 分页查询ONU数据 -->
+    <select id="queryByPage" parameterType="map" resultType="java.util.HashMap">
+        SELECT
+			x.res_olt_ip,
+			x.res_olt_name,
+			x.res_pon_id,
+			(
+				CASE
+				WHEN x.res_pon_state = 1 THEN
+					'在位'
+				WHEN x.res_pon_state = 0 THEN
+					'不在位'
+				END
+			) AS res_pon_state,
+			(
+				CASE
+				WHEN x.res_onu_ip = '0.0.0.0' THEN
+					'无'
+				END
+			) AS res_onu_ip,
+			x.res_ont_id,
+			x.res_onu_loid,
+			x.res_onu_mac,
+			x.res_onu_sn,
+			(
+				CASE
+				WHEN x.res_onu_online_state = 0 THEN
+					'在线'
+				WHEN x.res_onu_online_state = 1 THEN
+					'断电'
+		    WHEN x.res_onu_online_state = 2 THEN
+					'断纤'
+				WHEN x.res_onu_online_state = 3 THEN
+					'光功率异常'
+		    WHEN x.res_onu_online_state = 4 THEN
+					'未知异常'
+			END) as res_onu_online_state,
+			x.res_onu_model,
+			v.res_vendor_name,
+			x.res_onu_name,
+			x.res_onu_type,
+			c.city_name,
+			(
+				CASE
+				WHEN x.res_onu_state = 1 THEN
+					'新增'
+				WHEN x.res_onu_state = 2 THEN
+					'修改'
+				WHEN x.res_onu_state = 3 THEN
+					'删除'
+				END
+			) AS res_onu_state,
+			x.res_add_date,
+			x.res_update_date,
+			x.res_delete_date,
+			x.res_olt_model,
+			x.res_hardev_version,
+			x.res_soft_version
+		FROM
+			wvg_res_onu_data x
+		LEFT JOIN wvg_res_vendor v ON x.res_vender_id = v.res_vendor_id
+		LEFT JOIN wvg_city c ON c.city_id = x.city_id
+		<where>
+		    <if test="city_id != null and city_id != ''">
+		        AND x.city_id=#{city_id}
+		    </if>
+		    <if test="res_onu_online_state != null and res_onu_online_state != ''">
+		        AND x.res_onu_online_state=#{res_onu_online_state}
+		    </if>
+		    <if test="res_olt_ip != null and res_olt_ip != ''">
+		        AND x.res_olt_ip=#{res_olt_ip}
+		    </if>
+		    <if test="res_olt_name != null and res_olt_name != ''">
+		        AND x.res_olt_name=#{res_olt_name}
+		    </if>
+		    <if test="res_pon_state != null and res_pon_state != ''">
+		        AND x.res_pon_state=#{res_pon_state}
+		    </if>
+		    <if test="res_onu_ip != null and res_onu_ip != ''">
+		        AND x.res_onu_ip=#{res_onu_ip}
+		    </if>
+		    <if test="res_onu_loid != null and res_onu_loid != ''">
+		        AND x.res_onu_loid=#{res_onu_loid}
+		    </if>
+		    <if test="res_onu_state != null and res_onu_state != ''">
+		        AND x.res_onu_state=#{res_onu_state}
+		    </if>
+		</where>
+        
+    </select>
+    
+    <!-- 查询资源数据详情 -->
+    <select id="get" parameterType="java.lang.String" resultType="java.util.HashMap">
+        SELECT
+			x.res_olt_ip,
+			x.res_olt_name,
+			x.res_pon_id,
+			(
+				CASE
+				WHEN x.res_pon_state = 1 THEN
+					'在位'
+				WHEN x.res_pon_state = 0 THEN
+					'不在位'
+				END
+			) AS res_pon_state,
+			(
+				CASE
+				WHEN x.res_onu_ip = '0.0.0.0' THEN
+					'无'
+				END
+			) AS res_onu_ip,
+			x.res_ont_id,
+			x.res_onu_loid,
+			x.res_onu_mac,
+			x.res_onu_sn,
+			(
+				CASE
+				WHEN x.res_onu_online_state = 0 THEN
+					'在线'
+				WHEN x.res_onu_online_state = 1 THEN
+					'断电'
+		    WHEN x.res_onu_online_state = 2 THEN
+					'断纤'
+				WHEN x.res_onu_online_state = 3 THEN
+					'光功率异常'
+		    WHEN x.res_onu_online_state = 4 THEN
+					'未知异常'
+			END) as res_onu_online_state,
+			x.res_onu_model,
+			v.res_vendor_name,
+			x.res_onu_name,
+			x.res_onu_type,
+			c.city_name,
+			(
+				CASE
+				WHEN x.res_onu_state = 1 THEN
+					'新增'
+				WHEN x.res_onu_state = 2 THEN
+					'修改'
+				WHEN x.res_onu_state = 3 THEN
+					'删除'
+				END
+			) AS res_onu_state,
+			x.res_add_date,
+			x.res_update_date,
+			x.res_delete_date,
+			x.res_olt_model,
+			x.res_hardev_version,
+			x.res_soft_version
+		FROM
+			wvg_res_onu_data x
+		LEFT JOIN wvg_res_vendor v ON x.res_vender_id = v.res_vendor_id
+		LEFT JOIN wvg_city c ON c.city_id = x.city_id
+		
+		WHERE x.res_onu_loid = #{id}
+    </select>
+</mapper>

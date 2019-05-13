@@ -68,12 +68,32 @@ public class PageController {
 	public String userList(){
 		return "user/userManager";
 	}
+
 	/**
-	 * 用户新增
+	 * 资源列表
 	 * @return
 	 */
-	@GetMapping("/user/addUser")
-	public String userAdd(){
-		return "user/addUser";
+	@GetMapping("/res/list")
+	public String res_list(){
+		return "res/list";
 	}
+
+	/**
+	 * 告警查询列表
+	 * @return
+	 */
+	@GetMapping("/am/list")
+	public String am_list(){
+		return "am/list";
+	}
+
+	/**
+	 * 告警明细
+	 * @return
+	 */
+	@GetMapping("/am/detail")
+	public String am_detail(){
+		return "am/detail";
+	}
+
 }

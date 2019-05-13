@@ -1,0 +1,9 @@
+server:
+  port: 8087
+esql:
+  # 集群名称
+  clusterName: wvg-es
+  # ES地址
+  host: 136.192.50.29:9310
+  # 是否开启嗅探
+  sniff: false
