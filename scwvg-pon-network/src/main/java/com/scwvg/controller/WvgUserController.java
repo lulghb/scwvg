@@ -48,6 +48,16 @@ public class WvgUserController {
         return UserUtil.getLoginUser();
     }
 
+
+
+    /*用户新增*/
+    @PostMapping("/add/user")
+    @ApiOperation(value = "用户新增")
+    @PreAuthorize("hasAuthority('users:add')")
+    public Msg saveUser(WvgUser user){
+        return wvgUserService.saveUser(user);
+    }
+
     @GetMapping("/userList")
     @ApiOperation(value = "用户列表")
     @Log("用户列表查询")
@@ -69,4 +79,5 @@ public class WvgUserController {
     public Msg offlineUser(@PathVariable Long wvg_user_id){
         return wvgUserService.userOffline(wvg_user_id);
     }
+
 }

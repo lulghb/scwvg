@@ -69,6 +69,8 @@ public interface WvgUserMapper {
                                        @Param("limit") Integer limit);
 
     /*新增用户*/
+    /*根据用户ID删除用户角色中间表*/
+
     @Options(useGeneratedKeys = true, keyColumn = "wvg_user_id")
     @Insert("insert into wvg_user(wvg_user_id,\n" +
             "wvg_login_name,\n" +
@@ -84,7 +86,6 @@ public interface WvgUserMapper {
             "wvg_password_data,\n" +
             "wvg_add_time,\n" +
             "wvg_update_time,\n" +
-            "wvg_account_type,\n" +
             "wvg_login_time,\n" +
             "wvg_login_ip,\n" +
             "wvg_account_remarks) values" +
@@ -92,6 +93,7 @@ public interface WvgUserMapper {
             "#{wvg_login_name},\n" +
             "#{wvg_real_name},\n" +
             "#{wvg_id_type},\n" +
+            "#{wvg_city_id},\n" +
             "#{wvg_spec_id},\n" +
             "#{wvg_id_number},\n" +
             "#{wvg_user_iphone},\n" +
@@ -101,18 +103,16 @@ public interface WvgUserMapper {
             "#{wvg_password_data},\n" +
             "now(),\n" +
             "now(),\n" +
-            "#{wvg_account_type},\n" +
             "#{wvg_login_time},\n" +
             "#{wvg_login_ip},\n" +
             "#{wvg_account_remarks})")
     public int saveUserInfo(WvgUser wvgUser);
-
-    /*根据用户ID删除用户角色中间表*/
     @Delete("delete from wvg_role_user where wvg_user_id = #{wvg_user_id}")
     public int deleteUserByID(Long wvg_user_id);
 
-    /*新增一组角色（一对多）一个用户属于多个角色*/
-    public int saveUserRoles(@Param("wvg_user_id") Long userId, @Param("roleIds") List<Long> roleIds);
+    /*新增一个角色,系统目前只支持一个用户属于一个角色*/
+    @Update("INSERT into wvg_role_user(wvg_role_id,wvg_user_id) values(#{wvg_role_id},#{wvg_user_id}) ")
+    public int saveUserRoles(@Param("wvg_role_id") Long wvg_role_id, @Param("wvg_user_id") Long wvg_user_id);
     /*修改用户信息*/
     public int updateUserInfo(WvgUser user);
 
@@ -138,4 +138,8 @@ public interface WvgUserMapper {
     public int updateUserOffline(@Param("wvg_user_id") Long wvg_user_id,@Param("wvg_online_state") int wvg_online_state);
     @Select("select user_type_name from wvg_user_type where user_type_id=#{idType}")
     public String queryIdName(int idType);
+
+    /*查询最大的ID*/
+    @Select("SELECT MAX(wvg_user_id) from wvg_user")
+   public int queryMaxUserID();
 }

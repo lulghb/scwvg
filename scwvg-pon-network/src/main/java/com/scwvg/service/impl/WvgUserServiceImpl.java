@@ -31,6 +31,7 @@ import java.util.Map;
 @Service
 public class WvgUserServiceImpl implements WvgUserService {
     private static final Logger log = LoggerFactory.getLogger("WvgUserServiceImpl");
+    private static final String scwvg="www.scwvg.com";
     @Autowired
     private WvgSpecTypeService specTypeService;
     @Autowired
@@ -39,6 +40,17 @@ public class WvgUserServiceImpl implements WvgUserService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; //密码动态加密
 
+    Msg msg =new Msg();
+
+
+    /**
+     * 查询用户表里最大的ID进行+1
+     * @return
+     */
+    public Long querMaxUserId(){
+        int wvg_menu_id=userMapper.queryMaxUserID();
+        return wvg_menu_id+1L;
+    }
     /**
      * 查找所有用户信息
      *
@@ -82,37 +94,51 @@ public class WvgUserServiceImpl implements WvgUserService {
 
     /**
      * 新增用户
-     *
-     * @param roleUsers
      * @return
      */
     @Override
     @Transactional
-    public WvgUser saveUser(WvgRoleUser roleUsers) {
-        WvgUser user = roleUsers;
+    public Msg saveUser(WvgUser user) {
+        user.setWvg_user_id(querMaxUserId());
         user.setWvg_user_password(passwordEncoder.encode(user.getWvg_user_password()));
-        user.setWvg_account_enabled(0);  //账号状态，默认为0 不启用（普通地市用户需要管理员，其他用户启用需要系统管理员）
-        userMapper.saveUserInfo(user);   //用户新增
-        saveRoleUserIds(user.getWvg_user_id(), roleUsers.getRoleIds());  //角色新增
-        log.debug("用户新增！" + user.getWvg_real_name());
-        return user;
+        user.setWvg_account_data(12); //账号有效期默认为12个月
+        user.setWvg_password_data(3); //密码有效期默认为3个月
+        int res= userMapper.saveUserInfo(user);   //用户新增
+        if(res==1){
+            saveRoleUserIds(user); //角色新增*/
+        }
+        else{
+            msg.setMessage("新增用户失败！请访问"+scwvg+"联系系统厂商！");
+            msg.setCode("1");
+            return msg;
+        }
+        msg.setCode("0");
+        return msg;
     }
 
-    //新增用户与角色中间表
-    private void saveRoleUserIds(Long wvg_user_id, List<Long> roleIds) {
-        if (roleIds != null) {
-            userMapper.deleteUserByID(wvg_user_id);
-            if (!CollectionUtils.isEmpty(roleIds)) {
-                userMapper.saveUserRoles(wvg_user_id, roleIds);
-            }
+   //新增用户与角色中间表
+    private Msg saveRoleUserIds(WvgUser user) {
+        if (user.getId() != null && user.getWvg_user_id() !=null) {
+               int res= userMapper.saveUserRoles(user.getId(),user.getWvg_user_id());
+               if(res!=1){
+                   msg.setMessage("新增角色失败！请访问"+scwvg+"联系系统厂商！");
+                  return msg;
+               }
+        }else {
+            msg.setCode("1");
+            msg.setMessage("用户ID或者角色ID为空！请访问"+scwvg+"联系系统厂商！");
+            return msg;
         }
+        msg.setCode("0");
+        msg.setMessage("新增成功！");
+        return msg;
     }
 
     /*修改用户*/
     @Override
     public WvgUser updateUser(WvgRoleUser roleUser) {
         userMapper.updateUserInfo(roleUser);
-        saveRoleUserIds(roleUser.getWvg_user_id(), roleUser.getRoleIds());
+        /*saveRoleUserIds(roleUser.getWvg_user_id(), roleUser.getRoleIds());*/
         return roleUser;
     }
 

@@ -19,7 +19,8 @@ import java.util.Map;
 public interface WvgUserService {
     /*查找所有用户*/
     Page<WvgUser> queryAllUsers(Map<String,Object> params, Page<WvgUser> page);
-    WvgUser saveUser(WvgRoleUser roleUsers);
+    /*新增用户*/
+    Msg saveUser(WvgUser user);
     WvgUser updateUser(WvgRoleUser roleUser);
     WvgUser querUserInfo(String username);
     void changePassword(String username, String oldPassword, String newPassword);

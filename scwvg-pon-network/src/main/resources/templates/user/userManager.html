@@ -42,6 +42,7 @@
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                     <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="users:add">添加</button>
+                    <input id="handle_status" value="" hidden="hidden">
                 </div>
             </div>
         </div>
@@ -65,10 +66,10 @@
         base:"/"
     }).extend({
         index: 'lib/index'
-    }).use(['index','form','table','laydate'], function () {
-        var table = layui.table;
-        var form = layui.form;
+    }).use(['index','form','useradmin','table','laydate'], function () {
         var laydate = layui.laydate;
+        var form = layui.form;
+        var table = layui.table;
         /*设置表头，获取数据*/
         table.render({
             elem: '#LAY-user-manage',
@@ -132,22 +133,28 @@
             layer.open({
                 type:2,
                 title: '添加用户',
-                content:'/page/user/addUser',
+                content: ['/page/user/addUser', 'no'],
                 maxmin: true,
                 area:['680px','500px'],
-                btn: ['确定', '取消'],
-                yes:function (index,layero) {
-                    var iframeWindow = window['layui-layer-iframe'+ index]
-                        ,submitID = 'LAY-user-front-submit'
-                        ,submit = layero.find('iframe').contents().find('#'+ submitID);
-                    //监听提交
-                    iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
-                        var field = data.field; //获取提交的字段
-
-
-                        table.reload('LAY-user-front-submit'); //数据刷新
-                        layer.close(index); //关闭弹层
-                    });
+                success:function(layero,index){
+                },
+                end:function() {
+                    var handle_status = $("#handle_status").val();
+                    if (handle_status == '0') {
+                        layer.msg('添加成功！', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            history.go(0);
+                        });
+                    } else if (handle_status == '1') {
+                        layer.msg('添加失败！', {
+                            icon: 2,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            history.go(0);
+                        });
+                    }
                 }
             });
         });
@@ -181,6 +188,7 @@ function Offline(wvg_user_id) {
             layer.msg(data.message);
         },
     })
+
 }
 
 </script>

@@ -17,11 +17,11 @@
         <div class="layui-form-item">
                 <label class="layui-form-label">用户名:</label>
             <div class="layui-input-inline">
-                <input type="text" name="wvg_user_name" lay-verify="required" placeholder="推荐使用地市名首字母_姓名拼音如:hrb_zhangsan" autocomplete="off" class="layui-input">
+                <input type="text" name="wvg_login_name" id="wvg_login_name" lay-verify="required" placeholder="推荐使用地市名首字母_姓名拼音如:hrb_zhangsan" autocomplete="off" class="layui-input">
             </div>
                 <label class="layui-form-label">密  码:</label>   <!--placeholder="推荐初始密码为：ponsystem@123456"-->
             <div class="layui-input-inline">
-                <input type="password" name="wvg_user_password" lay-verify="required" value="ponsystem@123456" autocomplete="off" class="layui-input">
+                <input type="password" disabled="disabled" name="wvg_user_password" lay-verify="required" value="ponsystem@123456" autocomplete="off" class="layui-input">
             </div>
         </div>
         <div class="layui-form-item">
@@ -37,13 +37,13 @@
         <div class="layui-form-item">
             <label class="layui-form-label">身份类型:</label>
             <div class="layui-input-inline" lay-filter="userID">
-                <select name="cityuser" lay-verify="required" lay-search  id="userid">
+                <select name="userid" lay-verify="required" lay-search  id="userid">
                     <option value="">请选择身份类型</option>
                 </select>
             </div>
                 <label class="layui-form-label">证件号码:</label>
             <div class="layui-input-inline">
-                <input type="text" name="wvg_id_number" lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input">
+                <input type="text" name="wvg_id_number" lay-verify="identity" placeholder="请输入证件号码" autocomplete="off" class="layui-input">
             </div>
         </div>
        <div class="layui-form-item">
@@ -69,14 +69,26 @@
            </div>
            <label class="layui-form-label">是否启用:</label>
            <div class="layui-input-inline">
-               <input type="radio" name="sex" value="1" title="启用" checked>
-               <input type="radio" name="sex" value="0" title="禁用">
+               <input type="radio" name="wvg_account_enabled" value="1" title="启用" checked>
+               <input type="radio" name="wvg_account_enabled" value="0" title="禁用">
            </div>
        </div>
        <div class="layui-card-body layui-text layadmin-text">
            <p>注意：【1】账号有效期默认为：12个月</p>
            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【2】密码有效期默认为：3个月</p>
            <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【3】初始化默认密码为：ponsystem@123456</p>
+       </div>
+       <div class="form-actions">
+           <div class="row" align="center">
+               <div class="col-md-12">
+                   <button class="layui-btn layui-btn-radius"  lay-submit lay-filter="add">
+                       <i class="layui-icon">&#xe608;</i> 添加
+                   </button>
+                 <!--  <button class="layui-btn layui-btn-radius layui-btn-warm" lay-submit lay-filter="revert">
+                       <i></i> 返回
+                   </button>-->
+               </div>
+           </div>
        </div>
    </div>
    <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
@@ -85,11 +97,38 @@
    <script type="text/javascript" src="../../js/select.js"></script>
 
    <script th:inline="none">
-    layui.use(['layer', 'form', 'element'], function(){
-        var layer = layui.layer
-            ,form = layui.form
-            ,element = layui.element
-    });
+       var token=localStorage.getItem("token");
+       layui.config({
+           base: '/' //静态资源所在路径
+       }).extend({
+           index: 'lib/index' //主入口模块
+       }).use(['layer', 'form', 'element'], function(){
+           var layer = layui.layer
+               ,form = layui.form
+               ,element = layui.element
+           form.on('submit(add)',function (data) {
+               var field = data.field;
+               field.wvg_id_type=$("#userid").val();
+               field.wvg_spec_id=$("#userspec").val();
+               field.wvg_city_id=$("#usercity").val();
+               field.id=$("#userrole").val();
+               $.ajax({
+                   type:'post',
+                   url:'/users/add/user?token='+token,
+                   data:field,
+                   success:function (data) {
+                       var index = parent.layer.getFrameIndex(window.name);
+                       if(data.code=="0"){
+                           parent.$("#handle_status").val('0');
+                           parent.layer.close(index);
+                       }else if( success == '1' ) {
+                           parent.$("#handle_status").val('1');
+                           parent.layer.close(index);
+                       }
+                   },
+               })
+           })
+       });
    </script>
 </body>
 </html>
