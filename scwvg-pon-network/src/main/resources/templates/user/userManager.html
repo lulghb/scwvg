@@ -41,7 +41,7 @@
                     <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
-                    <button class="layui-btn layuiadmin-btn-useradmin" id="adduser" data-type="add" permission="users:add">添加</button>
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="users:add">添加</button>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
         base:"/"
     }).extend({
         index: 'lib/index'
-    }).use(['index','table','laydate'], function () {
+    }).use(['index','form','table','laydate'], function () {
         var table = layui.table;
         var form = layui.form;
         var laydate = layui.laydate;
@@ -75,7 +75,7 @@
             //二维数组表头,详见layui官方文档
             cols:[[ {field: 'wvg_login_name', title: '登录名', width: 80},
                 {field: 'wvg_real_name', title: '真实姓名', width: 120},
-                {field: 'wvg_id_type', title: '身份类型', width: 120},
+                {field: 'changeStr4', title: '身份类型', width: 120},
                 {field: 'changeStr3', title: '用户属地', width: 120},
                 {field: 'changeStr', title: '用户专业', width: 80},
                 {field: 'wvg_id_number', title: '身份证号', width: 120},
@@ -127,7 +127,30 @@
                 where:field
             });
         });
+        /*监听添加*/
+        form.on('submit(add)',function () {
+            layer.open({
+                type:2,
+                title: '添加用户',
+                content:'/page/user/addUser',
+                maxmin: true,
+                area:['680px','500px'],
+                btn: ['确定', '取消'],
+                yes:function (index,layero) {
+                    var iframeWindow = window['layui-layer-iframe'+ index]
+                        ,submitID = 'LAY-user-front-submit'
+                        ,submit = layero.find('iframe').contents().find('#'+ submitID);
+                    //监听提交
+                    iframeWindow.layui.form.on('submit('+ submitID +')', function(data){
+                        var field = data.field; //获取提交的字段
 
+
+                        table.reload('LAY-user-front-submit'); //数据刷新
+                        layer.close(index); //关闭弹层
+                    });
+                }
+            });
+        });
         //监听事件
         table.on('tool(LAY-user-manage)', function(obj){
             var data = obj.data; //获得当前行数据
@@ -154,6 +177,7 @@ function Offline(wvg_user_id) {
     $.ajax({
         url:'/users/quit/'+wvg_user_id,
         success:function (data) {
+            table.reload('LAY-user-manage'); //数据刷新
             layer.msg(data.message);
         },
     })
