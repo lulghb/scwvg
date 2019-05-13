@@ -12,6 +12,7 @@ import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ReactiveTypeDescriptor;
 import org.springframework.http.HttpRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -68,5 +69,4 @@ public class WvgUserController {
     public Msg offlineUser(@PathVariable Long wvg_user_id){
         return wvgUserService.userOffline(wvg_user_id);
     }
-
 }
