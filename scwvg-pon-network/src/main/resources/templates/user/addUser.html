@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>新增页面</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+   <div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+        <div class="layui-form-item">
+                <label class="layui-form-label">用户名:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wvg_user_name" lay-verify="required" placeholder="推荐使用地市名首字母_姓名拼音如:hrb_zhangsan" autocomplete="off" class="layui-input">
+            </div>
+                <label class="layui-form-label">密  码:</label>   <!--placeholder="推荐初始密码为：ponsystem@123456"-->
+            <div class="layui-input-inline">
+                <input type="password" name="wvg_user_password" lay-verify="required" value="ponsystem@123456" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+                <label class="layui-form-label">真实姓名:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wvg_real_name" lay-verify="required" placeholder="请输入用户真实姓名" autocomplete="off" class="layui-input">
+            </div>
+                <label class="layui-form-label">手机号码:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wvg_user_iphone" lay-verify="required" placeholder="请输入11位手机号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">身份类型:</label>
+            <div class="layui-input-inline" lay-filter="userID">
+                <select name="cityuser" lay-verify="required" lay-search  id="userid">
+                    <option value="">请选择身份类型</option>
+                </select>
+            </div>
+                <label class="layui-form-label">证件号码:</label>
+            <div class="layui-input-inline">
+                <input type="text" name="wvg_id_number" lay-verify="required" placeholder="请输入证件号码" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+       <div class="layui-form-item">
+                 <label class="layui-form-label">用户专业:</label>
+           <div class="layui-input-inline">
+               <select lay-filter="spec" name="specuser" lay-verify="required"  lay-search id="userspec">
+                   <option value="">请选择专业</option>
+               </select>
+           </div>
+                 <label class="layui-form-label">用户属地:</label>
+           <div class="layui-input-inline">
+               <select lay-filter="city" name="cityuser" lay-verify="required"  lay-search id="usercity">
+                   <option value="">请选择专业</option>
+               </select>
+           </div>
+       </div>
+       <div class="layui-form-item">
+           <label class="layui-form-label">用户角色:</label>
+           <div class="layui-input-inline">
+               <select lay-filter="role" name="roleuser" lay-verify="required"  lay-search id="userrole">
+                   <option value="">请选择角色</option>
+               </select>
+           </div>
+           <label class="layui-form-label">是否启用:</label>
+           <div class="layui-input-inline">
+               <input type="radio" name="sex" value="1" title="启用" checked>
+               <input type="radio" name="sex" value="0" title="禁用">
+           </div>
+       </div>
+       <div class="layui-card-body layui-text layadmin-text">
+           <p>注意：【1】账号有效期默认为：12个月</p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【2】密码有效期默认为：3个月</p>
+           <p>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;【3】初始化默认密码为：ponsystem@123456</p>
+       </div>
+   </div>
+   <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+   <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+   <script type="text/javascript" src="../../js/jq.js"></script>
+   <script type="text/javascript" src="../../js/select.js"></script>
+
+   <script th:inline="none">
+    layui.use(['layer', 'form', 'element'], function(){
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element
+    });
+   </script>
+</body>
+</html>
