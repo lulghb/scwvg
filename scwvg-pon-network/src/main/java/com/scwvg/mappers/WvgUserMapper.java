@@ -17,6 +17,13 @@ import java.util.Map;
  **/
 @Mapper
 public interface WvgUserMapper {
+    @Select("select count(1) from wvg_user where (wvg_login_name = #{wvg_login_name} " +
+            "OR wvg_id_number = #{wvg_user_iphone} " +
+            "OR wvg_user_iphone = #{wvg_id_number})")
+    public int querUserNameAndIhoneAndIdnumber(@Param("wvg_login_name")  String wvg_login_name,
+                                                   @Param("wvg_user_iphone")  String wvg_user_iphone,
+                                                   @Param("wvg_id_number")  String wvg_id_number);
+
     @Update("update wvg_user set wvg_login_time=SYSDATE()," +
             "wvg_login_ip=#{wvg_login_ip}," +
             "wvg_online_state=#{wvg_online_state} " +
@@ -142,4 +149,6 @@ public interface WvgUserMapper {
     /*查询最大的ID*/
     @Select("SELECT MAX(wvg_user_id) from wvg_user")
    public int queryMaxUserID();
+
+
 }

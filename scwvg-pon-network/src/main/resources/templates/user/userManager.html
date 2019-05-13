@@ -148,7 +148,7 @@
                             history.go(0);
                         });
                     } else if (handle_status == '1') {
-                        layer.msg('添加失败！', {
+                        layer.msg('添加失败,请联系系统厂商处理！', {
                             icon: 2,
                             time: 2000 //2秒关闭（如果不配置，默认是3秒）
                         }, function () {
@@ -176,7 +176,7 @@
                     Offline(data.wvg_user_id);
                 });
             }else if(layEvent=='edit'){
-               lay.msg('编辑用户吗!');
+               alert("用户修改！");
             }
        });
     });

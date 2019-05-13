@@ -84,9 +84,6 @@
                    <button class="layui-btn layui-btn-radius"  lay-submit lay-filter="add">
                        <i class="layui-icon">&#xe608;</i> 添加
                    </button>
-                 <!--  <button class="layui-btn layui-btn-radius layui-btn-warm" lay-submit lay-filter="revert">
-                       <i></i> 返回
-                   </button>-->
                </div>
            </div>
        </div>
@@ -121,7 +118,7 @@
                        if(data.code=="0"){
                            parent.$("#handle_status").val('0');
                            parent.layer.close(index);
-                       }else if( success == '1' ) {
+                       }else if(data.code == '1' ) {
                            parent.$("#handle_status").val('1');
                            parent.layer.close(index);
                        }

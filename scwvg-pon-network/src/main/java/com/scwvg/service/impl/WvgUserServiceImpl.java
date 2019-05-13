@@ -99,6 +99,12 @@ public class WvgUserServiceImpl implements WvgUserService {
     @Override
     @Transactional
     public Msg saveUser(WvgUser user) {
+        int users = userMapper.querUserNameAndIhoneAndIdnumber(user.getWvg_login_name(),user.getWvg_user_iphone(),user.getWvg_id_number());
+        if(users !=0){
+            msg.setMessage("新增用户失败！已存在该用户，请访问"+scwvg+"联系系统厂商处理！");
+            msg.setCode("1");
+            return msg;
+        }
         user.setWvg_user_id(querMaxUserId());
         user.setWvg_user_password(passwordEncoder.encode(user.getWvg_user_password()));
         user.setWvg_account_data(12); //账号有效期默认为12个月
