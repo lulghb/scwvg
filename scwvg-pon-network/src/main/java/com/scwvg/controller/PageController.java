@@ -76,6 +76,14 @@ public class PageController {
 	public String userAdd(){
 		return "user/addUser";
 	}
+	/**
+	 * 用户修改
+	 * @return
+	 */
+	@GetMapping("/user/editUser")
+	public String userEdit(){
+		return "user/editUser";
+	}
 
 	/**
 	 * 资源列表

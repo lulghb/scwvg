@@ -26,7 +26,7 @@
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">真实姓名</label>
+                    <label class="layui-form-label" lay-size="sm">真实姓名</label>
                     <div class="layui-input-block">
                         <input class="layui-input" type="text" name="wvg_real_name" placeholder="真实姓名" autocomplete="off">
                     </div>
@@ -43,6 +43,7 @@
                     </button>
                     <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="users:add">添加</button>
                     <input id="handle_status" value="" hidden="hidden">
+                    <!--<span class="layui-btn layui-btn-sm layui-btn-pink" lay-event="autoRefresh" data-time="500">自动刷新(refresh)</span>-->
                 </div>
             </div>
         </div>
@@ -50,9 +51,10 @@
         <div class="layui-card-body">
             <table id="LAY-user-manage" lay-filter="LAY-user-manage"></table>
             <script type="text/html" id="operation">
-                <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail" permission="users:quit">踢下线</a>
-                <a class="layui-btn layui-btn-xs" lay-event="edit" permission="users:update">编辑</a>
-                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" permission="users:del">删除</a>
+                <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="detail" permission="users:quit">踢下线</a>
+                <a class="layui-btn layui-btn-sm" lay-event="edit" id="edit" permission="users:update">编辑</a>
+                <a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="reset" permission="users:update">密码重置</a>
+                <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" permission="users:del">删除</a>
             </script>
         </div>
     </div>
@@ -73,7 +75,8 @@
         /*设置表头，获取数据*/
         table.render({
             elem: '#LAY-user-manage',
-            //二维数组表头,详见layui官方文档
+            sort: true,
+            smartReloadModel: true,// 是否开启智能reload的模式
             cols:[[ {field: 'wvg_login_name', title: '登录名', width: 80},
                 {field: 'wvg_real_name', title: '真实姓名', width: 120},
                 {field: 'changeStr4', title: '身份类型', width: 120},
@@ -90,7 +93,7 @@
                 {field: 'wvg_login_time', title: '账号登录时间', width: 160},
                 {field: 'wvg_login_ip', title: '账号登录IP', width: 160},
                 {field: 'wvg_account_remarks', title: '说明', width: 160},
-                {fixed: 'right', title: '操作', toolbar: '#operation', width: 150}]],
+                {fixed: 'right', title: '操作', toolbar: '#operation', width: 100}]],
             url: '/users/userList?token=' +token,
             //分页
             request:{
@@ -117,7 +120,6 @@
             toolbar: 'default', //让工具栏左侧显示默认的内置模板
             even: true
         });
-
 
         /*监听搜索*/
         form.on('submit(LAY-user-front-search)',function (data) {
@@ -158,7 +160,25 @@
                 }
             });
         });
-        //监听事件
+
+        //解决隐藏工具条无法点击
+        $(document).off('mousedown','.layui-table-grid-down')
+           .on('mousedown','.layui-table-grid-down',function(event) {
+            table._tableTrCurr=$(this).closest('td');
+        });
+        $(document).off('click','.layui-table-tips-main [lay-event]')
+             .on('click', '.layui-table-tips-main [lay-event]', function(event){
+                 var elem=$(this);
+                 var tableTrCurr=table._tableTrCurr;
+                 if(!tableTrCurr){
+                    return;
+                 }
+                 var layerIndex=elem.closest('.layui-table-tips').attr('times');
+                 layer.close(layerIndex);
+                 table._tableTrCurr.find('[lay-event="'+elem.attr('lay-event')+'"]').click();//fires()
+        });
+
+        //工具监听事件
         table.on('tool(LAY-user-manage)', function(obj){
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值
@@ -176,7 +196,75 @@
                     Offline(data.wvg_user_id);
                 });
             }else if(layEvent=='edit'){
-               alert("用户修改！");
+                layer.open({
+                    type:2,
+                    title: '修改用户',
+                    content: ['/page/user/editUser', 'no'],
+                    maxmin: true,
+                    area:['680px','400px'],
+                    success:function(layero,index){
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#wvg_user_id").val(data.wvg_user_id);
+                        body.find("#wvg_login_name").val(data.wvg_login_name);
+                        body.find("#wvg_real_name").val(data.wvg_real_name);
+                        body.find("#wvg_user_iphone").val(data.wvg_user_iphone);
+                        body.find("#wvg_id_number").val(data.wvg_id_number);
+                        body.find("#wvg_user_password").val(data.wvg_user_password);
+                        /*body.find("#userid").field("option[value="+data.wvg_id_type+"]").attr('selected',true).option.innerText='';*/
+                        form.render();
+                    },
+                    end:function() {
+                        var handle_status = $("#handle_status").val();
+                        if (handle_status == '0') {
+                            layer.msg('修改成功！', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }/*, function () {
+                                history.go(0);
+                            }*/);
+                        } else if (handle_status == '1') {
+                            layer.msg('修改失败,请联系系统厂商处理！', {
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function () {
+                                history.go(0);
+                            });
+                        }
+                    }
+                });
+            }
+            else if(layEvent=='reset'){
+                layer.confirm('确定重置该用户密码为初始密码：' +
+                    'ponsystem@123456', function(index){
+                    layer.close(index);
+                $.ajax({
+                    url:'/users/reset/'+data.wvg_user_id,
+                    data:data,
+                    success:function (data) {
+                        layer.msg(data.message, {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        });
+                    }
+                })
+                });
+            }
+            else if(layEvent=='del'){
+                layer.confirm('确定删除该用户吗？', function(index){
+                    layer.close(index);
+                    $.ajax({
+                        url:'/users/delete/'+data.wvg_user_id,
+                        data:data,
+                        success:function (data) {
+                            layer.msg(data.message, {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function () {
+                                history.go(0);
+                            });
+                        }
+                    })
+                });
             }
        });
     });

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>修改用户</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+<div class="layui-form" lay-filter="userEdit" id="userEdit" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">用户名:</label>
+        <div class="layui-input-inline">
+            <input id="wvg_user_id" value="" hidden="hidden">
+            <input type="text" disabled="disabled" name="wvg_login_name" id="wvg_login_name" lay-verify="required" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">密  码:</label>
+        <div class="layui-input-inline">
+            <input type="password" disabled="disabled" name="wvg_user_password" id="wvg_user_password" lay-verify="required|pass"  autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">真实姓名:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="wvg_real_name" id="wvg_real_name" lay-verify="required" placeholder="请输入用户真实姓名" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">手机号码:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="wvg_user_iphone" id="wvg_user_iphone" lay-verify="required|phone|number"  placeholder="请输入11位手机号码" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">身份类型:</label>
+        <div class="layui-input-inline" lay-filter="userID">
+            <select name="userid" lay-verify="required" lay-search  id="userid">
+                <option value="">请选择身份类型</option>
+            </select>
+        </div>
+        <label class="layui-form-label">证件号码:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="wvg_id_number" id="wvg_id_number" lay-verify="identity" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">用户专业:</label>
+        <div class="layui-input-inline">
+            <select lay-filter="spec" name="specuser" lay-verify="required"  lay-search id="userspec">
+                <option value="">请选择专业</option>
+            </select>
+        </div>
+        <label class="layui-form-label">用户属地:</label>
+        <div class="layui-input-inline">
+            <select lay-filter="city" name="cityuser" lay-verify="required"  lay-search id="usercity">
+                <option value="">请选择专业</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item" pane>
+        <label class="layui-form-label">用户角色:</label>
+        <div class="layui-input-inline">
+            <select lay-filter="role" name="roleuser" lay-verify="required"  lay-search id="userrole">
+                <option value="">请选择角色</option>
+            </select>
+        </div>
+        <label class="layui-form-label">是否启用:</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="wvg_account_enabled" value="1" title="启用" checked>
+            <input type="radio" name="wvg_account_enabled" value="0" title="禁用">
+        </div>
+    </div>
+    <div class="form-actions">
+        <div class="row" align="center">
+            <div class="col-md-12">
+                <button class="layui-btn"  lay-submit lay-filter="edit">
+                     确认修改
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/select.js"></script>
+
+<script th:inline="none">
+    var token=localStorage.getItem("token");
+    layui.config({
+        base: '/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['layer', 'form', 'element'], function(){
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element
+
+        /*密码校验*/
+        form.verify({
+            //数组的两个值分别代表：[正则匹配、匹配不符时的提示文字]
+            pass: [
+                /(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[^a-zA-Z0-9]).{8,30}/,
+                '密码中必须包含字母、数字、特殊字符并且至少8个字符，最多30个字符'
+            ]
+        });
+
+        form.on('submit(edit)',function (data) {
+            var field = data.field;
+            field.wvg_user_id=$("#wvg_user_id").val();
+            field.wvg_id_type=$("#userid").val();
+            field.wvg_spec_id=$("#userspec").val();
+            field.wvg_city_id=$("#usercity").val();
+            field.id=$("#userrole").val();
+            $.ajax({
+                type:'post',
+                url:'/users/edit/user?token='+token,
+                data:field,
+                success:function (data) {
+                    var index = parent.layer.getFrameIndex(window.name);
+                    if(data.code=="0"){
+                        parent.$("#handle_status").val('0');
+                        parent.layer.close(index);
+                    }else if(data.code == '1' ) {
+                        parent.$("#handle_status").val('1');
+                        parent.layer.close(index);
+                    }
+                },
+            })
+        })
+    });
+</script>
+</body>
+</html>

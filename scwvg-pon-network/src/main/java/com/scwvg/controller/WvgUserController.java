@@ -49,15 +49,6 @@ public class WvgUserController {
     }
 
 
-
-    /*用户新增*/
-    @PostMapping("/add/user")
-    @ApiOperation(value = "用户新增")
-    @PreAuthorize("hasAuthority('users:add')")
-    public Msg saveUser(WvgUser user){
-        return wvgUserService.saveUser(user);
-    }
-
     @GetMapping("/userList")
     @ApiOperation(value = "用户列表")
     @Log("用户列表查询")
@@ -73,6 +64,24 @@ public class WvgUserController {
         pageInfo.setItems(queryAllUser.getResult());
         return pageInfo;
     }
+
+    /*用户新增*/
+    @PostMapping("/add/user")
+    @ApiOperation(value = "用户新增")
+    @Log("用户新增")
+    @PreAuthorize("hasAuthority('users:add')")
+    public Msg saveUser(WvgUser user){
+        return wvgUserService.saveUser(user);
+    }
+    /*用户修改*/
+    @PostMapping("/edit/user")
+    @ApiOperation(value = "用户修改")
+    @Log("用户修改")
+    @PreAuthorize("hasAuthority('users:update')")
+    public Msg editUser(WvgUser user){
+        return wvgUserService.updateUser(user);
+    }
+
     @GetMapping("/quit/{wvg_user_id}")
     @Log("用户退出，踢用户下线")
     @PreAuthorize("hasAuthority('users:quit')")
@@ -80,4 +89,17 @@ public class WvgUserController {
         return wvgUserService.userOffline(wvg_user_id);
     }
 
+    @GetMapping("/reset/{wvg_user_id}")
+    @Log("密码重置！")
+    @PreAuthorize("hasAuthority('users:reset')")
+    public Msg reset(@PathVariable Long wvg_user_id){
+        return wvgUserService.userReset(wvg_user_id);
+    }
+
+    @GetMapping("/delete/{wvg_user_id}")
+    @Log("用户删除！")
+    @PreAuthorize("hasAuthority('users:del')")
+    public Msg delete(@PathVariable Long wvg_user_id){
+        return wvgUserService.deleteUser(wvg_user_id);
+    }
 }

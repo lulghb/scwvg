@@ -24,6 +24,7 @@ public interface WvgUserMapper {
                                                    @Param("wvg_user_iphone")  String wvg_user_iphone,
                                                    @Param("wvg_id_number")  String wvg_id_number);
 
+    /*修改用户在线信息*/
     @Update("update wvg_user set wvg_login_time=SYSDATE()," +
             "wvg_login_ip=#{wvg_login_ip}," +
             "wvg_online_state=#{wvg_online_state} " +
@@ -114,7 +115,9 @@ public interface WvgUserMapper {
             "#{wvg_login_ip},\n" +
             "#{wvg_account_remarks})")
     public int saveUserInfo(WvgUser wvgUser);
-    @Delete("delete from wvg_role_user where wvg_user_id = #{wvg_user_id}")
+
+    /*通过用户ID删除用户*/
+    @Delete("delete from wvg_user where wvg_user_id = #{wvg_user_id}")
     public int deleteUserByID(Long wvg_user_id);
 
     /*新增一个角色,系统目前只支持一个用户属于一个角色*/
@@ -122,7 +125,7 @@ public interface WvgUserMapper {
     public int saveUserRoles(@Param("wvg_role_id") Long wvg_role_id, @Param("wvg_user_id") Long wvg_user_id);
     /*修改用户信息*/
     public int updateUserInfo(WvgUser user);
-
+    /*查询所有用户信息*/
     public Page<WvgUser> queryAllUserByPage(Map<String, Object> params);
 
     /*token刷新或者过期或者用户未登录先进行删除登录IP，登录时间，登录状态*/
@@ -146,9 +149,14 @@ public interface WvgUserMapper {
     @Select("select user_type_name from wvg_user_type where user_type_id=#{idType}")
     public String queryIdName(int idType);
 
+    /*删除角色用户中间表*/
+    @Delete("delete from wvg_role_user where wvg_user_id=#{wvg_user_id}")
+    public int deleteRoleUserId(Long wvg_user_id);
+
     /*查询最大的ID*/
     @Select("SELECT MAX(wvg_user_id) from wvg_user")
    public int queryMaxUserID();
+
 
 
 }

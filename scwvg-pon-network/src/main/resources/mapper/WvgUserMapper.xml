@@ -4,9 +4,6 @@
     <update id="updateUserInfo">
         update wvg_user x
         <set>
-            <if test="wvg_login_name != null">
-                wvg_login_name = #{wvg_login_name},
-            </if>
             <if test="wvg_real_name != null">
                 wvg_real_name = #{wvg_real_name},
             </if>
@@ -22,35 +19,16 @@
             <if test="wvg_user_iphone != null">
                 wvg_user_iphone = #{wvg_user_iphone},
             </if>
-            <if test="wvg_account_data != null">
-                wvg_account_data = #{wvg_account_data},
-            </if>
             <if test="wvg_account_enabled != null">
                 wvg_account_enabled = #{wvg_account_enabled},
             </if>
             <if test="wvg_user_password != null">
                 wvg_user_password = #{wvg_user_password},
             </if>
-
-            <if test="wvg_password_data != null">
-                wvg_password_data = #{wvg_password_data},
-            </if>
             <if test="wvg_add_time != null">
-                wvg_add_time = #{wvg_add_time},
+                wvg_add_time = now(),
             </if>
-            wvg_update_time = #{wvg_update_time},
-            <if test="wvg_user_password != null">
-                wvg_account_type = #{wvg_account_type},
-            </if>
-            <if test="wvg_user_password != null">
-                wvg_login_time = #{wvg_login_time},
-            </if>
-            <if test="wvg_login_ip != null">
-                wvg_login_ip = #{wvg_login_ip},
-            </if>
-            <if test="wvg_account_remarks != null">
-                wvg_account_remarks = #{wvg_account_remarks},
-            </if>
+               wvg_update_time = now()
         </set>
         where x.wvg_user_id = #{wvg_user_id}
     </update>

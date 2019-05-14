@@ -4,11 +4,13 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.*;
+import com.scwvg.mappers.WvgTokenMapper;
 import com.scwvg.mappers.WvgUserMapper;
 import com.scwvg.service.WvgSpecTypeService;
 import com.scwvg.service.WvgUserService;
 import com.scwvg.utils.IpUtils;
 import com.scwvg.utils.RequestHolder;
+import com.scwvg.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,8 @@ public class WvgUserServiceImpl implements WvgUserService {
     private WvgSpecTypeService specTypeService;
     @Autowired
     private WvgUserMapper userMapper; //用户操作mapper注入进来
+    @Autowired
+    private WvgTokenMapper tokenMapper;
 
     @Autowired
     private BCryptPasswordEncoder passwordEncoder; //密码动态加密
@@ -127,25 +131,33 @@ public class WvgUserServiceImpl implements WvgUserService {
         if (user.getId() != null && user.getWvg_user_id() !=null) {
                int res= userMapper.saveUserRoles(user.getId(),user.getWvg_user_id());
                if(res!=1){
-                   msg.setMessage("新增角色失败！请访问"+scwvg+"联系系统厂商！");
-                  return msg;
+                   msg.setCode("1");
+                   msg.setMessage("失败！请访问"+scwvg+"联系系统厂商！");
+               }
+               else {
+                   msg.setCode("0");
+                   msg.setMessage("成功！");
                }
         }else {
             msg.setCode("1");
             msg.setMessage("用户ID或者角色ID为空！请访问"+scwvg+"联系系统厂商！");
-            return msg;
         }
-        msg.setCode("0");
-        msg.setMessage("新增成功！");
         return msg;
     }
 
     /*修改用户*/
     @Override
-    public WvgUser updateUser(WvgRoleUser roleUser) {
-        userMapper.updateUserInfo(roleUser);
-        /*saveRoleUserIds(roleUser.getWvg_user_id(), roleUser.getRoleIds());*/
-        return roleUser;
+    public Msg updateUser(WvgUser user) {
+        int res =userMapper.updateUserInfo(user);
+        if(res ==1){
+            saveRoleUserIds(user);
+        }
+        else {
+            msg.setCode("1");
+            msg.setMessage("用户修改失败！请访问"+scwvg+"联系系统厂商！");
+
+        }
+        return msg;
     }
 
     /*根据用户名查询用户*/
@@ -198,5 +210,48 @@ public class WvgUserServiceImpl implements WvgUserService {
            msg.setMessage("剔下线失败！");
            return msg;
        }
+    }
+
+    @Override
+    public Msg userReset(Long wvg_user_id) {
+        int res;
+        if(wvg_user_id.equals("") || "".equals(wvg_user_id) || "null".equals(wvg_user_id)){
+         msg.setCode("1");
+         msg.setMessage("未获取到该用户！");
+        }
+        else {
+            String pwd=passwordEncoder.encode("ponsystem@123456");
+            res= userMapper.changePassword(wvg_user_id,pwd);
+            if(res==1){
+                res =tokenMapper.queryCountByUserid(wvg_user_id);
+                if(res !=0 ){
+                    res=tokenMapper.deleteUserId(wvg_user_id);
+                    msg.setMessage(res==1?"用户密码重置成功!":"用户密码重置失败,请访问"+scwvg+"联系系统厂商！");
+                }
+                else {
+                    msg.setMessage(res==1?"用户密码重置成功!":"用户密码重置成功!");
+                }
+            }
+        }
+        return msg;
+    }
+
+    @Override
+    public Msg deleteUser(Long wvg_user_id) {
+        int res;
+        if(wvg_user_id.equals("") || "".equals(wvg_user_id) || "null".equals(wvg_user_id)){
+           msg.setMessage("未获取到该用户信息！请访问"+scwvg+"联系系统厂商处理！");
+        }
+        else {
+            res=userMapper.deleteRoleUserId(wvg_user_id);
+            if(res==1){
+                res =userMapper.deleteUserByID(wvg_user_id);
+              msg.setMessage(res==1?"删除成功":"删除失败！请访问"+scwvg+"联系系统厂商处理！");
+            }
+            else{
+                msg.setMessage("用户删除失败！请访问"+scwvg+"联系系统厂商处理！");
+            }
+        }
+        return msg;
     }
 }
