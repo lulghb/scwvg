@@ -52,7 +52,6 @@
 
         form.on('submit(add)',function (data) {
             var field = data.field;
-            field.wvg_role_id=$("#wvg_role_id").val();
             $.ajax({
                 type:'get',
                 url:'/roles/addRole?token='+token,
