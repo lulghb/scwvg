@@ -5,12 +5,14 @@
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
 <head>
     <meta charset="UTF-8">
-    <title>用户管理</title>
+    <title>角色管理</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
     <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+    <link rel="stylesheet" href="../../../static/layui/css/dtree.css" th:href="@{/layui/css/dtree.css}" media="all">
+    <link rel="stylesheet" href="../../../static/layui/css/dtreefont.css" th:href="@{/layui/css/dtreefont.css}" media="all">
 </head>
 <body>
 <div class="layui-fluid">
@@ -20,41 +22,47 @@
             <div class="layui-form-item">
                 <!--开始编写查询条件内如-->
                 <div class="layui-inline">
-                    <label class="layui-form-label">登录账号</label>
+                    <label class="layui-form-label">英文角色名</label>
                     <div class="layui-input-block">
-                        <input class="layui-input" type="text" name="wvg_login_name" placeholder="登录用户名" autocomplete="off">
+                        <input class="layui-input" type="text" name="wvg_role_name" placeholder="角色英文名" autocomplete="off">
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label" lay-size="sm">真实姓名</label>
+                    <label class="layui-form-label" lay-size="sm">中文角色名</label>
                     <div class="layui-input-block">
-                        <input class="layui-input" type="text" name="wvg_real_name" placeholder="真实姓名" autocomplete="off">
+                        <input class="layui-input" type="text" name="wvg_role_description" placeholder="角色中文名" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报表ID：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="reportId3" id="reportId3" autocomplete="off" class="layui-input" readonly>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">报表名称：</label>
+                        <div class="layui-input-block">
+                            <input type="text" name="reportName3" id="reportName3" autocomplete="off" class="layui-input" readonly>
+                        </div>
                     </div>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">电话号码</label>
-                    <div class="layui-input-block">
-                        <input class="layui-input" type="text" name="wvg_user_ihpone" placeholder="手机号码" autocomplete="off">
-                    </div>
-                </div>
-                <div class="layui-inline">
-                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-user-front-search">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="queryRols">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
-                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="users:add">添加</button>
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="role:add">添加</button>
                     <input id="handle_status" value="" hidden="hidden">
-                    <!--<span class="layui-btn layui-btn-sm layui-btn-pink" lay-event="autoRefresh" data-time="500">自动刷新(refresh)</span>-->
                 </div>
             </div>
         </div>
         <!--body中间-->
         <div class="layui-card-body">
-            <table id="LAY-user-manage" lay-filter="LAY-user-manage"></table>
+            <table id="roleManger" lay-filter="roleManger"></table>
             <script type="text/html" id="operation">
-                <a class="layui-btn layui-btn-sm layui-btn-danger" lay-event="detail" permission="users:quit">踢下线</a>
-                <a class="layui-btn layui-btn-sm" lay-event="edit" id="edit" permission="users:update">编辑</a>
-                <a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="reset" permission="users:update">密码重置</a>
-                <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" permission="users:del">删除</a>
+                <a class="layui-btn layui-btn-warm layui-btn-sm" lay-event="editAuthority" permission="role:authority:edit">修改权限</a>
+                <a class="layui-btn layui-btn-sm" lay-event="edit" id="edit" permission="role:update">修改角色</a>
+                <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" permission="role:del">删除</a>
             </script>
         </div>
     </div>
@@ -62,39 +70,30 @@
 <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
 <script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/dtree.js" th:src="@{/js/dtree.js}"></script>
 <script th:inline="none">
     var token=localStorage.getItem("token");
     layui.config({
         base:"/"
     }).extend({
         index: 'lib/index'
-    }).use(['index','form','useradmin','table','laydate'], function () {
+    }).use(['index','form','useradmin','table','laydate','dtree'], function () {
+        var dtree = layui.dtree;
         var laydate = layui.laydate;
         var form = layui.form;
         var table = layui.table;
         /*设置表头，获取数据*/
         table.render({
-            elem: '#LAY-user-manage',
+            elem: '#roleManger',
             sort: true,
             smartReloadModel: true,// 是否开启智能reload的模式
-            cols:[[ {field: 'wvg_login_name', title: '登录名', width: 80},
-                {field: 'wvg_real_name', title: '真实姓名', width: 120},
-                {field: 'changeStr4', title: '身份类型', width: 120},
-                {field: 'changeStr3', title: '用户属地', width: 120},
-                {field: 'changeStr', title: '用户专业', width: 80},
-                {field: 'wvg_id_number', title: '身份证号', width: 120},
-                {field: 'wvg_user_iphone', title: '手机号', width: 160},
-                {field: 'changeStr1', title: '账号在线状态', width: 160},
-                {field: 'changeStr2', title: '是否启用', width: 160},
-                {field: 'wvg_account_data', title: '账号有效期', width: 160},
-                {field: 'wvg_password_data', title: '密码有效期', width: 160},
-                {field: 'wvg_add_time', title: '账号新增时间', width: 160},
-                {field: 'wvg_update_time', title: '账号修改时间', width: 160},
-                {field: 'wvg_login_time', title: '账号登录时间', width: 160},
-                {field: 'wvg_login_ip', title: '账号登录IP', width: 160},
-                {field: 'wvg_account_remarks', title: '说明', width: 160},
-                {fixed: 'right', title: '操作', toolbar: '#operation', width: 100}]],
-            url: '/users/userList?token=' +token,
+            cols:[[ {field: 'wvg_role_name', title: '角色名', width: 120},
+                {field: 'wvg_role_description', title: '中文名', width: 180},
+                {field: 'createTime', title: '新增时间', width: 220},
+                {field: 'updateTime', title: '修改时间', width: 220},
+                {field: 'changeStr', title: '新增人', width: 100},
+                {fixed: 'right', title: '操作', toolbar: '#operation', width: 200}]],
+            url: '/roles/roleList?token=' +token,
             //分页
             request:{
                 pageName: 'pageNum',
@@ -122,24 +121,26 @@
         });
 
         /*监听搜索*/
-        form.on('submit(LAY-user-front-search)',function (data) {
+        form.on('submit(queryRols)',function (data) {
             //获取数据
             var field =data.field;
             //执行重载
-            table.reload('LAY-user-manage',{
+            table.reload('roleManger',{
                 where:field
             });
         });
+
         /*监听添加*/
         form.on('submit(add)',function () {
             layer.open({
-                anim:1,
                 type:2,
-                title: '添加用户',
-                content: ['/page/user/addUser', 'no'],
+                title: '添加角色',
+                content: ['/page/role/addRole?token='+token, 'no'],
                 maxmin: true,
-                area:['680px','500px'],
+                area:['730px','130px'],
+                anim: 1,
                 success:function(layero,index){
+
                 },
                 end:function() {
                     var handle_status = $("#handle_status").val();
@@ -180,39 +181,60 @@
         });
 
         //工具监听事件
-        table.on('tool(LAY-user-manage)', function(obj){
+        table.on('tool(roleManger)', function(obj){
             var data = obj.data; //获得当前行数据
             var layEvent = obj.event; //获得 lay-event 对应的值
-            if(layEvent=='detail')
-            {
-                if(data.changeStr1=='离线'){
-                    layer.open({
-                        title: '用户不在线提示！'
-                        ,content: '当前用户不在线，无法踢下线！'
-                    });
-                    return;
-                }
-                layer.confirm('确定踢出该用户下线吗？', function(index){
-                    layer.close(index);
-                    Offline(data.wvg_user_id);
-                });
-            }else if(layEvent=='edit'){
+            if(layEvent=='editAuthority'){
                 layer.open({
+                    type:0,
                     anim:1,
+                    title:"权限选择",
+                    area:["400px", "80%"],
+                    content:'<ul id="roleTree" class="dtree" data-id="0"></ul>',
+                    btn: ['确认','取消'],
+                    success: function (layero,index) {
+                        var wvgtree =dtree.render({   //数据回显
+                            obj: $(layero).find("#roleTree"),
+                            url: "/roles/roledTreeList?token="+token,
+                            checkbar: true// 开启复选框
+                        });
+                    },
+                    yes: function(index, layero) {
+                        var flag = true;
+                        var params = dtree.getCheckbarNodesParam("roleTree"); // 获取选中值
+                        if(params.length == 0){
+                            layer.msg("请至少选择一个节点",{icon:2});
+                            flag = false;
+                        }
+
+                        var ids = [], names = [];
+                        for(var key in params){
+                            var param = params[key];
+                            ids.push(param.nodeId);
+                            names.push(param.context);
+                        }
+                        $("#reportId3").val(ids.join(","));
+                        $("#reportName3").val(names.join(","));
+                        if(flag){
+                            layer.close(index);
+                        }
+                    }
+                });
+            }
+
+           if(layEvent=='edit'){
+                layer.open({
                     type:2,
-                    title: '修改用户',
-                    content: ['/page/user/editUser', 'no'],
+                    anim:1,
+                    title: '修改角色',
+                    content: ['/page/role/addRole?token='+token, 'no'],
                     maxmin: true,
-                    area:['680px','400px'],
+                    area:['730px','130px'],
                     success:function(layero,index){
                         var body = layui.layer.getChildFrame('body', index);
-                        body.find("#wvg_user_id").val(data.wvg_user_id);
-                        body.find("#wvg_login_name").val(data.wvg_login_name);
-                        body.find("#wvg_real_name").val(data.wvg_real_name);
-                        body.find("#wvg_user_iphone").val(data.wvg_user_iphone);
-                        body.find("#wvg_id_number").val(data.wvg_id_number);
-                        body.find("#wvg_user_password").val(data.wvg_user_password);
-                        /*body.find("#userid").field("option[value="+data.wvg_id_type+"]").attr('selected',true).option.innerText='';*/
+                        body.find("#wvg_role_id").val(data.wvg_role_id);
+                        body.find("#wvg_role_name").val(data.wvg_role_name);
+                        body.find("#wvg_role_description").val(data.wvg_role_description);
                         form.render();
                     },
                     end:function() {
@@ -235,52 +257,35 @@
                     }
                 });
             }
-            else if(layEvent=='reset'){
-                layer.confirm('确定重置该用户密码为初始密码：' +
-                    'ponsystem@123456', function(index){
-                    layer.close(index);
-                $.ajax({
-                    url:'/users/reset/'+data.wvg_user_id,
-                    data:data,
-                    success:function (data) {
-                        layer.msg(data.message, {
-                            icon: 1,
-                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                        });
-                    }
-                })
-                });
-            }
             else if(layEvent=='del'){
-                layer.confirm('确定删除该用户吗？', function(index){
+                layer.confirm('确定删除该条角色吗？', function(index){
                     layer.close(index);
                     $.ajax({
-                        url:'/users/delete/'+data.wvg_user_id,
-                        data:data,
+                        url:'/roles/delRole/'+data.wvg_role_id,
                         success:function (data) {
-                            layer.msg(data.message, {
-                                icon: 1,
-                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
-                            }, function () {
-                                history.go(0);
-                            });
+                            if(data.code=='0'){
+                                layer.msg(data.message, {
+                                    icon: 1,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                    history.go(0);
+                                });
+                            }
+                            else {
+                                layer.msg(data.message, {
+                                    icon: 2,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                    history.go(0);
+                                });
+                            }
+
                         }
                     })
                 });
             }
        });
     });
-function Offline(wvg_user_id) {
-    $.ajax({
-        url:'/users/quit/'+wvg_user_id,
-        success:function (data) {
-            table.reload('LAY-user-manage'); //数据刷新
-            layer.msg(data.message);
-        },
-    })
-
-}
-
 </script>
 </body>
 </html>

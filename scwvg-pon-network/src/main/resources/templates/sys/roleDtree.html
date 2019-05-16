@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>新增角色</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/css/dtree.css" th:href="@{/layui/css/dtree.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/css/dtreefont.css" th:href="@{/layui/css/dtreefont.css}" media="all">
+
+</head>
+<body>
+<div class="layui-form">
+    <div class="layui-fluid">
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限ID：</label>
+            <div class="layui-input-block">
+                <input type="text" name="reportId3" id="reportId3" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">权限名称：</label>
+            <div class="layui-input-block">
+                <input type="text" name="reportName3" id="reportName3" autocomplete="off" class="layui-input" readonly>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <ul id="openTree3" class="dtree" data-id="0"></ul>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/dtree.js" th:src="@{/js/dtree.js}"></script>
+<script th:inline="none">
+    var token=localStorage.getItem("token");
+    layui.config({
+        base: '/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['layer','wvgdtree'], function(){
+        var layer = layui.layer;
+        var dtree = layui.wvgdtree;
+    });
+</script>
+</body>
+</html>

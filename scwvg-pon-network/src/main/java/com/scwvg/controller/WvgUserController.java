@@ -52,7 +52,7 @@ public class WvgUserController {
     @GetMapping("/userList")
     @ApiOperation(value = "用户列表")
     @Log("用户列表查询")
-    @PreAuthorize("hasAuthority('users:query:list')")
+    @PreAuthorize("hasAuthority('users:query')")
     public @ResponseBody PageInfo<WvgUser> queryAllUsers(WvgUser wvgUser, Page<WvgUser> page) {
         Map<String, Object> params = new HashMap<>();
         params.put("wvg_login_name", wvgUser.getWvg_login_name());

@@ -1,6 +1,13 @@
 package com.scwvg.service;
 
+import com.github.pagehelper.Page;
+import com.scwvg.entitys.Msg;
+import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
+import com.scwvg.entitys.scwvgponnetwork.WvgRole;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleMenu;
+
+import java.util.List;
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -11,13 +18,37 @@ import com.scwvg.entitys.scwvgponnetwork.WvgRoleMenu;
  **/
 public interface WvgRoleService {
     /**
-     * 保存角色ID和菜单ID
-     * @param roleMenu
+     * 查询所有角色
+     * @param params
+     * @param page
+     * @return
      */
-    void saveRole(WvgRoleMenu roleMenu);
+    Page<WvgRole> queryAllRols(Map<String,Object> params, Page<WvgRole> page);
+
+    /**
+     * 查询所有的权限与菜单
+     * @return
+     */
+    public List<WvgMenu> roledTreeList();
+
+    /**
+     * 新增角色
+     * @param role
+     * @return
+     */
+    Msg addRole(WvgRole role);
+
+    /**
+     * 修改角色
+     * @param role
+     * @return
+     */
+    Msg editRole(WvgRole role);
+
     /**
      * 删除角色
-     * @param
+     * @param wvg_role_id
+     * @return
      */
-    void deleteRole(Long id);
+    Msg delRoles(Long wvg_role_id);
 }

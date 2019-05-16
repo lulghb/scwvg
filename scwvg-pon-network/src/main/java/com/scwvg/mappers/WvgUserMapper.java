@@ -72,13 +72,9 @@ public interface WvgUserMapper {
     /*查询统计用户数*/
     public Integer countUserAll(@Param("params") Map<String, Object> params);
 
-    /*查询用户列表(分页)*/
-    public List<WvgUser> queryUserList(@Param("params") Map<String, Object> params, @Param("offset") Integer offset,
-                                       @Param("limit") Integer limit);
+
 
     /*新增用户*/
-    /*根据用户ID删除用户角色中间表*/
-
     @Options(useGeneratedKeys = true, keyColumn = "wvg_user_id")
     @Insert("insert into wvg_user(wvg_user_id,\n" +
             "wvg_login_name,\n" +

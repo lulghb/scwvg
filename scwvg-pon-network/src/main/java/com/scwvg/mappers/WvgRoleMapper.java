@@ -1,6 +1,11 @@
 package com.scwvg.mappers;
 
+import com.github.pagehelper.Page;
+import com.scwvg.entitys.Msg;
+import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.entitys.scwvgponnetwork.WvgRole;
+import com.scwvg.entitys.scwvgponnetwork.WvgRoleMenu;
+import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
@@ -15,18 +20,14 @@ import java.util.Map;
  **/
 @Mapper
 public interface WvgRoleMapper {
-    /*新增角色（此处有两个问题，1，ID需要查询数据库再++,wvg_user_id需要查询当前操作人的用户ID）*/
+    /*新增角色*/
     @Insert("insert into wvg_role(wvg_role_id,wvg_role_name,wvg_role_description,wvg_add_time," +
-            "wvg_update_time,wvg_user_id) values (#{wvg_role_id},#{wvg_role_name},#{wvg_role_description})" +
-            "#{wvg_add_time},null,#{wvg_user_id}")
+            "wvg_user_id) values (#{wvg_role_id},#{wvg_role_name},#{wvg_role_description}," +
+            "now(),#{wvg_user_id})")
     public int save(WvgRole role);
 
     /*统计所有角色*/
     public int countRole(@Param("params") Map<String, Object> params);
-
-    /*查询角色列表*/
-    public List<WvgRole> queryRolelist(@Param("params") Map<String, Object> params, @Param("offset") Integer offset,
-                                       @Param("limit") Integer limit);
 
     /*通过ID查找角色*/
     @Select("select * from wvg_role where wvg_role_id=#{wvg_role_id}")
@@ -36,35 +37,36 @@ public interface WvgRoleMapper {
     @Select("select * from wvg_role where wvg_role_name=#{wvg_role_name}")
     public WvgRole queryRoleByName(String wvg_role_name);
 
-    /*修改角色*/
-    @Update("update wvg_role t set wvg_role_name=#{wvg_role_name}," +
-            "set wvg_role_description=#{wvg_role_description}," +
-            "set wvg_add_time=#{wvg_add_time},set wvg_update_time " +
-            "where wvg_user_id=#{wvg_user_id}")
-    public int update(WvgRole role);
-
-    /*通过用户ID查找角色列表*/
-    @Select("SELECT\n" +
-            "\tx.*\n" +
-            "FROM\n" +
-            "\twvg_role x\n" +
-            "inner join wvg_role_user y\n" +
-            "on x.wvg_role_id = y.wvg_role_id\n" +
-            "INNER JOIN wvg_user u\n" +
-            "on y.wvg_user_id=u.wvg_user_id\n" +
-            "where u.wvg_user_id=#{wvg_uer_id}")
-    public List<WvgRole> queryWvgUserById(Long wvg_uer_id);
-
-    @Delete("delete from wvg_role_menu where wvg_role_id=#{id}")
-    public int deleteWvgRoleWvgMenu(Long id);
-    @Delete("delete from wvg_role_user where wvg_role_id=#{id}")
-    public int deleteWvgRoleUser(Long id);
-    @Delete("delete from wvg_role where wvg_role_id=#{id}")
-    public int  deleteWvgRole(Long id);
 
 
     /*存储数据*/
     public int saveRoleMenu(@Param("wvg_role_id") Long wvg_role_id, @Param("wvg_menu_ids") List<Long> wvg_menu_ids);
 
+    /*查询角色列表*/
+    public Page<WvgRole> queryAllRoleByPage(Map<String,Object> params);
+    /*查询用户姓名*/
+    @Select("select wvg_real_name from wvg_user where wvg_user_id=#{wvg_user_id}")
+    public String getUserName(long wvg_user_id);
 
+    //查询权限内容
+    @Select("select wvg_menu_id,wvg_menu_name,wvg_parent_id from wvg_menu")
+    List<WvgMenu> queryTreeList();
+    //查询最大ID
+    @Select("SELECT MAX(wvg_role_id) from wvg_role")
+    int queryMaxRoleId();
+    //修改角色
+    @Update("update wvg_role set wvg_role_name=#{wvg_role_name}," +
+            "wvg_role_description=#{wvg_role_description}," +
+            "wvg_update_time=now() " +
+            "where wvg_role_id=#{wvg_role_id}")
+    int editRole(WvgRole role);
+    /*删除中间表*/
+    @Delete("delete from wvg_role_menu where wvg_role_id=#{wvg_role_id}")
+    int delRoleMenus(Long wvg_role_id);
+    /*删除角色表*/
+    @Delete("delete from wvg_role where wvg_role_id=#{wvg_role_id}")
+    public int  deleteWvgRole(Long wvg_role_id);
+    /*查询是否已经给角色赋值权限*/
+    @Select("select count(1) from wvg_role_menu where wvg_role_id=#{wvg_role_id}")
+    int countRoleMenus(Long wvg_role_id);
 }

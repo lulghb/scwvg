@@ -1,5 +1,6 @@
 package com.scwvg.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -83,6 +84,24 @@ public class PageController {
 	@GetMapping("/user/editUser")
 	public String userEdit(){
 		return "user/editUser";
+	}
+
+	/**
+	 * 角色管理
+	 * @return
+	 */
+	@GetMapping("/role/roleManger")
+	public String roleManger(){
+		return "sys/roleManager";
+	}
+
+	/**
+	 * 角色新增
+	 * @return
+	 */
+	@GetMapping("/role/addRole")
+	public String addRole(){
+		return "sys/addRole";
 	}
 
 	/**
