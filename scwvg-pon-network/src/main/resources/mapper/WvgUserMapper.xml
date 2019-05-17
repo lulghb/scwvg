@@ -85,6 +85,7 @@
         <if test="wvg_user_iphone != null and wvg_user_iphone != ''">
             AND wvg_user_iphone = #{wvg_user_iphone}
         </if>
+        order by u.wvg_user_id desc
     </select>
 </mapper>
 

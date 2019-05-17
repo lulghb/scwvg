@@ -1,6 +1,9 @@
 package com.scwvg.service.impl;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
+import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import com.scwvg.mappers.WvgMenuMapper;
 import com.scwvg.service.WvgMenuService;
 import org.slf4j.Logger;
@@ -8,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -22,6 +27,13 @@ public class WvgMenuServiceImpl implements WvgMenuService {
 
     @Autowired
     private WvgMenuMapper wvgMenuMapper;
+
+    @Override
+    public Page<WvgMenu> queryMenuAll(Map<String, Object> params, Page<WvgMenu> page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        Page<WvgMenu> wvgMenus = wvgMenuMapper.queryMenuAllByPage(params);
+        return wvgMenus;
+    }
 
     /*菜单新增*/
     @Override

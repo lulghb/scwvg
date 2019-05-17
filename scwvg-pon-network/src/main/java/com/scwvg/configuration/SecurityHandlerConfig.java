@@ -7,6 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.scwvg.mappers.WvgUserMapper;
 import com.scwvg.service.WvgUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -43,6 +44,9 @@ public class SecurityHandlerConfig {
     
     @Autowired
     private LoginLogService loginLogService;
+
+    @Autowired
+    private WvgUserMapper userMapper; //用户操作mapper注入进来
 
     @Autowired
     private WvgUserService  userService;
@@ -141,7 +145,15 @@ public class SecurityHandlerConfig {
                 Msg msg = new Msg(HttpStatus.OK.value() + "", "退出成功！");
 
                 String token = TokenFilter.getToken(request);
+
+                WvgLoginUser loginUser =wvgTokenService.getLoginUser(token);
+
+                /*用户点击退出时，先删除用户表里在线记录*/
+                int wvg_online_state=1;
+                userMapper.updateUserOffline(loginUser.getWvg_user_id(),wvg_online_state);
+
                 wvgTokenService.deleteToken(token);
+
 
                 ResponseUtil.responseJson(response, HttpStatus.OK.value(), msg);
             }

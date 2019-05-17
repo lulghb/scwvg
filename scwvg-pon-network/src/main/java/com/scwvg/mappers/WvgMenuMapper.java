@@ -1,9 +1,11 @@
 package com.scwvg.mappers;
 
+import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import org.apache.ibatis.annotations.*;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -83,4 +85,6 @@ public interface WvgMenuMapper {
     /*查询最大的ID*/
     @Select("SELECT MAX(wvg_menu_id) from wvg_menu")
     public int queryMaxMenuID();
+
+   public Page<WvgMenu> queryMenuAllByPage(Map<String,Object> params);
 }

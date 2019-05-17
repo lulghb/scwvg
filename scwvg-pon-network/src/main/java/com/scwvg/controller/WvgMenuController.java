@@ -1,19 +1,24 @@
 package com.scwvg.controller;
 
+import com.github.pagehelper.Page;
+import com.scwvg.annotation.Log;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
+import com.scwvg.entitys.scwvgponnetwork.WvgUser;
+import com.scwvg.service.WvgMenuService;
+import com.scwvg.utils.PageInfo;
 import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -23,10 +28,35 @@ import java.util.stream.Collectors;
  * @date：20192019/5/3
  * @Explain：菜单操作类
  **/
-@Api(tags = "权限")
+@Api(tags = "权限菜单")
 @RestController
-@RequestMapping("/menu")
+@RequestMapping("/menus")
 public class WvgMenuController {
+    @Autowired
+    WvgMenuService menuService;
+
+    @GetMapping("/menuList")
+    @ApiOperation(value = "角色管理列表")
+    @Log("角色列表查询")
+    public @ResponseBody PageInfo<WvgMenu> queryMenuAll(WvgMenu wvgMenu, Page<WvgMenu> page){
+        Map<String, Object> params = new HashMap<>();
+
+
+        Page<WvgMenu> menus = menuService.queryMenuAll(params,page);
+        PageInfo<WvgMenu> pageInfo = new PageInfo<>(menus.getPageNum(), menus.getPageSize(), menus.getTotal());
+        pageInfo.setTotalPage(menus.getPages());
+        pageInfo.setItems(menus.getResult());
+        return pageInfo;
+    }
+
+
+
+
+
+
+
+
+
     /**
      * 校验权限
      *

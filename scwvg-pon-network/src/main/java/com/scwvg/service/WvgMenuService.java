@@ -1,6 +1,9 @@
 package com.scwvg.service;
 
+import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
+
+import java.util.Map;
 
 /**
  * @aothor: lul
@@ -10,10 +13,28 @@ import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
  * @Explain：菜单操作Service
  **/
 public interface WvgMenuService {
-    /*新增菜单*/
+    /**
+     * 查询菜单（菜单管理）
+     * @param params
+     * @param page
+     * @return
+     */
+    public Page<WvgMenu> queryMenuAll(Map<String,Object> params, Page<WvgMenu> page);
+    /**
+     * 新增菜单
+     * @param wvgMenu
+     */
     void save(WvgMenu wvgMenu);
-    /*修改菜单*/
+
+    /**
+     * 修改菜单
+     * @param wvgMenu
+     */
     void update(WvgMenu wvgMenu);
-    /*删除菜单*/
+
+    /**
+     * 删除菜单
+     * @param id
+     */
     void delete(Long id);
 }

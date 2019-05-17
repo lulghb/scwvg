@@ -52,9 +52,17 @@
 
         form.on('submit(add)',function (data) {
             var field = data.field;
+            var wvg_role_id=$("#wvg_role_id").val();
+            if(wvg_role_id !=""){
+                field.wvg_role_id=wvg_role_id;
+              var update='/roles/editRole?token='+token
+            }
+            else {
+                var update='/roles/addRole?token='+token
+            }
             $.ajax({
                 type:'get',
-                url:'/roles/addRole?token='+token,
+                url:update,
                 data:field,
                 success:function (data) {
                     var index = parent.layer.getFrameIndex(window.name);

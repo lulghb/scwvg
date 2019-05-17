@@ -87,8 +87,8 @@
                 {field: 'wvg_user_iphone', title: '手机号', width: 160},
                 {field: 'changeStr1', title: '账号在线状态', width: 160},
                 {field: 'changeStr2', title: '是否启用', width: 160},
-                {field: 'wvg_account_data', title: '账号有效期', width: 160},
-                {field: 'wvg_password_data', title: '密码有效期', width: 160},
+                {field: 'wvg_account_data', title: '账号有效期', width: 120},
+                {field: 'wvg_password_data', title: '密码有效期', width: 120},
                 {field: 'wvg_add_time', title: '账号新增时间', width: 160},
                 {field: 'wvg_update_time', title: '账号修改时间', width: 160},
                 {field: 'wvg_login_time', title: '账号登录时间', width: 160},
@@ -275,8 +275,12 @@ function Offline(wvg_user_id) {
     $.ajax({
         url:'/users/quit/'+wvg_user_id,
         success:function (data) {
-            table.reload('LAY-user-manage'); //数据刷新
-            layer.msg(data.message);
+            layer.msg(data.message, {
+                icon: 1,
+                time: 2000
+            }, function () {
+                history.go(0);
+            });
         },
     })
 

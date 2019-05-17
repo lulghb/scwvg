@@ -1,5 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.scwvg.mappers.WvgMenuMapper">
-
+    <resultMap id="menuMaps" type="com.scwvg.entitys.scwvgponnetwork.WvgMenu">
+        <id column="wvg_menu_id" property="wvg_menu_id"></id>
+        <result column="wvg_menu_name" property="wvg_menu_name"/>
+        <result column="wvg_menu_url" property="wvg_menu_url"/>
+        <result column="wvg_menu_type" property="wvg_menu_type"/>
+        <result column="wvg_menu_type_name" property="wvg_menu_type_name"/>
+        <result column="wvg_authority" property="wvg_authority"/>
+        <result column="wvg_menu_css" property="wvg_menu_css"/>
+        <result column="wvg_add_time" property="wvg_add_time"/>
+        <result column="wvg_updata_time" property="wvg_updata_time"/>
+        <result column="wvg_menu_icon" property="wvg_menu_icon"/>
+        <result column="wvg_menu_state" property="wvg_menu_state"/>
+        <result column="wvg_menu_explain" property="wvg_menu_explain"/>
+        <result column="wvg_user_id" property="wvg_user_id"/>
+    </resultMap>
+    
+    <select id="queryMenuAllByPage" parameterType="map" resultMap="menuMaps">
+      select
+	      wvg_menu_id       ,
+	      wvg_menu_name     ,
+	      wvg_menu_url      ,
+	      wvg_menu_type     ,
+	      wvg_menu_type_name,
+	      wvg_authority     ,
+	      wvg_menu_css      ,
+	      wvg_add_time      ,
+	      wvg_updata_time   ,
+	      wvg_menu_icon     ,
+	      wvg_menu_state    ,
+	      wvg_menu_explain  ,
+	      wvg_user_id
+      from wvg_menu
+    </select>
 </mapper>

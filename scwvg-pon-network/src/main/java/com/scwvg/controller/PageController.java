@@ -1,6 +1,5 @@
 package com.scwvg.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -67,7 +66,7 @@ public class PageController {
 	 */
 	@GetMapping("/user/getUserList")
 	public String userList(){
-		return "user/userManager";
+		return "sys/user/userManager";
 	}
 	/**
 	 * 用户新增
@@ -75,7 +74,7 @@ public class PageController {
 	 */
 	@GetMapping("/user/addUser")
 	public String userAdd(){
-		return "user/addUser";
+		return "sys/user/addUser";
 	}
 	/**
 	 * 用户修改
@@ -83,7 +82,7 @@ public class PageController {
 	 */
 	@GetMapping("/user/editUser")
 	public String userEdit(){
-		return "user/editUser";
+		return "sys/user/editUser";
 	}
 
 	/**
@@ -92,7 +91,7 @@ public class PageController {
 	 */
 	@GetMapping("/role/roleManger")
 	public String roleManger(){
-		return "sys/roleManager";
+		return "sys/role/roleManager";
 	}
 
 	/**
@@ -101,8 +100,18 @@ public class PageController {
 	 */
 	@GetMapping("/role/addRole")
 	public String addRole(){
-		return "sys/addRole";
+		return "sys/role/addRole";
 	}
+
+	/**
+	 * 菜单管理
+	 * @return
+	 */
+    @GetMapping("/menu/menuManger")
+	public String menuManger(){
+		return "sys/menu/menuManger";
+	}
+
 
 	/**
 	 * 资源列表

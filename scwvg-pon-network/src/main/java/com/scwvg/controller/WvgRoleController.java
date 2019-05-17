@@ -15,7 +15,6 @@ import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -61,16 +60,14 @@ public class WvgRoleController {
     @PreAuthorize("hasAuthority('role:add')")
     @Log("角色新增")
     public Msg addRole(WvgRole role) {
-        Msg msg =null;
-        if(role.getWvg_role_id()!=0){
-            //修改
-            msg=roleService.editRole(role);
-        }
-        else{
-            //新增
-             msg=roleService.addRole(role);
-        }
-        return msg;
+        return roleService.addRole(role);
+    }
+    @GetMapping("/editRole")
+    @ApiOperation(value = "角色修改")
+    @PreAuthorize("hasAuthority('role:update')")
+    @Log("角色修改")
+    public Msg editRole(WvgRole role) {
+        return roleService.editRole(role);
     }
 
     @GetMapping("/delRole/{wvg_role_id}")

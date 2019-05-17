@@ -204,18 +204,10 @@ public class WvgUserServiceImpl implements WvgUserService {
         Msg msg=new Msg();
         int res;
         res= userMapper.userOffline(wvg_user_id);
-       if(res==1){
-           int wvg_online_state=1;
-           res= userMapper.updateUserOffline(wvg_user_id,wvg_online_state);
-           if(res==1){
-               msg.setMessage("用户已踢下线！");
-           }
-           return msg;
-       }
-       else {
-           msg.setMessage("剔下线失败！");
-           return msg;
-       }
+        int wvg_online_state=1;
+        res= userMapper.updateUserOffline(wvg_user_id,wvg_online_state);
+        msg.setMessage(res==1?"已踢下线":"踢下线失败，请联系系统供应商！");
+        return msg;
     }
 
     @Override

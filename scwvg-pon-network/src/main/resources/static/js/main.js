@@ -2,7 +2,7 @@ initMenu();
 function initMenu(){
     var token=localStorage.getItem("token");
 	 $.ajax({  
-	     url:"/menu/current?token="+token,
+	     url:"/menus/current?token="+token,
 	     type:"get",  
 	     async:false,
 	     success:function(data){

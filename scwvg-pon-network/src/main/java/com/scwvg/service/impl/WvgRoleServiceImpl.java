@@ -110,10 +110,8 @@ public class WvgRoleServiceImpl implements WvgRoleService {
         res=roleMapper.delRoleMenus(Long.valueOf(wvg_role_id));
         for(int i=0;i<menuids.length;i++){
             int menu_id=Integer.parseInt(menuids[i]);
-            if(res !=0){
-              res= roleMapper.saveWvgRoleMenus(role_id,menu_id);
-               msg.setMessage(res==1?"操作成功！":"操作失败！");
-            }
+            res= roleMapper.saveWvgRoleMenus(role_id,menu_id);
+            msg.setMessage(res==1?"操作成功！":"操作失败！");
         }
         return msg;
     }
