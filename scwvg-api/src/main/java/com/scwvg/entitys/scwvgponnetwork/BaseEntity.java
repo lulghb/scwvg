@@ -31,6 +31,8 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
     private String changeStr4;
     //转换数据库里int转String的问题
     private String changeStr3;
+    //转换数据库里int转String的问题
+    private String changeStr5;
 
     public ID getId() {
         return id;
