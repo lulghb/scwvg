@@ -121,6 +121,9 @@ public interface WvgUserMapper {
     public int saveUserRoles(@Param("wvg_role_id") Long wvg_role_id, @Param("wvg_user_id") Long wvg_user_id);
     /*修改用户信息*/
     public int updateUserInfo(WvgUser user);
+    /*修改用户对应的角色信息*/
+    @Update("update wvg_role_user set wvg_role_id=#{id}  where wvg_user_id=#{wvg_user_id}")
+    int editRoleUserIds(WvgUser user);
     /*查询所有用户信息*/
     public Page<WvgUser> queryAllUserByPage(Map<String, Object> params);
 
@@ -142,12 +145,18 @@ public interface WvgUserMapper {
             "WHERE\n" +
             "\twvg_user_id = #{wvg_user_id}")
     public int updateUserOffline(@Param("wvg_user_id") Long wvg_user_id,@Param("wvg_online_state") int wvg_online_state);
+
+    /*查询用户所属证件类型*/
     @Select("select user_type_name from wvg_user_type where user_type_id=#{idType}")
     public String queryIdName(int idType);
+    /*查询用户所属角色名*/
+    @Select("select x.wvg_role_description from wvg_role x LEFT JOIN wvg_role_user y on x.wvg_role_id = y.wvg_role_id where 1=1 and y.wvg_user_id=#{user_id}")
+    public String queryRoleName(Long user_id);
 
     /*删除角色用户中间表*/
     @Delete("delete from wvg_role_user where wvg_user_id=#{wvg_user_id}")
     public int deleteRoleUserId(Long wvg_user_id);
+
 
     /*查询最大的ID*/
     @Select("SELECT MAX(wvg_user_id) from wvg_user")

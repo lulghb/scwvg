@@ -81,6 +81,10 @@ public class WvgUserServiceImpl implements WvgUserService {
             int idType=wvgUsers.get(i).getWvg_id_type();
             String idName=userMapper.queryIdName(idType);
             wvgUsers.get(i).setChangeStr4(idName);
+            //用户所属角色转换
+            Long user_id = wvgUsers.get(i).getWvg_user_id();
+            String wvg_role_name=userMapper.queryRoleName(user_id);
+            wvgUsers.get(i).setChangeStr5(wvg_role_name);
 
             if (wvgUsers.get(i).getWvg_online_state() == 1) {
                 wvgUsers.get(i).setChangeStr1("离线");
@@ -150,7 +154,9 @@ public class WvgUserServiceImpl implements WvgUserService {
     public Msg updateUser(WvgUser user) {
         int res =userMapper.updateUserInfo(user);
         if(res ==1){
-            saveRoleUserIds(user);
+           res =userMapper.editRoleUserIds(user);
+           msg.setCode(res==1?"0":"1");
+           msg.setMessage(res==1?"修改成功":"修改失败！");
         }
         else {
             msg.setCode("1");
