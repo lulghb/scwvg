@@ -3,19 +3,23 @@ package com.scwvg.controller;
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
 import com.scwvg.entitys.Msg;
+import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.entitys.scwvgponnetwork.WvgRole;
 import com.scwvg.entitys.scwvgponnetwork.WvgRoleMenu;
 import com.scwvg.service.WvgRoleService;
 import com.scwvg.utils.PageInfo;
+import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.method.P;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -34,6 +38,7 @@ import java.util.Map;
 public class WvgRoleController {
     @Autowired
     WvgRoleService roleService;
+
 
 
     @GetMapping("/roleList")
@@ -77,62 +82,90 @@ public class WvgRoleController {
         return msg;
     }
 
+    @GetMapping("/addRoleAuthority/{wvg_role_id}/{wvg_menu_id}")
+    @ApiOperation(value = "角色权限修改")
+    @PreAuthorize("hasAnyAuthority('role:authority:query')")
+    @Log("角色权限修改")
+    public Msg addRoleAuthority(@PathVariable String wvg_role_id,@PathVariable String  wvg_menu_id) {
+        return roleService.addRoleAuthority(wvg_role_id,wvg_menu_id);
+    }
 
-    @PostMapping("/roledTreeList")
+
+
+
+    @RequestMapping("/roledTreeList")
     @ApiOperation(value = "权限查询")
     @Log("权限查询")
+    @PreAuthorize("hasAnyAuthority('role:authority:query')")
     public @ResponseBody
-    Object roledTreeList() {
+    Object roledTreeList(Long wvg_role_id) {
         List<WvgMenu> menus = roleService.roledTreeList();
         DTree dTree = null;
-        List<DTree> list = new ArrayList<DTree>();
 
-        CheckArr checkArr = new CheckArr();
+        //查询当前角色所拥有的权限
+        List<WvgMenu> menuList = roleService.queryMenuRoleId(wvg_role_id);
+
+        List<DTree> list = new ArrayList<DTree>();
 
         for (WvgMenu menu : menus) {
             //筛选出父节点
             if (menu.getWvg_parent_id() == 0L) {
+                CheckArr checkArr1 = new CheckArr();
+                checkArr1.setType(0);
+                checkArr1.setIsChecked(0);
+                for(WvgMenu uMenu :menuList){
+                    if(menu.getWvg_menu_id() == uMenu.getWvg_menu_id()) {
+                        checkArr1.setIsChecked(1);
+                    }
+                }
                 dTree = new DTree();
+
+                dTree.setCheckArr(checkArr1);
 
                 dTree.setId(menu.getWvg_menu_id());
                 dTree.setTitle(menu.getWvg_menu_name());
                 dTree.setParentId(menu.getWvg_parent_id());
-
-
-                checkArr.setType(0);
-                checkArr.setIsChecked(0);
-                dTree.setCheckArr(checkArr);
-
                 List<DTree> childList = new ArrayList<>();
                 dTree.setChildren(childList);
-
                 for (WvgMenu tmp : menus) {
                     if (tmp.getWvg_parent_id() == menu.getWvg_menu_id()) {
-                        checkArr.setType(0);
-                        checkArr.setIsChecked(0);
+                        CheckArr checkArr2 = new CheckArr();
+                        checkArr2.setType(0);
+                        checkArr2.setIsChecked(0);
+                       for(WvgMenu uMenu :menuList){
+                            if(tmp.getWvg_menu_id() ==uMenu.getWvg_menu_id()){
+                                checkArr2.setIsChecked(1);
+                            }
+                        }
 
                         DTree childMenu = new DTree();
                         childMenu.setId(tmp.getWvg_menu_id());
                         childMenu.setTitle(tmp.getWvg_menu_name());
                         childMenu.setParentId(tmp.getWvg_parent_id());
 
-                        childMenu.setCheckArr(checkArr);
+                        childMenu.setCheckArr(checkArr2);
 
                         childList.add(childMenu);
                         List<DTree> thirdList = new ArrayList<>();
                         childMenu.setChildren(thirdList);
 
                         for (WvgMenu third : menus) {
+                            CheckArr checkArr3 = new CheckArr();
+                            checkArr3.setType(0);
+                            checkArr3.setIsChecked(0);
                             if (third.getWvg_parent_id() == tmp.getWvg_menu_id()) {
-                                checkArr.setType(0);
-                                checkArr.setIsChecked(0);
+                              for(WvgMenu uMenu :menuList){
+                                    if(third.getWvg_menu_id() == uMenu.getWvg_menu_id()){
+                                        checkArr3.setIsChecked(1);
+                                    }
+                                }
 
                                 DTree thirdMenu = new DTree();
                                 thirdMenu.setId(third.getWvg_menu_id());
                                 thirdMenu.setTitle(third.getWvg_menu_name());
                                 thirdMenu.setParentId(third.getWvg_parent_id());
 
-                                thirdMenu.setCheckArr(checkArr);
+                                thirdMenu.setCheckArr(checkArr3);
 
                                 thirdList.add(thirdMenu);
 
@@ -157,6 +190,7 @@ public class WvgRoleController {
     }
 
 }
+
 
 /**
  * response返回类
@@ -215,6 +249,8 @@ class DTree {
 @Getter
 @Setter
 class CheckArr {
-    private int type = 0;
-    private int isChecked = 0;
+    /** 复选框标记*/
+    private int type;
+    /*复选框是否选中*/
+    private int isChecked;
 }

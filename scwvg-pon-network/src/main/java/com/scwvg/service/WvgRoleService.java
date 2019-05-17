@@ -32,6 +32,13 @@ public interface WvgRoleService {
     public List<WvgMenu> roledTreeList();
 
     /**
+     * 查询当前角色拥有的权限
+     * @param wvg_role_id
+     * @return
+     */
+    List<WvgMenu> queryMenuRoleId(Long wvg_role_id);
+
+    /**
      * 新增角色
      * @param role
      * @return
@@ -51,4 +58,11 @@ public interface WvgRoleService {
      * @return
      */
     Msg delRoles(Long wvg_role_id);
+
+    /**
+     * 新增角色权限
+     * @param
+     * @return
+     */
+    Msg addRoleAuthority(String wvg_role_id,String wvg_menu_id);
 }

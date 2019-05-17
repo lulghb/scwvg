@@ -26,6 +26,10 @@ public interface WvgRoleMapper {
             "now(),#{wvg_user_id})")
     public int save(WvgRole role);
 
+
+    /*新增角色权限中间表*/
+    @Insert("insert into wvg_role_menu(wvg_role_id,wvg_menu_id) values(#{wvg_role_id},#{wvg_menu_id})")
+    public int saveWvgRoleMenus(@Param("wvg_role_id") int wvg_role_id,@Param("wvg_menu_id") int wvg_menu_id);
     /*统计所有角色*/
     public int countRole(@Param("params") Map<String, Object> params);
 
@@ -51,6 +55,17 @@ public interface WvgRoleMapper {
     //查询权限内容
     @Select("select wvg_menu_id,wvg_menu_name,wvg_parent_id from wvg_menu")
     List<WvgMenu> queryTreeList();
+
+    /*查询角色拥有的权限*/
+    @Select("SELECT\n" +
+            "\tx.wvg_menu_id,\n" +
+            "\tx.wvg_menu_name,\n" +
+            "\tx.wvg_parent_id\n" +
+            "FROM\n" +
+            "\twvg_menu x\n" +
+            "LEFT JOIN wvg_role_menu y ON x.wvg_menu_id = y.wvg_menu_id\n" +
+            "where y.wvg_role_id=#{wvg_role_id}")
+    List<WvgMenu> queryMenuRoleId(Long wvg_role_id);
     //查询最大ID
     @Select("SELECT MAX(wvg_role_id) from wvg_role")
     int queryMaxRoleId();
@@ -60,7 +75,7 @@ public interface WvgRoleMapper {
             "wvg_update_time=now() " +
             "where wvg_role_id=#{wvg_role_id}")
     int editRole(WvgRole role);
-    /*删除中间表*/
+    /*删除角色与菜单中间表*/
     @Delete("delete from wvg_role_menu where wvg_role_id=#{wvg_role_id}")
     int delRoleMenus(Long wvg_role_id);
     /*删除角色表*/
@@ -69,4 +84,10 @@ public interface WvgRoleMapper {
     /*查询是否已经给角色赋值权限*/
     @Select("select count(1) from wvg_role_menu where wvg_role_id=#{wvg_role_id}")
     int countRoleMenus(Long wvg_role_id);
+    /*查询是否已经给角色赋值用户*/
+    @Select("select count(1) from wvg_role_user where wvg_role_id=#{wvg_role_id}")
+    int countRoleUser(Long wvg_role_id);
+    /*删除中间用户角色中间表*/
+    @Delete("delete from wvg_role_user where wvg_role_id=#{wvg_role_id}")
+    int delRoleUsers(Long wvg_role_id);
 }

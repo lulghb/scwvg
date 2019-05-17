@@ -33,26 +33,13 @@
                         <input class="layui-input" type="text" name="wvg_role_description" placeholder="角色中文名" autocomplete="off">
                     </div>
                 </div>
-                <div class="layui-form-item">
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">报表ID：</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="reportId3" id="reportId3" autocomplete="off" class="layui-input" readonly>
-                        </div>
-                    </div>
-                    <div class="layui-form-item">
-                        <label class="layui-form-label">报表名称：</label>
-                        <div class="layui-input-block">
-                            <input type="text" name="reportName3" id="reportName3" autocomplete="off" class="layui-input" readonly>
-                        </div>
-                    </div>
-                </div>
                 <div class="layui-inline">
                     <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="queryRols">
                         <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                     </button>
                     <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="role:add">添加</button>
                     <input id="handle_status" value="" hidden="hidden">
+                    <input type="text" name="reportId3" id="reportId3" hidden="hidden">
                 </div>
             </div>
         </div>
@@ -195,8 +182,9 @@
                     success: function (layero,index) {
                         var wvgtree =dtree.render({   //数据回显
                             obj: $(layero).find("#roleTree"),
-                            url: "/roles/roledTreeList?token="+token,
-                            checkbar: true// 开启复选框
+                            url: "/roles/roledTreeList?token"+token,
+                            request:{wvg_role_id:data.wvg_role_id},  //自定义请求参数
+                            checkbar: true,// 开启复选框
                         });
                     },
                     yes: function(index, layero) {
@@ -206,7 +194,6 @@
                             layer.msg("请至少选择一个节点",{icon:2});
                             flag = false;
                         }
-
                         var ids = [], names = [];
                         for(var key in params){
                             var param = params[key];
@@ -214,7 +201,19 @@
                             names.push(param.context);
                         }
                         $("#reportId3").val(ids.join(","));
-                        $("#reportName3").val(names.join(","));
+                        var wvg_menu_id=$("#reportId3").val();
+                        var wvg_role_id=data.wvg_role_id;
+
+                        $.ajax({
+                            type:'get',
+                            url:'/roles/addRoleAuthority/'+wvg_role_id+'/'+wvg_menu_id+'?tokne'+token,
+                            success:function (data) {
+                                layer.msg(data.message, {
+                                    icon: 1,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                });
+                            }
+                        })
                         if(flag){
                             layer.close(index);
                         }

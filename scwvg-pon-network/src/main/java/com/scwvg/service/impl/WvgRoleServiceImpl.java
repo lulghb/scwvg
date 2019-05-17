@@ -55,6 +55,11 @@ public class WvgRoleServiceImpl implements WvgRoleService {
     }
 
     @Override
+    public List<WvgMenu> queryMenuRoleId(Long wvg_role_id) {
+        return roleMapper.queryMenuRoleId(wvg_role_id);
+    }
+
+    @Override
     public Msg addRole(WvgRole role) {
         WvgRole r = roleMapper.queryRoleByName(role.getWvg_role_name());
         if (r != null && r.getId() != role.getId()) {
@@ -85,22 +90,31 @@ public class WvgRoleServiceImpl implements WvgRoleService {
         res =roleMapper.countRoleMenus(wvg_role_id);
         if(res>0){
             res=roleMapper.delRoleMenus(wvg_role_id); //删除角色菜单中间表
-            if(res>=1){
-                res =roleMapper.deleteWvgRole(wvg_role_id);
-                msg.setCode(res==1?"0":"1");
-                msg.setMessage(res >=1?"删除成功":"删除失败！");
-            }
-            else {
-                msg.setCode("1");
-                msg.setMessage("删除失败");
-            }
-        }else {
-            res =roleMapper.deleteWvgRole(wvg_role_id);
-            msg.setCode(res==1?"0":"1");
-            msg.setMessage(res >=1?"删除成功":"删除失败！");
+        }
+        res = roleMapper.countRoleUser(wvg_role_id);
+        if(res>0){
+            res=roleMapper.delRoleUsers(wvg_role_id);//删除角色用户中间表
         }
 
+        res =roleMapper.deleteWvgRole(wvg_role_id);
+        msg.setCode(res==1?"0":"1");
+        msg.setMessage(res >=1?"删除成功":"删除失败！");
+        return msg;
+    }
 
+    @Override
+    public Msg addRoleAuthority(String wvg_role_id,String wvg_menu_id) {
+        String[] menuids = wvg_menu_id.split(",");
+        int role_id = Integer.parseInt(wvg_role_id);
+        //先删除角色对应的所有权限，再根据用户点击的权限进行新增
+        res=roleMapper.delRoleMenus(Long.valueOf(wvg_role_id));
+        for(int i=0;i<menuids.length;i++){
+            int menu_id=Integer.parseInt(menuids[i]);
+            if(res !=0){
+              res= roleMapper.saveWvgRoleMenus(role_id,menu_id);
+               msg.setMessage(res==1?"操作成功！":"操作失败！");
+            }
+        }
         return msg;
     }
 
