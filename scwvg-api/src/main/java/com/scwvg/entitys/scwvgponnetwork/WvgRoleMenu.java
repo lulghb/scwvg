@@ -19,5 +19,5 @@ import java.util.List;
 @NoArgsConstructor
 public class WvgRoleMenu extends WvgRole implements Serializable {
     private static final long serialVersionUID = 4218495592167610193L;
-    private List<Long> WvgmenuIds;
+    private Long wvgmenuIds;
 }
