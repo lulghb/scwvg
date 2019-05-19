@@ -1,0 +1,309 @@
+
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>日志详细信息</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+<link rel="stylesheet" href="../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+<style type="text/css">
+	.layui-form-label {
+	    float: left;
+	    display: block;
+	    width: 96px;
+	    font-weight: 400;
+	    line-height: 20px;
+	    text-align: right;
+	    padding: 9px 15px;
+	}
+</style>
+</head>
+<body>
+
+	<div class="layui-form" lay-filter="resOltEtit" id="resOltEtit" style="padding: 20px 0 0 0;">
+		<input type="text" name="res_id" style="display: none;">
+		<div class="layui-form-item" pane>
+            <div class="layui-inline">
+            	<label class="layui-form-label">设备名称</label>
+            	<div class="layui-input-inline">
+            		<input type="text" name="res_name" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">设备IP</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="res_ip" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+			<div class="layui-inline">
+				<label class="layui-form-label">属地</label>
+				<div class="layui-input-inline layui-form" lay-filter="city_id">
+					<select id="city_id" name="city_id" lay-verify="">
+						<option value="">请选择</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">区域</label>
+				<div class="layui-input-inline">
+					<select name="res_area" lay-verify="">
+						<option value="">请选择</option>
+						<option value="0">市区</option>
+						<option value="1">县城</option>
+						<option value="2">乡镇</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">专业</label>
+				<div class="layui-input-inline">
+					<select name="city" lay-verify="">
+						<option value="">请选择</option>
+						<option value="2">接入网</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">设备层次</label>
+				<div class="layui-input-inline">
+					<select name="res_type_id" lay-verify="">
+						<option value="">请选择</option>
+						<option value="1">OLT</option>
+						<option value="2">ONU</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">厂商</label>
+				<div class="layui-input-inline">
+					<select name="res_vendor_id" lay-verify="">
+						<option value="">请选择</option>
+						<option value="1">华为</option>
+						<option value="2">中兴</option>
+						<option value="3">烽火</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">设备型号</label>
+				<div class="layui-input-inline">
+					<input type="text" name="res_model" placeholder="请输入" autocomplete="off" class="layui-input">
+				</div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">状态</label>
+				<div class="layui-input-inline">
+					<select name="res_state" lay-verify="">
+						<option value="">请选择</option>
+						<option value="1">在网</option>
+						<option value="2">新建</option>
+						<option value="3">退网</option>
+					</select>
+				</div>
+			</div>
+			<div class="layui-inline">
+              	<label class="layui-form-label">上联口模式</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="up_model" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">双上联</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="double_couplet" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">上联方式</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="up_manner" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+            	<label class="layui-form-label">蓄电池</label>
+              	<div class="layui-input-inline">
+              		<select name="isno_battery" lay-verify="">
+			  		<option value="">请选择</option>
+			  		<option value="是">是</option>
+			  		<option value="否">否</option>
+					</select>
+              	</div>
+            </div>
+            <div class="layui-inline">
+            	<label class="layui-form-label">动环</label>
+              	<div class="layui-input-inline">
+              		<select name="isno_dynamicring" lay-verify="">
+			  			<option value="">请选择</option>
+			  			<option value="是">是</option>
+			  			<option value="否">否</option>
+					</select>
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">站点名称</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="zd_name" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+			<div class="layui-inline">
+              	<label class="layui-form-label">snmp读口令</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="snmp_read" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">snmp写口令</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="snmp_write" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">snmp版本</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="snmp_version" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">telnet账号</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="telnet_user" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">telnet密码</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="telnet_password" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">telnet二级账号</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="telnet_user_2level" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">telnet二级密码</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="telnet_password_2level" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+            <div class="layui-inline">
+              	<label class="layui-form-label">地址</label>
+              	<div class="layui-input-inline">
+              		<input type="text" name="res_address" placeholder="请输入" autocomplete="off" class="layui-input">
+              	</div>
+            </div>
+		</div>
+
+		<div class="form-actions">
+	        <div class="row" align="center">
+	            <div class="col-md-12">
+	                <button class="layui-btn" lay-submit lay-filter="edit">保存</button>
+	            </div>
+	        </div>
+    	</div>
+	</div>
+
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script th:inline="none">
+var token = localStorage.getItem("token");
+function setFormValue(res_id) {
+	layui.config({
+		base : '/'
+	}).extend({
+		index : 'lib/index'
+	}).use([ 'index', 'table' ], function() {
+		var $ = layui.$;
+		var form = layui.form;
+		
+		$.ajax({
+			type: 'GET',
+			url: '/res/'+ res_id +'?token=' + localStorage.getItem("token"),
+		  	dataType: 'json',
+		  	success: function(result) {
+		  		form.val('resOltEtit', {
+		  			"res_id": res_id,
+		  			"res_ip": result.res_ip,
+		  			"res_name": result.res_name,
+		  			"city_id": result.city_id,
+		  			"res_area": result.res_area,
+		  			"res_type_id": result.res_type_id,
+		  			"res_vendor_id": result.res_vendor_id,
+		  			"res_model": result.res_model,
+		  			"res_state": result.res_state,
+		  			"up_model": result.up_model,
+		  			"double_couplet": result.double_couplet,
+		  			"up_manner": result.up_manner,
+		  			"isno_battery": result.isno_battery,
+		  			"isno_dynamicring": result.isno_dynamicring,
+		  			"zd_name": result.zd_name,
+		  			"snmp_read": result.snmp_read,
+		  			"snmp_write": result.snmp_write,
+		  			"snmp_version": result.snmp_version,
+		  			"telnet_user": result.telnet_user,
+		  			"telnet_password": result.telnet_password,
+		  			"telnet_user_2level": result.telnet_user_2level,
+		  			"telnet_password_2level": result.telnet_password_2level,
+		  			"res_address": result.res_addess
+		  		});
+		  	}
+		});
+		
+		$.ajax({
+			url: '/res/getCity?token=' + localStorage.getItem("token"),
+		  	dataType: 'json',
+		  	success: function(result) {
+			  	$.each(result, function(index, item) {
+				  	$('#city_id').append(new Option(item.city_name,item.city_id));
+			  	});
+			  	
+			  	form.render('select');
+		  	}
+		});
+		
+		form.on('submit(edit)',function (data) {
+			$.ajax({
+				type: 'post',
+				url: '/res/update?token=' + token,
+				data: data.field,
+				//dataType: 'json',
+				//contentType: 'application/json',
+				success: function (result) {
+	                if(result.code == 200) {
+		                var index = parent.layer.getFrameIndex(window.name);
+		                parent.layer.close(index);
+		                parent.layer.msg(result.msg,{
+	                        icon:1,
+	                        offset: 'rb',//右下角弹出
+	                        title: false,//不显示标题
+	                        closeBtn: 0, //不显示关闭按钮
+	                        shade: [0],//不显示遮罩层
+	                        time: 2000, //2秒后自动关闭
+	                        anim: 4,//动画效果
+	                    });
+		                // 重新加载Table
+		                parent.layui.table.reload('olt-table-data');
+					} else {
+						layer.msg("保存失败",{
+	                        icon:1,
+	                        offset: 'rb',//右下角弹出
+	                        title: false,//不显示标题
+	                        closeBtn: 0, //不显示关闭按钮
+	                        shade: [0],//不显示遮罩层
+	                        time: 2000, //2秒后自动关闭
+	                        anim: 4,//动画效果
+	                    });
+					}
+				}
+			});
+		});
+	});
+}
+
+</script>
+</body>
+</html>

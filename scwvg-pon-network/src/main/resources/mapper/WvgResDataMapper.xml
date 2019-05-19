@@ -6,11 +6,182 @@
         SELECT city_id, city_name FROM wvg_city where city_id != 0 ORDER BY city_id ASC
     </select>
     
+    <!-- 获取SNMP最大ID -->
+    <select id="getSnmpMaxId" resultType="java.lang.Long">
+        SELECT MAX(snmp_id) FROM wvg_snmp
+    </select>
+    <!-- 插入SNMP -->
+    <insert id="insertSnmp" parameterType="java.util.HashMap">
+        INSERT INTO wvg_snmp(
+			        snmp_id,
+					snmp_read,
+					snmp_write,
+					telnet_user,
+					telnet_password,
+					telnet_user_2level,
+					telnet_password_2level,
+					city_id,
+					res_vendor_id,
+					res_type_id)
+				VALUES(
+					#{snmp_id},
+					#{snmp_read},
+					#{snmp_write},
+					#{telnet_user},
+					#{telnet_password},
+					#{telnet_user_2level},
+					#{telnet_password_2level},
+					#{city_id},
+					#{res_vendor_id},
+					#{res_type_id})
+    </insert>
+    <!-- 更新SNMP -->
+    <update id="updateSnmp" parameterType="java.util.HashMap">
+        UPDATE wvg_snmp SET
+					snmp_read=#{snmp_read},
+					snmp_write=#{snmp_write},
+					telnet_user=#{telnet_user},
+					telnet_password=#{telnet_password},
+					telnet_user_2level=#{telnet_user_2level},
+					telnet_password_2level=#{telnet_password_2level},
+					city_id=#{city_id},
+					res_vendor_id=#{res_vendor_id},
+					res_type_id=#{res_type_id}
+				WHERE snmp_id=#{snmp_id}
+    </update>
+    <!-- 删除SNMP -->
+    <delete id="deleteSnmp" parameterType="java.lang.Long">
+        DELETE FROM wvg_snmp WHERE snmp_id=#{snmp_id}
+    </delete>
+    
+    <!-- 获取最大资源ID -->
+    <select id="getResMaxId" resultType="java.lang.Long">
+        SELECT MAX(CONVERT(res_id, SIGNED)) FROM wvg_res_data
+    </select>
+    <!-- 插入资源 -->
+    <insert id="insertRes" parameterType="java.util.HashMap">
+        INSERT INTO wvg_res_data(
+				        res_id,
+						res_ip,
+						res_name,
+						res_alias_name,
+						snmp_id,
+						res_type_id,
+						res_vendor_id,
+						res_model,
+						res_os_name,
+						res_os_version,
+						res_os_realversion,
+						res_state,
+						city_id,
+						res_addess,
+						res_addtime,
+						gather_id,
+						res_other)
+			VALUES(
+				#{res_id},
+				#{res_ip},
+				#{res_name},
+				#{res_alias_name},
+				#{snmp_id},
+				#{res_type_id},
+				#{res_vendor_id},
+				#{res_model},
+				#{res_os_name},
+				#{res_os_version},
+				#{res_os_realversion},
+				#{res_state},
+				#{city_id},
+				#{res_addess},
+				#{res_addtime},
+				#{gather_id},
+				#{res_other})
+    </insert>
+    <!-- 更新资源信息 -->
+    <update id="updateRes" parameterType="java.util.HashMap">
+        UPDATE wvg_res_data SET
+						res_ip=#{res_ip},
+						res_name=#{res_name},
+						res_alias_name=#{res_alias_name},
+						snmp_id=#{snmp_id},
+						res_type_id=#{res_type_id},
+						res_vendor_id=#{res_vendor_id},
+						res_model=#{res_model},
+						res_os_name=#{res_os_name},
+						res_os_version=#{res_os_version},
+						res_os_realversion=#{res_os_realversion},
+						res_state=#{res_state},
+						city_id=#{city_id},
+						res_addess=#{res_addess},
+						gather_id=#{gather_id},
+						res_other=#{res_other}
+				WHERE res_id=#{res_id}
+    </update>
+    <!-- 删除资源 -->
+    <delete id="deleteRes" parameterType="java.lang.Long">
+        DELETE FROM wvg_res_data WHERE res_id=#{res_id}
+    </delete>
+    
+    <!-- 插入资源子信息 -->
+    <insert id="insertResSubs" parameterType="java.util.HashMap">
+        INSERT INTO wvg_res_data_subs(
+					        res_id,
+							net_date,
+							isno_kba,
+							up_model,
+							double_coupbet_old,
+							double_couplet,
+							up_manner,
+							isno_battery,
+							isno_dynamicring,
+							zd_name,
+							res_area,
+							jf_name,
+							totalid)
+					VALUES(
+						#{res_id},
+						#{net_date},
+						#{isno_kba},
+						#{up_model},
+						#{double_coupbet_old},
+						#{double_couplet},
+						#{up_manner},
+						#{isno_battery},
+						#{isno_dynamicring},
+						#{zd_name},
+						#{res_area},
+						#{jf_name},
+						#{totalid})
+    </insert>
+    <!-- 更新资源子信息 -->
+    <update id="updateResSubs" parameterType="java.util.HashMap">
+        UPDATE wvg_res_data_subs SET
+						net_date=#{net_date},
+						isno_kba=#{isno_kba},
+						up_model=#{up_model},
+						double_coupbet_old=#{double_coupbet_old},
+						double_couplet=#{double_couplet},
+						up_manner=#{up_manner},
+						isno_battery=#{isno_battery},
+						isno_dynamicring=#{isno_dynamicring},
+						zd_name=#{zd_name},
+						res_area=#{res_area},
+						jf_name=#{jf_name},
+						totalid=#{totalid}
+					WHERE res_id=#{res_id}
+    </update>
+    <!-- 删除资源子信息 -->
+    <delete id="deleteResSubs" parameterType="java.lang.Long">
+        DELETE FROM wvg_res_data_subs WHERE res_id=#{res_id}
+    </delete>
+    
     <!-- 分页查询资源数据 -->
     <select id="queryByPage" parameterType="map" resultType="java.util.HashMap">
         SELECT
+        	x.res_id,
 			x.res_ip,
 			x.res_name,
+			x.snmp_id,
 		  s.snmp_read,
 		  s.snmp_write,
 		  v.res_vendor_name,
@@ -96,18 +267,24 @@
     <!-- 查询资源数据详情 -->
     <select id="get" parameterType="java.lang.String" resultType="java.util.HashMap">
         SELECT
+        	x.res_id,
 			x.res_ip,
 			x.res_name,
+			x.city_id,
+			x.res_type_id,
+			x.res_vendor_id,
+			x.res_state,
+			x.snmp_id,
 		  s.snmp_read,
 		  s.snmp_write,
+		  s.telnet_user,
+		  s.telnet_password,
+		  s.telnet_user_2level,
+		  s.telnet_password_2level,
 		  v.res_vendor_name,
 		  x.res_model,
 		  x.res_os_version,
-		  (CASE 
-		    WHEN x.res_state =0 then '在网'
-		    WHEN x.res_state =1 THEN '新建'
-		    WHEN x.res_state =2 THEN '退网'
-		   END) as res_state,
+		  x.res_state,
 		   c.city_name,
 		   (CASE
 		     WHEN x.snmp_state =0 THEN '正常'
@@ -131,11 +308,7 @@
 		   b.isno_battery,
 		   b.isno_dynamicring,
 		   b.zd_name,
-		  (CASE
-		    WHEN b.res_area=0 THEN '市区'
-		    WHEN b.res_area=1 THEN '县城'
-		    WHEN b.res_area=2 THEN '乡镇'
-		   END) as res_area,
+		   b.res_area,
 		   x.res_addess,
 		   x.res_addtime
 		FROM

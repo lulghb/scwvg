@@ -9,12 +9,15 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
+import com.scwvg.vo.ResVo;
 import com.scwvg.service.WvgResDataService;
 import com.scwvg.utils.PageInfo;
 
@@ -67,6 +70,36 @@ public class WvgResDataController {
 	@GetMapping("/{id}")
 	public @ResponseBody Map<String, Object> get(@PathVariable("id") String res_id) {
 		return wvgResDataService.get(res_id);
+	}
+	
+	@Log("新增OLT资源")
+	@PostMapping("/add")
+	public @ResponseBody JSONObject add(ResVo params) {
+		wvgResDataService.add(params);
+		JSONObject result = new JSONObject();
+		result.put("code", "200");
+		result.put("msg", "保存成功!");
+		return result;
+	}
+	
+	@Log("更新OLT资源")
+	@PostMapping("/update")
+	public @ResponseBody JSONObject update(ResVo params) {
+		wvgResDataService.update(params);
+		JSONObject result = new JSONObject();
+		result.put("code", "200");
+		result.put("msg", "更新成功!");
+		return result;
+	}
+	
+	@Log("删除OLT资源")
+	@PostMapping("/del/{id}")
+	public @ResponseBody JSONObject delete(@PathVariable("id") Long res_id) {
+		wvgResDataService.delete(res_id);
+		JSONObject result = new JSONObject();
+		result.put("code", "200");
+		result.put("msg", "删除成功!");
+		return result;
 	}
 
 }
