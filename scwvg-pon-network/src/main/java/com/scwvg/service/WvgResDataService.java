@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.github.pagehelper.Page;
+import com.scwvg.vo.ResVo;
 
 
 /**
@@ -20,5 +21,11 @@ public interface WvgResDataService {
 	public Page<Map<String, Object>> queryAll(Map<String, Object> params, Page<Map<String, Object>> page);
 	
 	public Map<String, Object> get(String res_id);
+	
+	public void add(ResVo params);
+	
+	public void update(ResVo params);
+	
+	public void delete(Long res_id);
 
 }

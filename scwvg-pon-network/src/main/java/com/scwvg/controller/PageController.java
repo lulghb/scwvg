@@ -137,6 +137,33 @@ public class PageController {
 	public String res_list(){
 		return "res/list";
 	}
+	
+	/**
+	 * 新增资源
+	 * @return
+	 */
+	@GetMapping("/res/add")
+	public String res_add(){
+		return "res/add";
+	}
+	
+	/**
+	 * 编辑资源
+	 * @return
+	 */
+	@GetMapping("/res/edit")
+	public String res_edit(){
+		return "res/edit";
+	}
+	
+	/**
+	 * 批量导入资源
+	 * @return
+	 */
+	@GetMapping("/res/import")
+	public String res_import(){
+		return "res/import";
+	}
 
 	/**
 	 * 告警查询列表

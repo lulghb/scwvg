@@ -143,11 +143,17 @@
 			            <button class="layui-btn layuiadmin-btn-order" lay-submit lay-filter="LAY-olt-search">
 			              <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
 			            </button>
+			            <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-olt-add" permission="olt:add">新增</button>
+			            <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="LAY-olt-batch" permission="olt:add">批量导入</button>
 			          </div>
 			        </div>
 		          </div>
 		          <div class="layui-card-body">
 		            <table class="layui-hide" id="olt-table-data" lay-filter="olt-table-data"></table>
+		            <script type="text/html" id="olt-table-data-barOperation">
+              			<a class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete"><i class="layui-icon">&#xe640;</i>删除</a>
+           			</script>
 		          </div>
               </div>
               <div class="layui-tab-item">
@@ -234,6 +240,10 @@
 		          </div>
 		          <div class="layui-card-body">
 		            <table class="layui-hide" id="onu-table-data" lay-filter="olt-table-data"></table>
+		            <script type="text/html" id="onu-table-data-barOperation">
+              			<a class="layui-btn layui-btn-sm" lay-event="edit"><i class="layui-icon">&#xe642;</i>编辑</a>
+						<a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="delete"><i class="layui-icon">&#xe640;</i>删除</a>
+           			</script>
 		          </div>
               </div>
             </div>
@@ -243,8 +253,11 @@
     </div>
   </div>
   
-  <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../js/jquery-2.1.1.min.js" th:src="@{/js/jquery-2.1.1.min.js}"></script>
+<script type="text/javascript" src="../js/jq.js" th:src="@{/js/jq.js}"></script>
 <script type="text/javascript" th:inline="none">
+var token = localStorage.getItem("token");
 layui.config({
     base: '/' //静态资源所在路径
   }).extend({
@@ -267,7 +280,7 @@ layui.config({
 	  var form = layui.form;
 	  
 	  $.ajax({
-		  url: '/res/getCity?token=' + localStorage.getItem("token"),
+		  url: '/res/getCity?token=' + token,
 		  dataType: 'json',
 		  success: function(result) {
 			  $.each(result, function(index, item) {
@@ -303,8 +316,9 @@ layui.config({
 			  {field: 'res_area', title: '区域', width: 100},
 			  {field: 'res_address', title: '地址', width: 100},
 			  {field: 'res_addtime', title: '添加时间', width: 100},
+			  {fixed: 'right', title:'操作', toolbar: '#olt-table-data-barOperation', width:150}
 		  ]],
-	  	  url: '/res/list?token=' + localStorage.getItem("token"),
+	  	  url: '/res/list?token=' + token,
 	  	  request: {
 	    	  pageName: 'pageNum',
 	    	  limitName: 'pageSize',
@@ -354,8 +368,9 @@ layui.config({
 			  {field: 'res_add_date', title: '新增时间', width: 180},
 			  {field: 'res_update_date', title: '修改时间', width: 180},
 			  {field: 'res_delete_date', title: '删除时间', width: 180},
+			  {fixed: 'right', title:'操作', toolbar: '#onu-table-data-barOperation', width:150}
 		  ]],
-	  	  url: '/res_onu/list?token=' + localStorage.getItem("token"),
+	  	  url: '/res_onu/list?token=' + token,
 	  	  request: {
 	    	  pageName: 'pageNum',
 	    	  limitName: 'pageSize',
@@ -380,6 +395,23 @@ layui.config({
 	      even: true
 	  });
 	  
+	$(document).off('mousedown','.layui-table-grid-down')
+      .on('mousedown','.layui-table-grid-down',function(event) {
+       table._tableTrCurr=$(this).closest('td');
+	});
+   	$(document).off('click','.layui-table-tips-main [lay-event]')
+        .on('click', '.layui-table-tips-main [lay-event]', function(event){
+            var elem=$(this);
+            var tableTrCurr=table._tableTrCurr;
+            if(!tableTrCurr){
+               return;
+            }
+            var layerIndex=elem.closest('.layui-table-tips').attr('times');
+            layer.close(layerIndex);
+            table._tableTrCurr.find('[lay-event="'+elem.attr('lay-event')+'"]').click();//fires()
+   	});
+	
+	//OLT搜索
 	form.on('submit(LAY-olt-search)', function(data){
 		var field = data.field; 
 		//执行重载
@@ -387,7 +419,87 @@ layui.config({
 	        where: field
 	    });
 	});
-	
+	//新增OLT
+	form.on('submit(LAY-olt-add)', function(data){
+		layer.open({
+			title: '新增',
+			type: 2,
+			anim: 1,
+			area: ["92%", "85%"],
+			content: '/page/res/add',
+			//maxmin: true,
+			moveType: 1, //拖拽模式，0或者1
+			id: (new Date()).valueOf(),
+			success: function(layero, index){
+	  			var body = layer.getChildFrame('body', index);
+	  			var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：
+	  			//iframeWin.method(data);
+	  		}
+		});
+	});
+	//新增OLT
+	form.on('submit(LAY-olt-batch)', function(data){
+		layer.open({
+			title: '批量导入',
+			type: 2,
+			anim: 1,
+			area: ["50%", "30%"],
+			content: '/page/res/import',
+			//maxmin: true,
+			moveType: 1, //拖拽模式，0或者1
+			id: (new Date()).valueOf(),
+			success: function(layero, index){
+	  			var body = layer.getChildFrame('body', index);
+	  			var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：
+	  			//iframeWin.method(data);
+	  		}
+		});
+	});
+	table.on('tool(olt-table-data)', function(obj){
+		if(obj.event === 'edit') {//编辑
+			layer.open({
+				title: '编辑',
+				type: 2,
+				anim: 1,
+				area: ["92%", "85%"],
+				content: '/page/res/edit',
+				//maxmin: true,
+				moveType: 1, //拖拽模式，0或者1
+				id: (new Date()).valueOf(),
+				success: function(layero, index){
+		  			var body = layer.getChildFrame('body', index);
+		  			var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：
+		  			iframeWin.setFormValue(obj.data.res_id);
+		  		}
+			});
+		} else if(obj.event === 'delete') {//删除
+			layer.confirm('您确定删除id：'+obj.data.res_id+'的数据吗？', function(index){
+				layer.close(index);
+				$.ajax({
+					type: 'post',
+					url: '/res/del/' + obj.data.res_id + '?token=' + token,
+					//dataType: 'json',
+					//contentType: 'application/json',
+					success: function (result) {
+						if(result.code == 200) {
+			                layer.msg(result.msg,{
+	                            icon:1,
+	                            offset: 'rb',//右下角弹出
+	                            title: false,//不显示标题
+	                            closeBtn: 0, //不显示关闭按钮
+	                            shade: [0],//不显示遮罩层
+	                            time: 2000, //2秒后自动关闭
+	                            anim: 4,//动画效果
+	                        });
+			                layui.table.reload('olt-table-data');
+						}
+					}
+				});
+			});
+			
+		}
+	});
+	//ONU搜索
 	form.on('submit(LAY-onu-search)', function(data){
 		var field = data.field; 
 		//执行重载

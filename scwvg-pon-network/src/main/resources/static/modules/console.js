@@ -159,6 +159,11 @@ layui.define(function(exports){
                     	borderWidth: 1,
                     	label: {
                     		show: true
+                    	},
+                    	labelLine: {
+                    		show: true,
+                            smooth: 0.2,
+                            length: 1,
                     	}
                     },
                     emphasis: {
@@ -377,6 +382,22 @@ layui.define(function(exports){
 	  		  	    		selectedMode: 'single',
 	  		  	    		radius: '30%',
 	  		  	    		center: ['45%', '65%'],
+		  		  	    	itemStyle: {
+		  		                normal: {
+		  		                    label: {        //此处为指示线文字
+		  		                        show: true,
+		  		                        textStyle: {
+		  		                            fontWeight: 200,
+		  		                            fontSize: 10    //文字的字体大小
+		  		                        }
+		  		                    },
+		  		                    labelLine: {    //指示线状态
+		  		                        show: true,
+		  		                        smooth: 0.2,
+		  		                        length: 5,
+		  		                    }
+		  		                }
+		  		            },
 	  		  	    		data: oltPieData,
 	  		  	    		textStyle: {
 	  		  	    			color: "white"
@@ -434,6 +455,22 @@ layui.define(function(exports){
 	  		  	    		selectedMode: 'single',
 	  		  	    		radius: '30%',
 	  		  	    		center: ['45%', '65%'],
+		  		  	    	itemStyle: {
+		  		                normal: {
+		  		                    label: {        //此处为指示线文字
+		  		                        show: true,
+		  		                        textStyle: {
+		  		                            fontWeight: 200,
+		  		                            fontSize: 10    //文字的字体大小
+		  		                        }
+		  		                    },
+		  		                    labelLine: {    //指示线状态
+		  		                        show: true,
+		  		                        smooth: 0.2,
+		  		                        length: 5,
+		  		                    }
+		  		                }
+		  		            },
 	  		  	    		data: onuPieData
 	  		  	    	}
 	  		  	    ]
@@ -486,7 +523,22 @@ layui.define(function(exports){
 	  		  	    		selectedMode: 'single',
 	  		  	    		radius: '30%',
 	  		  	    		center: ['45%', '65%'],
-		  		  	    	
+		  		  	        itemStyle: {
+		  		                normal: {
+		  		                    label: {        //此处为指示线文字
+		  		                        show: true,
+		  		                        textStyle: {
+		  		                            fontWeight: 200,
+		  		                            fontSize: 10    //文字的字体大小
+		  		                        }
+		  		                    },
+		  		                    labelLine: {    //指示线状态
+		  		                        show: true,
+		  		                        smooth: 0.2,
+		  		                        length: 5,
+		  		                    }
+		  		                }
+		  		            },
 	  		  	    		data: [
 		  		  	    		{name: "齐齐哈尔", value: Math.round(Math.random()*1000)},
 		  						{name: "牡丹江", value: Math.round(Math.random()*1000)},
