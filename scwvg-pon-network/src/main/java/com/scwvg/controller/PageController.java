@@ -111,6 +111,22 @@ public class PageController {
 	public String menuManger(){
 		return "sys/menu/menuManger";
 	}
+	/**
+	 * 菜单操作
+	 * @return
+	 */
+	@GetMapping("/menu/addMenus")
+	public String addMenus(){
+		return "sys/menu/menuOption";
+	}
+	/**
+	 * 菜单样式
+	 * @return
+	 */
+	@GetMapping("/menu/css")
+	public String css(){
+		return "sys/menu/icon";
+	}
 
 
 	/**

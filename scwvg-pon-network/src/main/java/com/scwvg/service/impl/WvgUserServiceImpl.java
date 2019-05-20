@@ -68,33 +68,25 @@ public class WvgUserServiceImpl implements WvgUserService {
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
         Page<WvgUser> wvgUsers = userMapper.queryAllUserByPage(params);
 
-        for (int i = 0; i < wvgUsers.size(); i++) {
+        for(WvgUser user:wvgUsers){
             //用户专业转换
-            int zhSpecId = wvgUsers.get(i).getWvg_spec_id();
-            String spec_name = specTypeService.queryAllSpec(zhSpecId);
-            wvgUsers.get(i).setChangeStr(spec_name);
+          user.setChangeStr(specTypeService.queryAllSpec(user.getWvg_spec_id()));
             //用户属地转换
-            int city_id=wvgUsers.get(i).getWvg_city_id();
-            city_name=userMapper.queryCityByCityId(city_id);
-            wvgUsers.get(i).setChangeStr3(city_name);
+          user.setChangeStr3(userMapper.queryCityByCityId(user.getWvg_city_id()));
             //用户证件类型转换
-            int idType=wvgUsers.get(i).getWvg_id_type();
-            String idName=userMapper.queryIdName(idType);
-            wvgUsers.get(i).setChangeStr4(idName);
+          user.setChangeStr4(userMapper.queryIdName(user.getWvg_id_type()));
             //用户所属角色转换
-            Long user_id = wvgUsers.get(i).getWvg_user_id();
-            String wvg_role_name=userMapper.queryRoleName(user_id);
-            wvgUsers.get(i).setChangeStr5(wvg_role_name);
-
-            if (wvgUsers.get(i).getWvg_online_state() == 1) {
-                wvgUsers.get(i).setChangeStr1("离线");
+          user.setChangeStr5(userMapper.queryRoleName(user.getWvg_user_id()));
+          if(user.getWvg_online_state()==1){
+              user.setChangeStr1("离线");
+          }
+          else {
+              user.setChangeStr1("在线");
+          }
+            if (user.getWvg_account_enabled() == 1) {
+                user.setChangeStr2("已激活");
             } else {
-                wvgUsers.get(i).setChangeStr1("在线");
-            }
-            if (wvgUsers.get(i).getWvg_account_enabled() == 1) {
-                wvgUsers.get(i).setChangeStr2("已激活");
-            } else {
-                wvgUsers.get(i).setChangeStr2("未激活");
+                user.setChangeStr2("未激活");
             }
         }
         return wvgUsers;

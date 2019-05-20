@@ -1,6 +1,7 @@
 package com.scwvg.service;
 
 import com.github.pagehelper.Page;
+import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 
 import java.util.Map;
@@ -24,7 +25,7 @@ public interface WvgMenuService {
      * 新增菜单
      * @param wvgMenu
      */
-    void save(WvgMenu wvgMenu);
+    Msg save(WvgMenu wvgMenu);
 
     /**
      * 修改菜单

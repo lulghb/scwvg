@@ -2,6 +2,7 @@ package com.scwvg.controller;
 
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
+import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgLoginUser;
 import com.scwvg.entitys.scwvgponnetwork.WvgMenu;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
@@ -11,12 +12,10 @@ import com.scwvg.utils.UserUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
@@ -40,26 +39,26 @@ public class WvgMenuController {
     @Log("角色列表查询")
     public @ResponseBody PageInfo<WvgMenu> queryMenuAll(WvgMenu wvgMenu, Page<WvgMenu> page){
         Map<String, Object> params = new HashMap<>();
-
-
+        params.put("wvg_menu_name",wvgMenu.getWvg_menu_name());
+        params.put("wvg_menu_type",wvgMenu.getWvg_menu_type());
         Page<WvgMenu> menus = menuService.queryMenuAll(params,page);
         PageInfo<WvgMenu> pageInfo = new PageInfo<>(menus.getPageNum(), menus.getPageSize(), menus.getTotal());
         pageInfo.setTotalPage(menus.getPages());
         pageInfo.setItems(menus.getResult());
         return pageInfo;
     }
-
-
-
-
-
-
-
-
-
+    /**
+     * 菜单新增
+     */
+   @GetMapping("/add/menu")
+   @ApiOperation(value = "菜单新增")
+   @Log("菜单新增")
+   @PreAuthorize("hasAuthority('menus:add')")
+   public Msg menuAdd(WvgMenu wvgMenu){
+    return menuService.save(wvgMenu);
+   }
     /**
      * 校验权限
-     *
      * @return
      */
     @GetMapping("/owns")

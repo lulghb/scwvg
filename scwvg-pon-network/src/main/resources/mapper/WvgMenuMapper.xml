@@ -33,5 +33,13 @@
 	      wvg_menu_explain  ,
 	      wvg_user_id
       from wvg_menu
+         where 1=1
+        <if test="wvg_menu_name != null and wvg_menu_name != ''">
+            AND wvg_menu_name like CONCAT('%',#{wvg_menu_name},'%')
+        </if>
+        <if test="wvg_menu_type != null and wvg_menu_type != ''">
+            AND wvg_menu_type = #{wvg_menu_type}
+        </if>
+        order by wvg_menu_id desc
     </select>
 </mapper>

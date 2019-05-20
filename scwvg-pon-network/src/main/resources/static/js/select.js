@@ -5,15 +5,27 @@
  * @date：20192019/5/12
  * @Explain：下拉框公共类查询
  **/
+layui.config({
+    base: '/' //静态资源所在路径
+}).extend({
+    index: 'lib/index' //主入口模块
+}).use(['layer', 'form', 'element'], function(){
+    var layer = layui.layer
+        ,form = layui.form
+        ,element = layui.element
+
+    function renderSelect() {
+        //重新渲染 不然无法显示
+        layui.form.render("select");
+    }
+
 var token=localStorage.getItem("token");
 initSelectUserId(); //用户身份类型
 initSelectSpec();
 initSelectCity();
 initSelectRole();
-function renderSelect() {
-    //重新渲染 不然无法显示
-    layui.form.render("select");
-}
+//父级菜单
+initParentMenus();
 function initSelectUserId() {
     $.ajax({
         type:"get",
@@ -73,4 +85,23 @@ function initSelectRole(){
         },
     });
 }
+
+
+
+function initParentMenus() {
+    $.ajax({
+        type:"get",
+        url:"/selects/getParentMenus?token"+token,
+        success:function (data) {
+            var wvgparent=$("#menuParent");
+            $.each(data,function (i,item) {
+                if(item.wvg_menu_id !=1) {
+                    wvgparent.append("<option value=" + item.wvg_menu_id + ">" + item.wvg_menu_name + "</option>");
+                }
+            })
+            renderSelect();
+        },
+    });
+}
+});
 

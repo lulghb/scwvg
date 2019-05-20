@@ -39,5 +39,10 @@ public class WvgSelectServiceImpl implements WvgSelectService {
         return selectMapper.queryRoles();
     }
 
+    @Override
+    public Map<Integer, Map<String, Object>> queryParentMenus() {
+        return selectMapper.queryParentMenus();
+    }
+
 
 }

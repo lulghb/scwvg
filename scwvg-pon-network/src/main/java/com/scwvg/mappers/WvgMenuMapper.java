@@ -38,6 +38,7 @@ public interface WvgMenuMapper {
     @Select("select * from wvg_menu where wvg_menu_id=#{wvg_menu_id}")
     public WvgMenu queryMenuById(Long wvg_menu_id);
     /*新增菜单*/
+    /*通过ID修改*/
     @Insert("insert into wvg_menu(wvg_menu_id,\n" +
             "wvg_parent_id,\n" +
             "wvg_menu_name,\n" +
@@ -46,23 +47,27 @@ public interface WvgMenuMapper {
             "wvg_menu_type_name,\n" +
             "wvg_authority,\n" +
             "wvg_add_time,\n" +
+            "wvg_menu_css,\n" +
             "wvg_updata_time,\n" +
             "wvg_menu_icon,\n" +
             "wvg_menu_state,\n" +
-            "wvg_user_id) values(#{wvg_menu_id},\n" +
+            "wvg_menu_explain,\n" +
+            "wvg_user_id)" +
+            "values(#{wvg_menu_id},\n" +
             "#{wvg_parent_id},\n" +
             "#{wvg_menu_name},\n" +
             "#{wvg_menu_url},\n" +
             "#{wvg_menu_type},\n" +
             "#{wvg_menu_type_name},\n" +
             "#{wvg_authority},\n" +
-            "#{wvg_add_time},\n" +
-            "#{wvg_updata_time},\n" +
+            "now(),\n" +
+            "#{wvg_menu_css},\n" +
+            "now(),\n" +
             "#{wvg_menu_icon},\n" +
             "#{wvg_menu_state},\n" +
+            "#{wvg_menu_explain},\n" +
             "#{wvg_user_id})")
     public int insertMenu(WvgMenu wvgMenu);
-    /*通过ID修改*/
     @Update("update wvg_menu set wvg_menu_id=#{wvg_menu_id},\n" +
             "set wvg_parent_id=#{wvg_parent_id},\n" +
             "set wvg_menu_name=#{wvg_menu_name},\n" +
@@ -87,4 +92,8 @@ public interface WvgMenuMapper {
     public int queryMaxMenuID();
 
    public Page<WvgMenu> queryMenuAllByPage(Map<String,Object> params);
+   /*获取新增人*/
+    @Select("select wvg_real_name from wvg_user where wvg_user_id=#{wvg_user_id} ")
+   String getWvgUserName(Long wvg_user_id);
+
 }

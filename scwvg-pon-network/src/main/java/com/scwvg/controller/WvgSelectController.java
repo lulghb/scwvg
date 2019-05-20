@@ -43,6 +43,9 @@ public class WvgSelectController {
         return selectService.querRoles();
     }
 
-
+    @GetMapping("/getParentMenus")
+    public @ResponseBody Map<Integer,Map<String,Object>> getParentMenus(){
+        return selectService.queryParentMenus();
+    }
 
 }

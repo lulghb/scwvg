@@ -32,4 +32,8 @@ public interface WvgSelectMapper {
     @MapKey("wvg_role_id")
     @Select("select DISTINCT wvg_role_id,wvg_role_description from wvg_role")
     public Map<Integer,Map<String,Object>> queryRoles();
+    //查询父节点菜单
+    @MapKey("wvg_menu_id")
+    @Select("select wvg_menu_id,wvg_menu_name from wvg_menu where wvg_menu_type='L'")
+    Map<Integer,Map<String,Object>> queryParentMenus();
 }

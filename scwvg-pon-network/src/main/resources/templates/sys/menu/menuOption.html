@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+    <head>
+        <meta charset="UTF-8">
+        <title>菜单操作</title>
+        <meta name="renderer" content="webkit">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+        <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+        <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+    </head>
+    <body>
+        <div class="layui-form" lay-filter="lmenu-option" id="lmenu-option">
+            <div class="layui-form-item">
+                <label class="layui-form-label">父级菜单:</label>
+                <div class="layui-input-inline">
+                    <select lay-filter="menuparent" name="cityuser" lay-verify="required"  lay-search id="menuParent">
+                        <option value="">请选择父节点</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">菜单名称:</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="wvg_menu_name" id="wvg_menu_name" lay-verify="required" placeholder="菜单名称" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单类型:</label>
+                <div class="layui-input-inline" lay-filter="menuType">
+                    <select name="wvg_menu_type"  lay-search  id="wvg_menu_type">
+                        <option value="">请选择菜单类型</option>
+                        <option value="L">根节点</option>
+                        <option value="M">树节点</option>
+                        <option value="N">叶节点</option>
+                    </select>
+                </div>
+                <label class="layui-form-label">菜单权限:</label>
+                <div class="layui-input-inline" lay-filter="authority">
+                    <input type="text" name="wvg_authority" id="wvg_authority" lay-verify="required" placeholder="建议写menus:authority类似" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单连接:</label>
+                <div class="layui-input-inline">
+                    <input type="url" name="wvg_menu_url" lay-verify="required" value="" autocomplete="off" class="layui-input">
+                </div>
+                <label class="layui-form-label">菜单样式:</label>
+                <div class="layui-input-inline">
+                    <button onclick="selectCss()" class="layui-btn layui-btn-normal"  lay-submit lay-filter="addCss">选择样式</button>
+                    <input type="hidden"  name="css" id="css" />
+                    <i id="cssImg" class="fa"></i>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">菜单状态:</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="wvg_menu_state" value="1" title="挂载" checked>
+                    <input type="radio" name="wvg_menu_state" value="2" title="不挂载">
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">菜单描述:</label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请对菜单功能，用途等进行描述" name="wvg_menu_explain" id="wvg_menu_explain" class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="form-actions">
+                <div class="row" align="center">
+                    <div class="col-md-12">
+                        <button class="layui-btn layui-btn-radius"  lay-submit lay-filter="add">
+                            <i class="layui-icon">&#xe608;</i> 添加
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+        <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="../../js/jq.js"></script>
+        <script type="text/javascript" src="../../js/select.js"></script>
+
+        <script th:inline="none">
+            var token=localStorage.getItem("token");
+            var select_text;
+            layui.config({
+                base: '/' //静态资源所在路径
+            }).extend({
+                index: 'lib/index' //主入口模块
+            }).use(['layer', 'form', 'element'], function(){
+                var layer = layui.layer
+                    ,form = layui.form
+                    ,element = layui.element
+
+
+
+                //获取到text的值
+                form.on('select', function(data){
+                    select_text = data.elem[data.elem.selectedIndex].text;
+                });
+                /*提交*/
+                form.on('submit(add)',function (data) {
+                    var field = data.field;
+                    field.wvg_parent_id=$("#menuParent").val();
+                    field.wvg_menu_type=$("#wvg_menu_type").val();
+                    field.wvg_menu_type_name=select_text;
+                    field.wvg_menu_css=$("#css").val();
+                    field.wvg_menu_icon=$("#cssImg").val();
+                    $.ajax({
+                        type:'get',
+                        url:'/menus/add/menu?token='+token,
+                        data:field,
+                        success:function (data) {
+                            var index = parent.layer.getFrameIndex(window.name);
+                            if(data.code=="0"){
+                                parent.$("#handle_status").val('0');
+                                parent.layer.close(index);
+                            }else if(data.code == '1' ) {
+                                parent.$("#handle_status").val('1');
+                                parent.layer.close(index);
+                            }
+                        },
+                    })
+                });
+            });
+
+            function selectCss(){
+                layer.open({
+                    anim:1,
+                    type: 2,
+                    title: "样式添加",
+                    area: ['600px', '360px'],
+                    maxmin: true,
+                    content: '/page/menu/css',
+                });
+            }
+        </script>
+    </body>
+</html>
