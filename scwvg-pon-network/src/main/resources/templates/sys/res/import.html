@@ -55,7 +55,7 @@ layui.config({
 	
 	upload.render({
 		elem: '#selFile',
-		url: '/upload/',
+		url: '/res/import?token=' + token,
 		accept: 'file',
 		auto: false,
 		bindAction: '#uploadFile',
@@ -64,8 +64,30 @@ layui.config({
 				$("#fname").val(file.name);
 			});
 		},
-		done: function(res) {
-			console.log(res);
+		done: function(result) {
+			if(result.code == 200) {
+				parent.layer.msg(result.msg,{
+	                icon:1,
+	                offset: 'rb',//右下角弹出
+	                title: false,//不显示标题
+	                closeBtn: 0, //不显示关闭按钮
+	                shade: [0],//不显示遮罩层
+	                time: 2000, //2秒后自动关闭
+	                anim: 4,//动画效果
+	            });
+				var index = parent.layer.getFrameIndex(window.name);
+                parent.layer.close(index);
+			} else {
+				layer.msg("导入失败",{
+                    icon:1,
+                    offset: 'rb',//右下角弹出
+                    title: false,//不显示标题
+                    closeBtn: 0, //不显示关闭按钮
+                    shade: [0],//不显示遮罩层
+                    time: 2000, //2秒后自动关闭
+                    anim: 4,//动画效果
+                });
+			}
 		}
 	});
 });
