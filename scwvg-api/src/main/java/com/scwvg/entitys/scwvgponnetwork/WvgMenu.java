@@ -29,7 +29,7 @@ public class WvgMenu extends BaseEntity<Long>{
     private Date wvg_updata_time;//修改时间',
     private String wvg_menu_css; //菜单样式',
     private String wvg_menu_icon; //菜单图标',
-    private Integer wvg_menu_state;  //菜单状态（0，根菜单   1，挂载  2，未挂载）',
+    private Integer wvg_menu_state;  //菜单状态（1，启用  2，停用）',
     private String wvg_menu_explain;  //对菜单功能进行说明
     private Long wvg_user_id;   //创建人',
 
