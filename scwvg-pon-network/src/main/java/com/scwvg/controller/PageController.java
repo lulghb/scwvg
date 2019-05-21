@@ -16,21 +16,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class PageController {
 	
 	/**
-	 * 首页
-	 * @return
-	 */
-	@GetMapping("/map/hljmap")
-	public String map() {
-		return "map/hljmap";
-	}
-	
-	/**
 	 * 操作日志列表页面
 	 * @return
 	 */
 	@GetMapping("/log/list")
 	public String log_list() {
-		return "log/list";
+		return "sys/log/list";
 	}
 	
 	/**
@@ -39,7 +30,7 @@ public class PageController {
 	 */
 	@GetMapping("/log/detail")
 	public String log_detail() {
-		return "log/detail";
+		return "sys/log/detail";
 	}
 	
 	/**
@@ -48,11 +39,11 @@ public class PageController {
 	 */
 	@GetMapping("/lonlog/list")
 	public String lonlog_detail() {
-		return "log/login/list";
+		return "sys/log/login/list";
 	}
 	
 	/**
-	 * 登录日志页面
+	 * 首页
 	 * @return
 	 */
 	@GetMapping("/console")
@@ -135,7 +126,7 @@ public class PageController {
 	 */
 	@GetMapping("/res/list")
 	public String res_list(){
-		return "res/list";
+		return "sys/res/list";
 	}
 	
 	/**
@@ -144,7 +135,7 @@ public class PageController {
 	 */
 	@GetMapping("/res/add")
 	public String res_add(){
-		return "res/add";
+		return "sys/res/add";
 	}
 	
 	/**
@@ -153,7 +144,7 @@ public class PageController {
 	 */
 	@GetMapping("/res/edit")
 	public String res_edit(){
-		return "res/edit";
+		return "sys/res/edit";
 	}
 	
 	/**
@@ -162,7 +153,7 @@ public class PageController {
 	 */
 	@GetMapping("/res/import")
 	public String res_import(){
-		return "res/import";
+		return "sys/res/import";
 	}
 
 	/**

@@ -11,15 +11,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
-import com.scwvg.vo.ResVo;
 import com.scwvg.service.WvgResDataService;
 import com.scwvg.utils.PageInfo;
+import com.scwvg.vo.ResVo;
+
+import io.swagger.annotations.ApiParam;
 
 /**
  * @author: tangyl
@@ -99,6 +103,20 @@ public class WvgResDataController {
 		JSONObject result = new JSONObject();
 		result.put("code", "200");
 		result.put("msg", "删除成功!");
+		return result;
+	}
+	
+	@Log("批量导入资源")
+	@PostMapping("/import")
+	public @ResponseBody JSONObject create(
+			@ApiParam(name = "file", value = "Excel文件", required = true) @RequestParam("file") MultipartFile file) {
+		
+		System.out.println(file.getOriginalFilename());
+		System.out.println(file.getName());
+		
+		JSONObject result = new JSONObject();
+		result.put("code", "200");
+		result.put("msg", "导入成功!");
 		return result;
 	}
 
