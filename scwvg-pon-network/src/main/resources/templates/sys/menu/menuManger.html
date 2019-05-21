@@ -11,6 +11,9 @@
         <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
         <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
         <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+
+        <link rel="stylesheet" href="../../../static/layui/css/dtree.css" th:href="@{/layui/css/dtree.css}" media="all">
+        <link rel="stylesheet" href="../../../static/layui/css/dtreefont.css" th:href="@{/layui/css/dtreefont.css}" media="all">
     </head>
     <body>
         <div class="layui-fluid">
@@ -32,6 +35,7 @@
                                     <option value="">请选择菜单类型</option>
                                     <option value="L">根节点</option>
                                     <option value="N">叶节点</option>
+                                    <option value="O">操作权</option>
                                 </select>
                             </div>
                         </div>
@@ -40,6 +44,7 @@
                                 <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
                             </button>
                             <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="menus:add">添加</button>
+                            <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="queryMenus">浏览菜单树</button>
                             <input id="handle_status" value="" hidden="hidden">
                         </div>
                     </div>
@@ -57,13 +62,15 @@
         <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
         <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
         <script type="text/javascript" src="../../js/jq.js"></script>
+        <script type="text/javascript" src="../../js/dtree.js" th:src="@{/js/dtree.js}"></script>
         <script th:inline="none">
             var token=localStorage.getItem("token");
             layui.config({
                 base:"/"
             }).extend({
                 index: 'lib/index'
-            }).use(['index','form','useradmin','table','laydate'], function () {
+            }).use(['index','form','useradmin','table','laydate','dtree'], function () {
+                var dtree = layui.dtree;
                 var laydate = layui.laydate;
                 var form = layui.form;
                 var table = layui.table;
@@ -74,11 +81,11 @@
                     smartReloadModel: true,// 是否开启智能reload的模式
                     cols: [[ //表头
                      {field: 'wvg_menu_name', title: '菜单名', width:100}
-                    ,{field: 'wvg_menu_url', title: '菜单连接', width:150}
+                    ,{field: 'wvg_menu_url', title: '菜单连接', width:100}
                     ,{field: 'wvg_menu_type', title: '菜单类型', width:80, sort: true}
                     ,{field: 'wvg_menu_type_name', title: '类型名称', width:130}
                     ,{field: 'wvg_menu_css', title: '菜单样式', width: 100}
-                    ,{field: 'wvg_menu_state', title: '菜单状态', width: 80, sort: true}
+                    ,{field: 'changeStr1', title: '菜单状态', width: 80, sort: true}
                     ,{field: 'changeStr', title: '新增人', width: 100}
                     ,{field: 'wvg_menu_explain', title: '菜单说明', width: 220}
                     ,{fixed: 'right', title: '操作', toolbar: '#operation', width: 130}
@@ -166,6 +173,24 @@
                             }
                         }
                     })
+                })
+                //菜单树浏览
+                form.on('submit(queryMenus)',function () {
+                    layer.open({
+                        type:0,
+                        anim:1,
+                        title:"菜单树浏览",
+                        area:["400px", "80%"],
+                        content:'<ul id="roleTree" class="dtree" data-id="0"></ul>',
+                        maxmin: true,
+                        btn: ['取消'],
+                        success: function (layero,index) {
+                            var wvgtree =dtree.render({   //数据回显
+                                obj: $(layero).find("#roleTree"),
+                                url: "/roles/roledTreeList?token"+token,
+                            });
+                        }
+                    });
                 })
                 
                 

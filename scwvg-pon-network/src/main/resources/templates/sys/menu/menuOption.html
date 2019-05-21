@@ -29,22 +29,23 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单类型:</label>
                 <div class="layui-input-inline" lay-filter="menuType">
-                    <select name="wvg_menu_type"  lay-search  id="wvg_menu_type">
+                    <select name="wvg_menu_type" lay-verify="required" lay-search  id="wvg_menu_type">
                         <option value="">请选择菜单类型</option>
                         <option value="L">根节点</option>
                         <option value="M">树节点</option>
                         <option value="N">叶节点</option>
+                        <option value="O">操作权</option>
                     </select>
                 </div>
                 <label class="layui-form-label">菜单权限:</label>
                 <div class="layui-input-inline" lay-filter="authority">
-                    <input type="text" name="wvg_authority" id="wvg_authority" lay-verify="required" placeholder="建议写menus:authority类似" autocomplete="off" class="layui-input">
+                    <input type="text" name="wvg_authority" id="wvg_authority" placeholder="建议写menus:authority类似" autocomplete="off" class="layui-input">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单连接:</label>
                 <div class="layui-input-inline">
-                    <input type="url" name="wvg_menu_url" lay-verify="required" value="" autocomplete="off" class="layui-input">
+                    <input type="url" name="wvg_menu_url" value="" autocomplete="off" class="layui-input">
                 </div>
                 <label class="layui-form-label">菜单样式:</label>
                 <div class="layui-input-inline">
@@ -56,8 +57,8 @@
             <div class="layui-form-item">
                 <label class="layui-form-label">菜单状态:</label>
                 <div class="layui-input-inline">
-                    <input type="radio" name="wvg_menu_state" value="1" title="挂载" checked>
-                    <input type="radio" name="wvg_menu_state" value="2" title="不挂载">
+                    <input type="radio" name="wvg_menu_state" value="1" title="启用" checked>
+                    <input type="radio" name="wvg_menu_state" value="2" title="停用">
                 </div>
             </div>
             <div class="layui-form-item layui-form-text">

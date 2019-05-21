@@ -34,6 +34,6 @@ public interface WvgSelectMapper {
     public Map<Integer,Map<String,Object>> queryRoles();
     //查询父节点菜单
     @MapKey("wvg_menu_id")
-    @Select("select wvg_menu_id,wvg_menu_name from wvg_menu where wvg_menu_type='L'")
+    @Select("select wvg_menu_id,wvg_menu_name from wvg_menu where (wvg_menu_type='L' or wvg_menu_type='N')")
     Map<Integer,Map<String,Object>> queryParentMenus();
 }

@@ -38,6 +38,7 @@ public class WvgMenuServiceImpl implements WvgMenuService {
         Page<WvgMenu> wvgMenus = wvgMenuMapper.queryMenuAllByPage(params);
         for(WvgMenu menu:wvgMenus){
            menu.setChangeStr(wvgMenuMapper.getWvgUserName(menu.getWvg_user_id()));
+           menu.setChangeStr1(menu.getWvg_menu_state()==1?"启用":"停用");
         }
         return wvgMenus;
     }
