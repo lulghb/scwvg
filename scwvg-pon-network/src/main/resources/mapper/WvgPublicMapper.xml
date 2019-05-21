@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgPublicMapper">
+    <resultMap id="specMap" type="com.scwvg.entitys.scwvgponnetwork.WvgSpecType">
+        <id column="spec_id" property="spec_id"/>
+        <result column="spec_name" property="spec_name"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="wvg_user_id" property="wvg_user_id"/>
+    </resultMap>
+    <select id="querySpecAllByPage" parameterType="map" resultMap="specMap">
+        select
+            spec_id,
+            spec_name,
+            createTime,
+            updateTime,
+            wvg_user_id
+        from wvg_spec_type
+        where 1=1
+        <if test="spec_name != null and spec_name != ''">
+            AND spec_name = #{spec_name}
+        </if>
+        order by spec_id
+    </select>
+</mapper>
+

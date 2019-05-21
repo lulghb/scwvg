@@ -4,23 +4,20 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.*;
+import com.scwvg.mappers.WvgPublicMapper;
 import com.scwvg.mappers.WvgTokenMapper;
 import com.scwvg.mappers.WvgUserMapper;
-import com.scwvg.service.WvgSpecTypeService;
 import com.scwvg.service.WvgUserService;
 import com.scwvg.utils.IpUtils;
 import com.scwvg.utils.RequestHolder;
-import com.scwvg.utils.UserUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -35,7 +32,7 @@ public class WvgUserServiceImpl implements WvgUserService {
     private static final Logger log = LoggerFactory.getLogger("WvgUserServiceImpl");
     private static final String scwvg="www.scwvg.com";
     @Autowired
-    private WvgSpecTypeService specTypeService;
+    private WvgPublicMapper publicMapper;
     @Autowired
     private WvgUserMapper userMapper; //用户操作mapper注入进来
     @Autowired
@@ -70,7 +67,7 @@ public class WvgUserServiceImpl implements WvgUserService {
 
         for(WvgUser user:wvgUsers){
             //用户专业转换
-          user.setChangeStr(specTypeService.queryAllSpec(user.getWvg_spec_id()));
+          user.setChangeStr(publicMapper.queryAllSpec(user.getWvg_spec_id()));
             //用户属地转换
           user.setChangeStr3(userMapper.queryCityByCityId(user.getWvg_city_id()));
             //用户证件类型转换

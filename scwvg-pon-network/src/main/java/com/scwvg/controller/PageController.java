@@ -118,6 +118,30 @@ public class PageController {
 	public String css(){
 		return "sys/menu/icon";
 	}
+	/**
+	 * 专业管理
+	 * @return
+	 */
+	@GetMapping("/spec/specManager")
+	public String specManager(){
+		return "sys/spec/specManager";
+	}
+	/**
+	 * 专业添加
+	 * @return
+	 */
+	@GetMapping("/spec/addSpec")
+	public String addSpec(){
+		return "sys/spec/specOption";
+	}
+	/**
+	 * 专业修改
+	 * @return
+	 */
+	@GetMapping("/spec/editSpec")
+	public String editSpec(){
+		return "sys/spec/specOption";
+	}
 
 
 	/**

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>专业管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!--header头部-->
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <!--开始编写查询条件内如-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">专业名称</label>
+                    <div class="layui-input-block">
+                        <input class="layui-input" type="text" name="spec_name" placeholder="专业名称" autocomplete="off">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="querySpec">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                    <button class="layui-btn layuiadmin-btn-useradmin" lay-submit lay-filter="add" permission="spec:add">添加</button>
+                    <input id="handle_status" value="" hidden="hidden">
+                    <input type="text" name="reportId3" id="reportId3" hidden="hidden">
+                </div>
+            </div>
+        </div>
+        <!--body中间-->
+        <div class="layui-card-body">
+            <table id="specManger" lay-filter="specManger"></table>
+            <script type="text/html" id="operation">
+                <a class="layui-btn layui-btn-sm" lay-event="edit" id="edit" permission="spec:edit">修改</a>
+                <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" permission="spec:del">删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script th:inline="none">
+    var token=localStorage.getItem("token");
+    layui.config({
+        base:"/"
+    }).extend({
+        index: 'lib/index'
+    }).use(['index','form','useradmin','table','laydate'], function () {
+        var laydate = layui.laydate;
+        var form = layui.form;
+        var table = layui.table;
+        /*设置表头，获取数据*/
+        table.render({
+            elem: '#specManger',
+            smartReloadModel: true,// 是否开启智能reload的模式
+            cols:[[ {field: 'spec_id', title: '专业ID', width: 120,sort:true},
+                {field: 'spec_name', title: '专业名称', width: 180},
+                {field: 'createTime', title: '新增时间', width: 180},
+                {field: 'updateTime', title: '修改时间', width: 180},
+                {field: 'changeStr', title: '新增人', width: 180},
+                {fixed: 'right', title: '操作', toolbar: '#operation', width: 230}]],
+            url: '/publics/specQueryAll?token=' +token,
+            //分页
+            request:{
+                pageName: 'pageNum',
+                limitName: 'pageSize',
+                size: 10,
+                page: 0
+            },
+            //获得服务器数据
+            parseData:function(res){
+                return{
+                    success:true,
+                    data:res.items,
+                    count:res.totalNum
+                };
+            },
+            page:{
+                page:0
+            },
+            response: {
+                statusName: 'success' //规定数据状态的字段名称，默认：code
+                ,statusCode: true //规定成功的状态码，默认：0
+            },
+            toolbar: 'default', //让工具栏左侧显示默认的内置模板
+            even: true
+        });
+
+        /*监听搜索*/
+        form.on('submit(querySpec)',function (data) {
+            //获取数据
+            var field =data.field;
+            //执行重载
+            table.reload('specManger',{
+                where:field
+            });
+        });
+
+        /*监听添加*/
+        form.on('submit(add)',function () {
+            layer.open({
+                type:2,
+                title: '添加专业',
+                content: ['/page/spec/addSpec?token='+token, 'no'],
+                maxmin: true,
+                area:['480px','130px'],
+                anim: 1,
+                success:function(layero,index){
+
+                },
+                end:function() {
+                    var handle_status = $("#handle_status").val();
+                    if (handle_status == '0') {
+                        layer.msg('添加成功！', {
+                            icon: 1,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            history.go(0);
+                        });
+                    } else if (handle_status == '1') {
+                        layer.msg('添加失败,请联系系统厂商处理！', {
+                            icon: 2,
+                            time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                        }, function () {
+                            history.go(0);
+                        });
+                    }
+                }
+            });
+        });
+
+        //工具监听事件
+        table.on('tool(specManger)', function(obj){
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值
+            if(layEvent=='edit'){
+                layer.open({
+                    type:2,
+                    anim:1,
+                    title: '修改专业',
+                    content: ['/page/spec/editSpec?token='+token, 'no'],
+                    maxmin: true,
+                    area:['480px','130px'],
+                    success:function(layero,index){
+                        var body = layui.layer.getChildFrame('body', index);
+                        body.find("#spec_name").val(data.spec_name);
+                        form.render();
+                    },
+                    end:function() {
+                        var handle_status = $("#handle_status").val();
+                        if (handle_status == '0') {
+                            layer.msg('修改成功！', {
+                                icon: 1,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function () {
+                                history.go(0);
+                            });
+                        } else if (handle_status == '1') {
+                            layer.msg('修改失败,请联系系统厂商处理！', {
+                                icon: 2,
+                                time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                            }, function () {
+                                history.go(0);
+                            });
+                        }
+                    }
+                });
+            }
+            else if(layEvent=='del'){
+                layer.confirm('确定删除吗？', function(index){
+                    layer.close(index);
+                    $.ajax({
+                        url:'/publics/delSpec/'+data.spec_id,
+                        success:function (data) {
+                            if(data.code=='0'){
+                                layer.msg(data.message, {
+                                    icon: 1,
+                                    time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                }, function () {
+                                    history.go(0);
+                                });
+                            }
+                            else {
+                                layer.msg(data.message, {
+                                    icon: 2,
+                                    time: 3000 //2秒关闭（如果不配置，默认是3秒）
+                                });
+                            }
+
+                        }
+                    })
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

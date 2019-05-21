@@ -39,7 +39,9 @@ public class WvgRoleServiceImpl implements WvgRoleService {
 
     @Override
     public Page<WvgRole> queryAllRols(Map<String, Object> params, Page<WvgRole> page) {
+        //分页必须使用此段代码
         PageHelper.startPage(page.getPageNum(), page.getPageSize());
+
         Page<WvgRole> roles = roleMapper.queryAllRoleByPage(params);
         for (int i = 0; i < roles.size(); i++) {
           String wvg_real_name =roleMapper.getUserName(roles.get(i).getWvg_user_id());
