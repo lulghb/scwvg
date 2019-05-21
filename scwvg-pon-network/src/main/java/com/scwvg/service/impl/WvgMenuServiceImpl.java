@@ -50,7 +50,7 @@ public class WvgMenuServiceImpl implements WvgMenuService {
         Long wvg_menu_id=querMaxMenuId();
         wvgMenu.setWvg_menu_id(wvg_menu_id);
         WvgUser user=UserUtil.getLoginUser();
-        wvgMenu.setWvg_user_id(user.getWvg_user_id() );
+        wvgMenu.setWvg_user_id(user.getWvg_user_id());
         int res= wvgMenuMapper.insertMenu(wvgMenu);
         msg.setCode(res==1? "0":"1");
         log.debug("新增菜单"+wvgMenu.getWvg_menu_name());
@@ -59,18 +59,24 @@ public class WvgMenuServiceImpl implements WvgMenuService {
 
     /*菜单修改*/
     @Override
-    public void update(WvgMenu wvgMenu) {
-      wvgMenuMapper.updateMenu(wvgMenu);
+    public Msg update(WvgMenu wvgMenu) {
+        WvgUser user=UserUtil.getLoginUser();
+        wvgMenu.setWvg_user_id(user.getWvg_user_id());
+      int res= wvgMenuMapper.updateMenu(wvgMenu);
+      msg.setCode(res==1?"0":"1");
+      return msg;
     }
 
     @Override
     @Transactional
-    public void delete(Long id) {
-        /*删除父级菜单表*/
-        wvgMenuMapper.deleteMenuParentId(id);
+    public Msg delete(Long id) {
+        int res;
+        /*先删除角色表的菜单ID*/
+        res =wvgMenuMapper.deleteRoleMenu(id);
         /*删除菜单表数据*/
-        wvgMenuMapper.deleteMenu(id);
-        log.debug("菜单删除！");
+        res =wvgMenuMapper.deleteMenu(id);
+        msg.setMessage(res==1?"删除成功！":"删除失败，请联系系统厂商进行处理！");
+        return msg;
     }
 
     /**

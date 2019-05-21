@@ -68,24 +68,30 @@ public interface WvgMenuMapper {
             "#{wvg_menu_explain},\n" +
             "#{wvg_user_id})")
     public int insertMenu(WvgMenu wvgMenu);
-    @Update("update wvg_menu set wvg_menu_id=#{wvg_menu_id},\n" +
-            "set wvg_parent_id=#{wvg_parent_id},\n" +
-            "set wvg_menu_name=#{wvg_menu_name},\n" +
-            "set wvg_menu_url=#{wvg_menu_url},\n" +
-            "set wvg_menu_type=#{wvg_menu_type},\n" +
-            "set wvg_menu_type_name=#{wvg_menu_type_name},\n" +
-            "set wvg_authority=#{wvg_authority},\n" +
-            "set wvg_add_time=#{wvg_add_time},\n" +
-            "set wvg_updata_time=#{wvg_updata_time},\n" +
-            "set wvg_menu_icon=#{wvg_menu_icon},\n" +
-            "set wvg_menu_state=#{wvg_menu_state},\n" +
-            "set wvg_user_id=#{wvg_user_id}")
+    /*修改菜单*/
+    @Update("update wvg_menu set" +
+            " wvg_parent_id=#{wvg_parent_id},\n" +
+            " wvg_menu_name=#{wvg_menu_name},\n" +
+            " wvg_menu_url=#{wvg_menu_url},\n" +
+            " wvg_menu_type=#{wvg_menu_type},\n" +
+            " wvg_menu_type_name=#{wvg_menu_type_name},\n" +
+            " wvg_authority=#{wvg_authority},\n" +
+            " wvg_updata_time=now(),\n" +
+            " wvg_menu_css=#{wvg_menu_css},\n" +
+            " wvg_menu_icon=#{wvg_menu_icon},\n" +
+            " wvg_menu_state=#{wvg_menu_state},\n" +
+            " wvg_menu_explain=#{wvg_menu_explain},\n" +
+            " wvg_user_id=#{wvg_user_id}" +
+            " where wvg_menu_id=#{wvg_menu_id}")
     public int updateMenu(WvgMenu wvgMenu);
+
+    /*删除角色表菜单ID*/
+    @Delete(" delete from wvg_role_menu where wvg_menu_id=#{wvg_menu_id}")
+    public int deleteRoleMenu(Long wvg_menu_id);
     /*根据ID删除菜单*/
-    @Delete("delete wvg_menu where wvg_parent_id=#{wvg_parent_id}")
-    public int deleteMenuParentId(Long wvg_parent_id);
-    @Delete("delete from sys_permission where id = #{id}")
-    int deleteMenu(Long id);
+    @Delete("delete from wvg_menu where wvg_menu_id=#{wvg_menu_id}")
+    public int deleteMenu(Long wvg_menu_id);
+
 
     /*查询最大的ID*/
     @Select("SELECT MAX(wvg_menu_id) from wvg_menu")

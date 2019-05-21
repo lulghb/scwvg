@@ -31,11 +31,11 @@ public interface WvgMenuService {
      * 修改菜单
      * @param wvgMenu
      */
-    void update(WvgMenu wvgMenu);
+    Msg update(WvgMenu wvgMenu);
 
     /**
      * 删除菜单
      * @param id
      */
-    void delete(Long id);
+    Msg delete(Long id);
 }

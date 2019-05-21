@@ -58,6 +58,24 @@ public class WvgMenuController {
     return menuService.save(wvgMenu);
    }
     /**
+     * 菜单修改
+     */
+    @GetMapping("/edit/menu")
+    @ApiOperation(value = "菜单修改")
+    @Log("菜单修改")
+    @PreAuthorize("hasAuthority('menus:edit')")
+    public Msg menuEdit(WvgMenu wvgMenu){
+        return menuService.update(wvgMenu);
+    }
+
+    @GetMapping("/del/menu/{wvg_menu_id}")
+    @ApiOperation(value = "菜单删除")
+    @Log("菜单修改")
+    @PreAuthorize("hasAuthority('menus:del')")
+    public Msg menuDel(@PathVariable Long wvg_menu_id){
+        return menuService.delete(wvg_menu_id);
+    }
+    /**
      * 校验权限
      * @return
      */

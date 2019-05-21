@@ -83,6 +83,7 @@
                      {field: 'wvg_menu_name', title: '菜单名', width:100}
                     ,{field: 'wvg_menu_url', title: '菜单连接', width:100}
                     ,{field: 'wvg_menu_type', title: '菜单类型', width:80, sort: true}
+                    ,{field: 'wvg_authority', title: '菜单权限', width:100, sort: true}
                     ,{field: 'wvg_menu_type_name', title: '类型名称', width:130}
                     ,{field: 'wvg_menu_css', title: '菜单样式', width: 100}
                     ,{field: 'changeStr1', title: '菜单状态', width: 80, sort: true}
@@ -200,10 +201,60 @@
                     var data = obj.data; //获得当前行数据
                     var layEvent = obj.event; //获得 lay-event 对应的值
                     if(layEvent=='edit'){
-                        alert("修改");
+                        layer.open({
+                            anim:1,
+                            type:2,
+                            title: '修改菜单',
+                            content: ['/page/menu/addMenus', 'no'],
+                            maxmin: true,
+                            area:['700px','420px'],
+                            success:function(layero,index){
+                                var body = layui.layer.getChildFrame('body', index);
+                                body.find("#wvg_menu_id").val(data.wvg_menu_id);
+                                body.find("#menuParent").val(data.wvg_parent_id);
+                                body.find("#wvg_menu_name").val(data.wvg_menu_name);
+                                body.find("#wvg_menu_type").val(data.wvg_menu_type);
+                                body.find("#wvg_authority").val(data.wvg_authority);
+                                body.find("#wvg_menu_url").val(data.wvg_menu_url);
+                                body.find("#wvg_menu_state").val(data.wvg_menu_state);
+                                body.find("#wvg_menu_explain").val(data.wvg_menu_explain);
+                                form.render();
+                            },
+                            end:function() {
+                                var handle_status = $("#handle_status").val();
+                                if (handle_status == '0') {
+                                    layer.msg('修改成功！', {
+                                        icon: 1,
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                        history.go(0);
+                                    });
+                                } else if (handle_status == '1') {
+                                    layer.msg('修改失败,请联系系统厂商处理！', {
+                                        icon: 2,
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                        history.go(0);
+                                    });
+                                }
+                            }
+                        })
                     }
                     if(layEvent=='del'){
-                        alert("删除");
+                        layer.confirm('确定删除该菜单吗？', function(index){
+                            layer.close(index);
+                            $.ajax({
+                                url:'/menus/del/menu/'+data.wvg_menu_id,
+                                success:function (data) {
+                                    layer.msg(data.message, {
+                                        icon: 1,
+                                        time: 2000 //2秒关闭（如果不配置，默认是3秒）
+                                    }, function () {
+                                        history.go(0);
+                                    });
+                                }
+                            })
+                        });
                     }
                 })
             });

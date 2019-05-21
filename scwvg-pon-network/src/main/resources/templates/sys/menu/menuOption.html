@@ -24,6 +24,7 @@
                 <label class="layui-form-label">菜单名称:</label>
                 <div class="layui-input-inline">
                     <input type="text" name="wvg_menu_name" id="wvg_menu_name" lay-verify="required" placeholder="菜单名称" autocomplete="off" class="layui-input">
+                    <input id="wvg_menu_id" value="" hidden="hidden">
                 </div>
             </div>
             <div class="layui-form-item">
@@ -102,15 +103,25 @@
                 });
                 /*提交*/
                 form.on('submit(add)',function (data) {
+                    var url;
                     var field = data.field;
                     field.wvg_parent_id=$("#menuParent").val();
                     field.wvg_menu_type=$("#wvg_menu_type").val();
                     field.wvg_menu_type_name=select_text;
                     field.wvg_menu_css=$("#css").val();
                     field.wvg_menu_icon=$("#cssImg").val();
+
+                    var wvg_menu_id=$("#wvg_menu_id").val();
+                    if(wvg_menu_id !=""){
+                        field.wvg_menu_id=wvg_menu_id;
+                        url='/menus/edit/menu?token='+token
+                    }
+                    else {
+                        url='/menus/add/menu?token='+token
+                    }
                     $.ajax({
                         type:'get',
-                        url:'/menus/add/menu?token='+token,
+                        url:url,
                         data:field,
                         success:function (data) {
                             var index = parent.layer.getFrameIndex(window.name);
