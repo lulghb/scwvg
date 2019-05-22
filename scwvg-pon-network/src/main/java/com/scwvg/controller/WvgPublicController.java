@@ -110,7 +110,7 @@ public class WvgPublicController {
     /*厂家删除*/
     @GetMapping("/delVendor/{res_vendor_id}")
     @ApiOperation(value = "厂家删除")
-    @Log("厂家修改")
+    @Log("厂家删除")
     @PreAuthorize("hasAuthority('vendor:del')")
     public Msg delVendor(@PathVariable Long res_vendor_id){
         return publicService.delVendor(res_vendor_id);
