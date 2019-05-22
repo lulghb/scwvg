@@ -143,6 +143,35 @@ public class PageController {
 		return "sys/spec/specOption";
 	}
 
+    /**
+     * 厂家管理
+     * @return
+     */
+    @GetMapping("/vendor/manger")
+    public String vendorManger(){
+        return "sys/vendor/vendorManger";
+    }
+
+	/**
+	 * 厂家新增
+	 * @return
+	 */
+	@GetMapping("/vendor/addVendor")
+	public String addVendor(){
+		return "sys/vendor/vendorOption";
+	}
+
+
+	/**
+	 * 厂家修改
+	 * @return
+	 */
+	@GetMapping("/vendor/editVendor")
+	public String editVendor(){
+		return "sys/vendor/vendorOption";
+	}
+
+
 
 	/**
 	 * 资源列表

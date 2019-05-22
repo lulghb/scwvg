@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>新增角色</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+
+</head>
+<body>
+<div class="layui-form" lay-filter="layuiadmin-form-useradmin" id="layuiadmin-form-useradmin" style="padding: 20px 0 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">厂家名称:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="res_vendor_name" id="res_vendor_name" lay-verify="required" placeholder="厂家名称" autocomplete="off" class="layui-input">
+            <input id="res_vendor_id" value="" hidden="hidden">
+        </div>
+        <label class="layui-form-label">支撑名称:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="res_vendor_admin_name" id="res_vendor_admin_name" lay-verify="required" placeholder="支撑姓名" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支撑职位:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="res_position" id="res_position" lay-verify="required" placeholder="支撑职位说明" autocomplete="off" class="layui-input">
+        </div>
+        <label class="layui-form-label">联系电话:</label>
+        <div class="layui-input-inline">
+            <input type="text" name="res_vendor_phone" id="res_vendor_phone" lay-verify="required|phone|number"  placeholder="联系电话" autocomplete="off" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">选择厂家:</label>
+        <div class="layui-input-block">
+            <select name="res_parent_id" lay-search lay-filter="res_parent_id" id="vendorName">
+                <option value="">请选择厂家（若是新厂商可以不在此进行选择）</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">职责说明:</label>
+            <div class="layui-input-block">
+                <textarea placeholder="请对菜单功能，用途等进行描述" name="res_position_content" id="res_position_content" class="layui-textarea"></textarea>
+            </div>
+        </div>
+        <div class="form-actions">
+            <div class="row" align="center">
+                <div class="col-md-12">
+                    <button class="layui-btn layui-btn-radius"  lay-submit lay-filter="add">
+                        <i class="layui-icon">&#xe608;</i> 添加
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/select.js"></script>
+<script th:inline="none">
+    var token=localStorage.getItem("token");
+    var vendorURL;
+    layui.config({
+        base: '/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['layer', 'form', 'element'], function(){
+        var layer = layui.layer
+            ,form = layui.form
+            ,element = layui.element
+
+
+        form.on('submit(add)',function (data) {
+            var field = data.field;
+            field.res_parent_id=$("#vendorName").val();
+            var res_vendor_id=$("#res_vendor_id").val();
+            if(res_vendor_id !=""){
+                field.res_vendor_id=res_vendor_id;
+                vendorURL='/publics/editVendor?token='+token
+            }
+            else {
+                vendorURL='/publics/addVendor?token='+token
+            }
+            $.ajax({
+                type:'get',
+                url:vendorURL,
+                data:field,
+                success:function (data) {
+                    var index = parent.layer.getFrameIndex(window.name);
+                    if(data.code=="0"){
+                        parent.$("#handle_status").val('0');
+                        parent.layer.close(index);
+                    }else if(data.code == '1' ) {
+                        parent.$("#handle_status").val('1');
+                        parent.layer.close(index);
+                    }
+                },
+            })
+        })
+    });
+</script>
+</body>
+</html>

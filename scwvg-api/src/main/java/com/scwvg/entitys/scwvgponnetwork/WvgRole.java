@@ -19,6 +19,5 @@ public class WvgRole extends BaseEntity<Long> {
     private long wvg_role_id;//	             角色ID
     private String wvg_role_name;//          角色名称
     private String wvg_role_description;//   角色描述
-    private long wvg_user_id;//			     新增人
 
 }

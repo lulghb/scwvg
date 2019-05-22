@@ -48,4 +48,10 @@ public class WvgSelectController {
         return selectService.queryParentMenus();
     }
 
+    @GetMapping("/getinitVendors")
+    public @ResponseBody Map<Integer,Map<String,Object>> getinitVendors(){
+        return selectService.queryVendorS();
+    }
+
+
 }

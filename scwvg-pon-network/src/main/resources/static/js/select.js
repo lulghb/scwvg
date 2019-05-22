@@ -26,6 +26,8 @@ initSelectCity();
 initSelectRole();
 //父级菜单
 initParentMenus();
+//厂家查询
+initVendors();
 function initSelectUserId() {
     $.ajax({
         type:"get",
@@ -103,5 +105,20 @@ function initParentMenus() {
         },
     });
 }
+
+
+    function initVendors() {
+        $.ajax({
+            type:"get",
+            url:"/selects/getinitVendors?token"+token,
+            success:function (data) {
+                var vendorName=$("#vendorName");
+                $.each(data,function (i,item) {
+                        vendorName.append("<option value=" + item.res_parent_id + ">" + item.res_vendor_name + "</option>");
+                })
+                renderSelect();
+            },
+        });
+    }
 });
 

@@ -2,6 +2,7 @@ package com.scwvg.mappers;
 
 import com.github.pagehelper.Page;
 import com.scwvg.entitys.scwvgponnetwork.WvgSpecType;
+import com.scwvg.entitys.scwvgponnetwork.WvgVendor;
 import org.apache.ibatis.annotations.*;
 
 import java.util.Map;
@@ -51,4 +52,35 @@ public interface WvgPublicMapper {
     /*查询用户表里是否关联了该专业*/
     @Select("select count(1) from wvg_user where wvg_spec_id=#{spec_id}")
     int countUserSpec(Long spec_id);
+
+    /*支撑厂家查询*/
+    Page<WvgVendor> queryVendorAllByPage(Map<String,Object> params);
+
+    /*查询最大的ID*/
+    @Select("SELECT MAX(res_vendor_id) from wvg_res_vendor")
+    int countVendorId();
+    /*支撑厂家新增*/
+    int saveVendor(WvgVendor vendor);
+
+    /*厂家修改*/
+    @Update("UPDATE wvg_res_vendor \n" +
+            "set\n" +
+            "\tres_parent_id=#{res_parent_id},\n" +
+            "\tres_vendor_name=#{res_vendor_name},\n" +
+            "\tres_vendor_admin_name=#{res_vendor_admin_name},\n" +
+            "\tres_position=#{res_position},\n" +
+            "\tres_vendor_phone=#{res_vendor_phone},\n" +
+            "\tres_position_content=#{res_position_content},\n" +
+            "\tupdateTime=NOW(),\n" +
+            " wvg_user_id=#{wvg_user_id}\n" +
+            "where res_vendor_id=#{res_vendor_id}")
+    int editVendor(WvgVendor vendor);
+
+    /*查询有多少个设备与厂家进行了关联*/
+    @Select("select count(1) from wvg_res_data where res_vendor_id=#{res_vendor_id}")
+    int countResData(Long res_vendor_id);
+
+    /*删除厂厂家信息*/
+    @Delete("delete from wvg_res_vendor where res_vendor_id=#{res_vendor_id}")
+    int deleteVendor(Long res_vendor_id);
 }

@@ -36,4 +36,9 @@ public interface WvgSelectMapper {
     @MapKey("wvg_menu_id")
     @Select("select wvg_menu_id,wvg_menu_name from wvg_menu where (wvg_menu_type='L' or wvg_menu_type='N')")
     Map<Integer,Map<String,Object>> queryParentMenus();
+
+    //厂家查询
+    @MapKey("res_parent_id")
+    @Select("select  DISTINCT res_parent_id,res_vendor_name from wvg_res_vendor;")
+    Map<Integer,Map<String,Object>> queryVendorS();
 }

@@ -21,6 +21,7 @@ public abstract class BaseEntity<ID extends Serializable> implements Serializabl
 
     private Date createTime = new Date();
     private Date updateTime = new Date();
+    private Long wvg_user_id;  //到处都需要有这个新增人的字段
     //转换数据库里int转String的问题
     private String changeStr;
     //转换数据库里int转String的问题

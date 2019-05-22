@@ -22,5 +22,56 @@
         </if>
         order by spec_id
     </select>
+
+    <resultMap id="vendorMap" type="com.scwvg.entitys.scwvgponnetwork.WvgVendor">
+        <id column="res_vendor_id" property="res_vendor_id"/>
+        <result column="res_parent_id" property="res_parent_id"/>
+        <result column="res_vendor_name" property="res_vendor_name"/>
+        <result column="res_vendor_admin_name" property="res_vendor_admin_name"/>
+        <result column="res_position" property="res_position"/>
+        <result column="res_vendor_phone" property="res_vendor_phone"/>
+        <result column="res_position_content" property="res_position_content"/>
+        <result column="createTime" property="createTime"/>
+        <result column="updateTime" property="updateTime"/>
+        <result column="wvg_user_id" property="wvg_user_id"/>
+    </resultMap>
+    <select id="queryVendorAllByPage" parameterType="map" resultMap="vendorMap">
+        SELECT
+            res_vendor_id,
+            res_parent_id,
+            res_vendor_name,
+            res_vendor_admin_name,
+            res_position,
+            res_vendor_phone,
+            res_position_content,
+            createTime,
+            updateTime,
+            wvg_user_id
+        FROM
+            wvg_res_vendor
+        where 1=1
+        <if test="res_parent_id != null and res_parent_id != ''">
+            AND res_parent_id = #{res_parent_id}
+        </if>
+        <if test="res_vendor_admin_name != null and res_vendor_admin_name != ''">
+            AND res_vendor_admin_name = #{res_vendor_admin_name}
+        </if>
+        order by res_vendor_id desc
+    </select>
+    <insert id="saveVendor" parameterType="com.scwvg.entitys.scwvgponnetwork.WvgVendor">
+        INSERT INTO wvg_res_vendor (
+            res_vendor_id,
+            res_parent_id,
+            res_vendor_name,
+            res_vendor_admin_name,
+            res_position,
+            res_vendor_phone,
+            res_position_content,
+            updateTime,
+            wvg_user_id
+        )
+        VALUES(#{res_vendor_id},#{res_parent_id},#{res_vendor_name},#{res_vendor_admin_name},
+        #{res_position},#{res_vendor_phone},#{res_position_content},now(),#{wvg_user_id})
+    </insert>
 </mapper>
 

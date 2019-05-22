@@ -20,4 +20,7 @@ public interface WvgSelectService {
     public Map<Integer,Map<String,Object>> querRoles();
     //查询父节菜单
     Map<Integer,Map<String,Object>> queryParentMenus();
+
+    //查询厂家
+    Map<Integer,Map<String,Object>> queryVendorS();
 }
