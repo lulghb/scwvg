@@ -99,6 +99,6 @@ public interface WvgPublicMapper {
     @Select("select * from wvg_alarm_counts")
     Page<AlarmCounts> queryAlarms();
     /*首页【今日流量拥塞量】*/
-    @Select("select * from ")
+    @Select("select * from wvg_flux_counts")
     Page<FluxCounts> queryFluxs();
 }
