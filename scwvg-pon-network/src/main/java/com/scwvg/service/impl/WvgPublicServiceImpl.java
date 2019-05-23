@@ -2,6 +2,9 @@ package com.scwvg.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.scwvg.entitys.AlarmCounts;
+import com.scwvg.entitys.BandUserCounts;
+import com.scwvg.entitys.FluxCounts;
 import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgSpecType;
 import com.scwvg.entitys.scwvgponnetwork.WvgUser;
@@ -12,7 +15,7 @@ import com.scwvg.utils.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.awt.image.RescaleOp;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -125,4 +128,32 @@ public class WvgPublicServiceImpl implements WvgPublicService {
         return msg;
     }
 
+
+    @Override
+    public List<WvgVendor> queryMainVendors() {
+        return publicMapper.queryMainVendors();
+    }
+
+    @Override
+    public Page<BandUserCounts> queryBandUsers(Page<BandUserCounts> page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        Page<BandUserCounts> list=publicMapper.queryBandUsers();
+        return list;
+    }
+
+    @Override
+    public Page<AlarmCounts> queryAlarms(Page<AlarmCounts> page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        Page<AlarmCounts> alarms=publicMapper.queryAlarms();
+        return alarms;
+    }
+
+    @Override
+    public Page<FluxCounts> queryFluxs(Page<FluxCounts> page) {
+        PageHelper.startPage(page.getPageNum(), page.getPageSize());
+        Page<FluxCounts> fluxs=publicMapper.queryFluxs();
+        return fluxs;
+    }
+
 }
+

@@ -1,13 +1,3 @@
-/**
-
- @Name：layuiAdmin 主页控制台
- @Author：贤心
- @Site：http://www.layui.com/admin/
- @License：GPL-2
-    
- */
-
-
 layui.define(function(exports){
   
   /*
@@ -241,40 +231,6 @@ layui.define(function(exports){
             },
         ]
       },
-      
-      //访客浏览器分布
-      { 
-        title : {
-          text: '访客浏览器分布',
-          x: 'center',
-          textStyle: {
-            fontSize: 14
-          }
-        },
-        tooltip : {
-          trigger: 'item',
-          formatter: "{a} <br/>{b} : {c} ({d}%)"
-        },
-        legend: {
-          orient : 'vertical',
-          x : 'left',
-          data:['Chrome','Firefox','IE 8.0','Safari','其它浏览器']
-        },
-        series : [{
-          name:'访问来源',
-          type:'pie',
-          radius : '55%',
-          center: ['50%', '50%'],
-          data:[
-            {value:9052, name:'Chrome'},
-            {value:1610, name:'Firefox'},
-            {value:3200, name:'IE 8.0'},
-            {value:535, name:'Safari'},
-            {value:1700, name:'其它浏览器'}
-          ]
-        }]
-      },
-      
       //新增的用户量
       {
         title: {
@@ -481,14 +437,6 @@ layui.define(function(exports){
 	  		      echOnuPip[index] = echarts.init(elemOnuPip[index], layui.echartsTheme);
 	  		      echOnuPip[index].setOption(oltOnuOp[index]);
 	  		      echOnuPip[index].on("pieSelected", function(param) {
-//	  		    	  var selected = param.selected;
-//	  		    	  var serie;
-//	  		    	  for (var idx in selected) {
-//	  		    		  if (selected[idx]) {
-//	  		    			  serie = option.series[idx];
-//	  		    			alert(serie);
-//	  		    		  }
-//	  		    	  }
 	  		    	  // 跳转到资源列表页面
 	  		    	  $("#toOnu")[0].click();
 	  		      });
@@ -627,43 +575,176 @@ layui.define(function(exports){
     layui.admin.on('hash(tab)', function(){
       layui.router().path.join('') || renderDataView(carouselIndex);
     });
-  });
 
-  //最新订单
-  layui.use('table', function(){
-    var $ = layui.$
-    ,table = layui.table;
-    
-    //今日热搜
-    table.render({
-      elem: '#LAY-index-topSearch'
-      ,url: layui.setter.base + 'json/console/top-search.js' //模拟接口
-      ,page: true
-      ,cols: [[
-        {type: 'numbers', fixed: 'left'}
-        ,{field: 'keywords', title: '关键词', minWidth: 300, templet: '<div><a href="https://www.baidu.com/s?wd={{ d.keywords }}" target="_blank" class="layui-table-link">{{ d.keywords }}</div>'}
-        ,{field: 'frequency', title: '搜索次数', minWidth: 120, sort: true}
-        ,{field: 'userNums', title: '用户数', sort: true}
-      ]]
-      ,skin: 'line'
-    });
-    
-    //今日热贴
-    table.render({
-      elem: '#LAY-index-topCard'
-      ,url: layui.setter.base + 'json/console/top-card.js' //模拟接口
-      ,page: true
-      ,cellMinWidth: 120
-      ,cols: [[
-        {type: 'numbers', fixed: 'left'}
-        ,{field: 'title', title: '标题', minWidth: 300, templet: '<div><a href="{{ d.href }}" target="_blank" class="layui-table-link">{{ d.title }}</div>'}
-        ,{field: 'username', title: '发帖者'}
-        ,{field: 'channel', title: '类别'}
-        ,{field: 'crt', title: '点击率', sort: true}
-      ]]
-      ,skin: 'line'
-    });
+
+      //今日新增用户量
+      var echnormcol = [], normcol = [
+          {
+              title : {
+                  text: '某地区蒸发量和降水量',
+              },
+              tooltip : {
+                  trigger: 'axis'
+              },
+              legend: {
+                  data:['蒸发量','降水量']
+              },
+              calculable : true,
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : ['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月']
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value'
+                  }
+              ],
+              series : [
+                  {
+                      name:'蒸发量',
+                      type:'bar',
+                      data:[2.0, 4.9, 7.0, 23.2, 25.6, 76.7, 135.6, 162.2, 32.6, 20.0, 6.4, 3.3],
+                      markPoint : {
+                          data : [
+                              {type : 'max', name: '最大值'},
+                              {type : 'min', name: '最小值'}
+                          ]
+                      },
+                      markLine : {
+                          data : [{type : 'average', name: '平均值'}]
+                      }
+                  },
+                  {
+                      name:'降水量',
+                      type:'bar',
+                      data:[2.6, 5.9, 9.0, 26.4, 28.7, 70.7, 175.6, 182.2, 48.7, 18.8, 6.0, 2.3],
+                      markPoint : {
+                          data : [
+                              {name : '年最高', value : 182.2, xAxis: 7, yAxis: 183, symbolSize:18},
+                              {name : '年最低', value : 2.3, xAxis: 11, yAxis: 3}
+                          ]
+                      },
+                      markLine : {
+                          data : [
+                              {type : 'average', name : '平均值'}
+                          ]
+                      }
+                  }
+              ]
+          }
+      ]
+          ,elemNormcol = $('#LAY-index-normcol').children('div')
+          ,renderNormcol = function(index){
+          echnormcol[index] = echarts.init(elemNormcol[index], layui.echartsTheme);
+          echnormcol[index].setOption(normcol[index]);
+          window.onresize = echnormcol[index].resize;
+      };
+      if(!elemNormcol[0]) return;
+      renderNormcol(0);
+      //堆积柱状图
+      var echheapcol = [], heapcol = [
+          {
+              tooltip : {
+                  trigger: 'axis',
+                  axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+                      type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+                  }
+              },
+              legend: {
+                  data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎','百度','谷歌','必应','其他']
+              },
+              calculable : true,
+              xAxis : [
+                  {
+                      type : 'category',
+                      data : ['周一','周二','周三','周四','周五','周六','周日']
+                  }
+              ],
+              yAxis : [
+                  {
+                      type : 'value'
+                  }
+              ],
+              series : [
+                  {
+                      name:'直接访问',
+                      type:'bar',
+                      data:[320, 332, 301, 334, 390, 330, 320]
+                  },
+                  {
+                      name:'邮件营销',
+                      type:'bar',
+                      stack: '广告',
+                      data:[120, 132, 101, 134, 90, 230, 210]
+                  },
+                  {
+                      name:'联盟广告',
+                      type:'bar',
+                      stack: '广告',
+                      data:[220, 182, 191, 234, 290, 330, 310]
+                  },
+                  {
+                      name:'视频广告',
+                      type:'bar',
+                      stack: '广告',
+                      data:[150, 232, 201, 154, 190, 330, 410]
+                  },
+                  {
+                      name:'搜索引擎',
+                      type:'bar',
+                      data:[862, 1018, 964, 1026, 1679, 1600, 1570],
+                      markLine : {
+                          itemStyle:{
+                              normal:{
+                                  lineStyle:{
+                                      type: 'dashed'
+                                  }
+                              }
+                          },
+                          data : [
+                              [{type : 'min'}, {type : 'max'}]
+                          ]
+                      }
+                  },
+                  {
+                      name:'百度',
+                      type:'bar',
+                      barWidth : 5,
+                      stack: '搜索引擎',
+                      data:[620, 732, 701, 734, 1090, 1130, 1120]
+                  },
+                  {
+                      name:'谷歌',
+                      type:'bar',
+                      stack: '搜索引擎',
+                      data:[120, 132, 101, 134, 290, 230, 220]
+                  },
+                  {
+                      name:'必应',
+                      type:'bar',
+                      stack: '搜索引擎',
+                      data:[60, 72, 71, 74, 190, 130, 110]
+                  },
+                  {
+                      name:'其他',
+                      type:'bar',
+                      stack: '搜索引擎',
+                      data:[62, 82, 91, 84, 109, 110, 120]
+                  }
+              ]
+          }
+      ]
+          ,elemHeapcol = $('#LAY-index-heapcol').children('div')
+          ,renderHeapcol = function(index){
+          echheapcol[index] = echarts.init(elemHeapcol[index], layui.echartsTheme);
+          echheapcol[index].setOption(heapcol[index]);
+          window.onresize = echheapcol[index].resize;
+      };
+      if(!elemHeapcol[0]) return;
+      renderHeapcol(0);
+
   });
-  
   exports('console', {})
 });

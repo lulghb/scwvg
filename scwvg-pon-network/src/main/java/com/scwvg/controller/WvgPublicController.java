@@ -2,6 +2,9 @@ package com.scwvg.controller;
 
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
+import com.scwvg.entitys.AlarmCounts;
+import com.scwvg.entitys.BandUserCounts;
+import com.scwvg.entitys.FluxCounts;
 import com.scwvg.entitys.Msg;
 import com.scwvg.entitys.scwvgponnetwork.WvgRole;
 import com.scwvg.entitys.scwvgponnetwork.WvgSpecType;
@@ -15,7 +18,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.concurrent.RecursiveTask;
 
 /**
  * @aothor: lul
@@ -115,4 +120,49 @@ public class WvgPublicController {
     public Msg delVendor(@PathVariable Long res_vendor_id){
         return publicService.delVendor(res_vendor_id);
     }
+
+    /*首页支撑查询*/
+    @GetMapping("/getVendorBrace")
+    @Log("首页支撑厂家查找")
+    public List<WvgVendor> getVendorBrace(){
+     List<WvgVendor> vendorList = publicService.queryMainVendors();
+        return vendorList;
+    }
+
+    /*首页【今日用户增减情况统计】*/
+    @GetMapping("/getBandUserInfo")
+    @ApiOperation(value = "今日用户增减情况统计")
+    public @ResponseBody
+    PageInfo<BandUserCounts> getBandUserInfo(Page<BandUserCounts> page) {
+        Page<BandUserCounts> bands = publicService.queryBandUsers(page);
+        PageInfo<BandUserCounts> pageInfo = new PageInfo<>(bands.getPageNum(), bands.getPageSize(), bands.getTotal());
+        pageInfo.setTotalPage(bands.getPages());
+        pageInfo.setItems(bands.getResult());
+        return pageInfo;
+    }
+    /*首页【今日告警量】*/
+    @GetMapping("/getAlarmInfo")
+    @ApiOperation(value = "今日用户增减情况统计")
+    public @ResponseBody
+    PageInfo<AlarmCounts> getAlarmInfo(Page<AlarmCounts> page) {
+        Page<AlarmCounts> alarms = publicService.queryAlarms(page);
+        PageInfo<AlarmCounts> pageInfo = new PageInfo<>(alarms.getPageNum(), alarms.getPageSize(), alarms.getTotal());
+        pageInfo.setTotalPage(alarms.getPages());
+        pageInfo.setItems(alarms.getResult());
+        return pageInfo;
+    }
+
+    /*首页【今日流量拥塞量】*/
+    @GetMapping("/getFluxInfo")
+    @ApiOperation(value = "今日用户增减情况统计")
+    public @ResponseBody
+    PageInfo<FluxCounts> getFluxInfo(Page<FluxCounts> page) {
+        Page<FluxCounts> alarms = publicService.queryFluxs(page);
+        PageInfo<FluxCounts> pageInfo = new PageInfo<>(alarms.getPageNum(), alarms.getPageSize(), alarms.getTotal());
+        pageInfo.setTotalPage(alarms.getPages());
+        pageInfo.setItems(alarms.getResult());
+        return pageInfo;
+    }
+
 }
+

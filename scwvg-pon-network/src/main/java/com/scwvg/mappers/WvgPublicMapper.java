@@ -1,10 +1,14 @@
 package com.scwvg.mappers;
 
 import com.github.pagehelper.Page;
+import com.scwvg.entitys.AlarmCounts;
+import com.scwvg.entitys.BandUserCounts;
+import com.scwvg.entitys.FluxCounts;
 import com.scwvg.entitys.scwvgponnetwork.WvgSpecType;
 import com.scwvg.entitys.scwvgponnetwork.WvgVendor;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -83,4 +87,18 @@ public interface WvgPublicMapper {
     /*删除厂厂家信息*/
     @Delete("delete from wvg_res_vendor where res_vendor_id=#{res_vendor_id}")
     int deleteVendor(Long res_vendor_id);
+
+    /*首页厂家支撑信息查询*/
+    @Select("select  res_vendor_name,res_vendor_admin_name,res_vendor_phone from wvg_res_vendor")
+    List<WvgVendor> queryMainVendors();
+
+    /*首页【今日用户增减情况】*/
+    @Select("select * from wvg_banduser_counts")
+    Page<BandUserCounts> queryBandUsers();
+    /*首页【今日告警情况】*/
+    @Select("select * from wvg_alarm_counts")
+    Page<AlarmCounts> queryAlarms();
+    /*首页【今日流量拥塞量】*/
+    @Select("select * from ")
+    Page<FluxCounts> queryFluxs();
 }

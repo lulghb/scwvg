@@ -30,7 +30,7 @@
                   <div carousel-item>
                     <ul class="layui-row layui-col-space10">
                       <li class="layui-col-xs3">
-                        <a lay-href="home/homepage1.html">
+                        <a lay-href="page/res/list">
                           <i class="layui-icon layui-icon-console"></i>
                           <cite>资源列表</cite>
                         </a>
@@ -93,39 +93,11 @@
               <div class="layui-card-body" style="padding: 0px 0px;">
                 <div class="layui-carousel layadmin-carousel layadmin-backlog">
                   <div carousel-item>
-                    <ul class="layui-row layui-col-space10">
-                      <li class="layui-col-xs3">
-                        <a lay-href="app/content/comment.html" class="layadmin-backlog-body">
-                          <h3>待审评论</h3>
-                          <p><cite>66</cite></p>
-                        </a>
-                      </li>
-                      <li class="layui-col-xs3">
-                        <a lay-href="app/forum/list.html" class="layadmin-backlog-body">
-                          <h3>待审帖子</h3>
-                          <p><cite>12</cite></p>
-                        </a>
-                      </li>
-                      <li class="layui-col-xs3">
-                        <a lay-href="template/goodslist.html" class="layadmin-backlog-body">
-                          <h3>待审商品</h3>
-                          <p><cite>99</cite></p>
-                        </a>
-                      </li>
-                      <li class="layui-col-xs3">
-                        <a href="javascript:;" onclick="layer.tips('不跳转', this, {tips: 3});" class="layadmin-backlog-body">
-                          <h3>待发货</h3>
-                          <p><cite>20</cite></p>
-                        </a>
-                      </li>
+                    <ul class="layui-row layui-col-space10" id="vendorInfo1">
+
                     </ul>
-                    <ul class="layui-row layui-col-space10">
-                      <li class="layui-col-xs5">
-                        <a href="javascript:;" class="layadmin-backlog-body">
-                          <h3>待审友情链接</h3>
-                          <p><cite style="color: #FF5722;">5</cite></p>
-                        </a>
-                      </li>
+                    <ul class="layui-row layui-col-space10" id="vendorInfo2">
+
                     </ul>
                   </div>
                 </div>
@@ -159,7 +131,7 @@
                     	</div>
                     	<i class="layui-icon layui-icon-loading1 layadmin-loading"></i>
                     </div>
-                    <div></div>
+                    <!--<div></div>-->
                     <div></div>
                   </div>
                 </div>
@@ -169,29 +141,24 @@
             <div class="layui-card">
               <div class="layui-tab layui-tab-brief layadmin-latestData">
                 <ul class="layui-tab-title">
-                  <li>今日新增用户量</li>
-                  <li>今日严重告警量</li>
+                  <li class="layui-this">今日用户增减情况</li>
+                  <li>今日告警量</li>
                   <li>今日流量拥塞量</li>
+                  <li>光衰达标率TOP</li>
                   <li>配置规范率TOP</li>
                   <li>开通成功率TOP</li>
                   <li>光纤距离TOP </li>
-
                 </ul>
-                <div class="layui-tab-content">
+
+                <div class="layui-tab-content" style="text-align: center;">
                   <div class="layui-tab-item layui-show">
                     <table id="LAY-index-topSearch"></table>
                   </div>
-                  <div class="layui-tab-item">
-                    <table id="LAY-index-topCard"></table>
+                  <div class="layui-tab-item" style="text-align: center;">
+                    <table id="alarm_counts"></table>
                   </div>
-                  <div class="layui-tab-item">
-                    <table id="LAY-index-topCard1"></table>
-                  </div>
-                  <div class="layui-tab-item">
-                    <table id="LAY-index-topCard2"></table>
-                  </div>
-                  <div class="layui-tab-item">
-                    <table id="LAY-index-topCard3"></table>
+                  <div class="layui-tab-item" style="text-align: center;">
+                    <table id="flux_counts"></table>
                   </div>
                 </div>
               </div>
@@ -310,6 +277,7 @@
   <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
   <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
   <script type="text/javascript" src="../../js/jq.js"></script>
+  <script type="text/javascript" src="../../js/wvg-console.js"></script>
   <script>
   layui.config({
     base: '/' //静态资源所在路径
