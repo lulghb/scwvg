@@ -903,7 +903,7 @@ a cite {
 .layui-fluid {
     position: relative;
     margin: 0 auto;
-    padding: 0 15px
+    padding: 0 5px
 }
 
 .layui-row:after, .layui-row:before {
@@ -1630,9 +1630,9 @@ a cite {
 }
 
 .layui-card {
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     border-radius: 2px;
-    background-color: #fff;
+    background-color: rgba(49, 45, 76, 0.1);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, .05)
 }
 
@@ -1642,8 +1642,8 @@ a cite {
 
 .layui-card-header {
     position: relative;
-    height: 42px;
-    line-height: 42px;
+    height: 32px;
+    line-height: 32px;
     padding: 0 15px;
     border-bottom: 1px solid #f6f6f6;
     color: #333;
@@ -1657,7 +1657,7 @@ a cite {
 
 .layui-card-body {
     position: relative;
-    padding: 10px 15px;
+    padding: 10px 0px;
     line-height: 24px
 }
 
@@ -1670,7 +1670,7 @@ a cite {
 }
 
 .layui-card-body .layui-table {
-    margin: 5px 0
+    margin: 2px 0
 }
 
 .layui-card .layui-tab {
@@ -2811,8 +2811,9 @@ a cite {
 
 .layui-table {
     width: 100%;
-    background-color: #fff;
-    color: #666
+    background-color: rgba(111, 255, 169, 0.15);
+    color: #961a1d;
+    text-align: center;
 }
 
 .layui-table tr {
@@ -2821,26 +2822,27 @@ a cite {
 }
 
 .layui-table th {
-    text-align: left;
-    font-weight: 400
+    background-color: #009688;
+    text-align: center;
+    font-weight: 800
 }
 
 .layui-table tbody tr:hover, .layui-table thead tr, .layui-table-click, .layui-table-header, .layui-table-hover, .layui-table-mend, .layui-table-patch, .layui-table-tool, .layui-table-total, .layui-table-total tr, .layui-table[lay-even] tr:nth-child(even) {
-    background-color: #f2f2f2
+    background-color: rgba(204, 242, 127, 0.45)
 }
 
 .layui-table td, .layui-table th, .layui-table-col-set, .layui-table-fixed-r, .layui-table-grid-down, .layui-table-header, .layui-table-page, .layui-table-tips-main, .layui-table-tool, .layui-table-total, .layui-table-view, .layui-table[lay-skin=line], .layui-table[lay-skin=row] {
     border-width: 1px;
     border-style: solid;
-    border-color: #e6e6e6
+    border-color: #961a1d
 }
 
 .layui-table td, .layui-table th {
     position: relative;
-    padding: 9px 15px;
+    padding: 0px 1px;
     min-height: 20px;
     line-height: 20px;
-    font-size: 14px
+    font-size: 10px
 }
 
 .layui-table[lay-skin=line] td, .layui-table[lay-skin=line] th {
@@ -4137,7 +4139,7 @@ body .layui-table-tips .layui-layer-content {
 
 .layui-carousel-ind {
     position: relative;
-    top: -35px;
+    top: -26px;
     width: 100%;
     line-height: 0 !important;
     text-align: center;
@@ -5021,3 +5023,5 @@ body .layui-util-face .layui-layer-content {
     -webkit-animation-name: layui-fadeout;
     animation-name: layui-fadeout
 }
+/*定义*/
+.layui-input{color: #6b2ebd;font-size: 14px}

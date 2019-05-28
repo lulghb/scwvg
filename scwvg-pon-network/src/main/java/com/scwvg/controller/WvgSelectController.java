@@ -53,5 +53,32 @@ public class WvgSelectController {
         return selectService.queryVendorS();
     }
 
+    @GetMapping("/getResVendorId")
+    public @ResponseBody Map<Integer,Map<String,Object>> getResVendorId(){
+        return selectService.queryVendorS();
+    }
+    @GetMapping("/queryProtocol")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryProtocol(){
+        return selectService.queryProtocol();
+    }
+    @GetMapping("/queryOptType")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryOptType(){
+        return selectService.queryOptType();
+    }
+
+    @GetMapping("/queryDataType")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryDataType(){
+        return selectService.queryDataType();
+    }
+    @GetMapping("/queryResType")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryResType(){
+        return selectService.queryResType();
+    }
+    @GetMapping("/queryIdtBaseInt")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryIdtBaseInt(){
+        return selectService.queryIdtBaseInt();
+    }
+
+
 
 }

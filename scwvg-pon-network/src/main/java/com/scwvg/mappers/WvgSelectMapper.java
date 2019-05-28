@@ -41,4 +41,44 @@ public interface WvgSelectMapper {
     @MapKey("res_parent_id")
     @Select("select  DISTINCT res_parent_id,res_vendor_name from wvg_res_vendor;")
     Map<Integer,Map<String,Object>> queryVendorS();
+
+    /**
+     * 采集协议查询
+     * @return
+     */
+    @MapKey("cmd_type_id")
+    @Select("select cmd_type_id,cmd_type_name from wvg_protocol_type")
+    Map<Integer,Map<String,Object>> queryProtocol();
+
+    /**
+     * 指令操作类型查询
+     * @return
+     */
+    @MapKey("opt_type_id")
+    @Select("select opt_type_id,opt_type_name from wvg_opt_type")
+    Map<Integer,Map<String,Object>> queryOptType();
+
+    /**
+     * 数据类型查询
+     * @return
+     */
+    @MapKey("data_type_id")
+    @Select("select data_type_id,data_type_name from wvg_data_type")
+    Map<Integer,Map<String,Object>> queryDataType();
+
+    /**
+     * 资源类型查询
+     * @return
+     */
+    @MapKey("res_type_id")
+    @Select("select res_type_id,res_type_name from wvg_res_type")
+    Map<Integer,Map<String,Object>> queryResType();
+
+    /**
+     * 数据库选择
+     * @return
+     */
+    @MapKey("base_id")
+    @Select("select base_id,base_name from wvg_data_base")
+    Map<Integer,Map<String,Object>> queryIdtBaseInt();
 }

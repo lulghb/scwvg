@@ -227,4 +227,22 @@ public class PageController {
 		return "am/detail";
 	}
 
+	/**
+	 * 告警明细
+	 * @return
+	 */
+	@GetMapping("/flux/manager")
+	public String fluxManager(){
+		return "sys/flux/fluxManager";
+	}
+
+	/**
+	 * 采集模型库管理
+	 * @return
+	 */
+	@GetMapping("/lib/manger")
+	public String libManager(){
+		return "sys/lib/gatherLibManage";
+	}
+
 }

@@ -118,6 +118,8 @@
   </div>
   
   <script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+  <script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+  <script type="text/javascript" src="../../js/jq.js"></script>
 <script type="text/javascript" th:inline="none">
 layui.config({
     base: '/' //静态资源所在路径
@@ -204,6 +206,7 @@ layui.config({
 	    	  page: 0
 	      },
 	      parseData: function(res) {
+              $('th').css({'background-color': '#009688', 'color': '#fff'});
 	    	  return {
 	    		  success: true,
 	    		  data: res.items, //解析数据列表

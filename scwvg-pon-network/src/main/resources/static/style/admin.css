@@ -30,7 +30,7 @@ html #layuicss-layuiAdmin {
 
 /* 鍏ㄥ眬 */
 html {
-    background-color: #f2f0a9;/*#f2f2f2  #000000;*/
+    background-color: rgba(219, 242, 6, 0.14);/*#f2f2f2  #000000;*/
     color: #666;
 }
 
@@ -825,7 +825,7 @@ html {
 
 .layadmin-carousel .layui-carousel-ind {
     position: absolute;
-    top: -41px;
+    top: -26px;
     text-align: right;
 }
 

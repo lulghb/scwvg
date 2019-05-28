@@ -49,5 +49,29 @@ public class WvgSelectServiceImpl implements WvgSelectService {
         return selectMapper.queryVendorS();
     }
 
+    @Override
+    public Map<Integer, Map<String, Object>> queryProtocol() {
+        return selectMapper.queryProtocol();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Object>> queryOptType() {
+        return selectMapper.queryOptType();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Object>> queryDataType() {
+        return selectMapper.queryDataType();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Object>> queryResType() {
+        return selectMapper.queryResType();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Object>> queryIdtBaseInt() {
+        return selectMapper.queryIdtBaseInt();
+    }
 
 }

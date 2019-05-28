@@ -23,4 +23,16 @@ public interface WvgSelectService {
 
     //查询厂家
     Map<Integer,Map<String,Object>> queryVendorS();
+    //采集协议查询
+    Map<Integer,Map<String,Object>> queryProtocol();
+    //指令操作类型查询
+    Map<Integer,Map<String,Object>> queryOptType();
+
+    //数据类型查询
+    Map<Integer,Map<String,Object>> queryDataType();
+    //资源类型查询
+    Map<Integer,Map<String,Object>> queryResType();
+
+    //数据库选择
+    Map<Integer,Map<String,Object>> queryIdtBaseInt();
 }

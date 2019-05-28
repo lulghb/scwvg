@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.scwvg.mappers.WvgCmdMapper">
+    <select id="queryCmdAllByPage" parameterType="map" resultType="java.util.HashMap">
+       SELECT
+            x.cmd_id,
+            x.cmd_ch_name,
+            x.cmd_en_name,
+            x.cmd_context,
+            x.cmd_index_algo,
+          (case
+            WHEN x.cmd_type=0 THEN 'EPON'
+                WHEN x.cmd_type=1 THEN 'GPON'
+                WHEN x.cmd_type=2 THEN '通用'
+           end)  as cmd_type,
+            v.res_vendor_name,
+            s.spec_name,
+          (CASE
+           WHEN 	x.cmd_is_algo=0 THEN '不计算'
+           WHEN 	x.cmd_is_algo=1 THEN '计算'
+          end) as cmd_is_algo,
+            x.cmd_res_algorithm,
+            x.cmd_res_unit,
+            p.cmd_type_name,
+            o.opt_type_name,
+          (
+           CASE
+           WHEN x.cmd_enable=0 THEN '不启用'
+           WHEN x.cmd_enable=1 THEN '启用'
+          end ) as cmd_enable,
+            x.createTime,
+            x.updateTime,
+            u.wvg_real_name
+        FROM
+            wvg_cmd_base x
+          LEFT JOIN wvg_res_vendor v on x.res_vendor_id=v.res_vendor_id
+          LEFT JOIN wvg_spec_type s on s.spec_id=x.spec_id
+          LEFT JOIN wvg_protocol_type p on x.cmd_protocol_id=p.cmd_type_id
+          LEFT JOIN wvg_opt_type o on o.opt_type_id=x.opt_type_id
+          LEFT JOIN wvg_user u on u.wvg_user_id=x.wvg_user_id
+        <where>
+            <if test="cmd_type != null and cmd_type != ''">
+                AND x.cmd_type = #{cmd_type}
+            </if>
+            <if test="res_vendor_id != null and res_vendor_id != ''">
+                AND x.res_vendor_id = #{res_vendor_id}
+            </if>
+            <if test="spec_id != null and spec_id != ''">
+                AND x.spec_id = #{spec_id}
+            </if>
+            <if test="cmd_protocol_id != null and cmd_protocol_id != ''">
+                AND x.cmd_protocol_id = #{cmd_protocol_id}
+            </if>
+            <if test="opt_type_id != null and opt_type_id != ''">
+                AND x.opt_type_id = #{opt_type_id}
+            </if>
+            <if test="cmd_is_algo != null and cmd_is_algo != ''">
+                AND x.cmd_is_algo = #{cmd_is_algo}
+            </if>
+            <if test="cmd_ch_name != null and cmd_ch_name != ''">
+                AND x.cmd_ch_name = #{cmd_ch_name}
+            </if>
+            <if test="cmd_en_name != null and cmd_en_name != ''">
+                AND x.cmd_en_name = #{cmd_en_name}
+            </if>
+        </where>
+        ORDER BY x.cmd_id
+    </select>
+
+    <select id="getInductionByPage" parameterType="map" resultType="java.util.HashMap">
+        SELECT
+            x.idt_cmd_id,
+            x.idt_cmd_name,
+            y.data_type_name,
+            s.spec_name,
+            r.res_type_name,
+            x.idt_retry_number,
+            (CASE
+            WHEN x.idt_is_test =0 THEN '未测试'
+            WHEN x.idt_is_test =1 THEN '测试通过'
+            WHEN x.idt_is_test =2 THEN '测试失败'
+            end) as idt_is_test,
+            (CASE
+            WHEN x.idt_is_addlib = 0 THEN '不入库'
+            WHEN x.idt_is_addlib = 1 THEN '入库'
+            end) as idt_is_addlib,
+            d.base_name,
+            u.wvg_real_name
+        FROM wvg_cmd_induction x
+            LEFT JOIN wvg_data_type y on x.data_type_id=y.data_type_id
+            LEFT JOIN wvg_spec_type s on x.spec_id=s.spec_id
+            LEFT JOIN wvg_res_type  r on x.res_type_id=r.res_type_id
+            LEFT JOIN wvg_data_base d on x.base_id=d.base_id
+            LEFT JOIN wvg_user u on x.wvg_user_id=u.wvg_user_id
+        <where>
+            <if test="data_type_id != null and data_type_id != ''">
+                AND x.data_type_id = #{data_type_id}
+            </if>
+            <if test="res_type_id != null and res_type_id != ''">
+                AND x.res_type_id = #{res_type_id}
+            </if>
+            <if test="idt_is_test != null and idt_is_test != ''">
+                AND x.idt_is_test = #{idt_is_test}
+            </if>
+            <if test="idt_is_addlib != null and idt_is_addlib != ''">
+                AND x.idt_is_addlib = #{idt_is_addlib}
+            </if>
+            <if test="idt_base_int != null and idt_base_int != ''">
+                AND x.idt_base_int = #{idt_base_int}
+            </if>
+            <if test="cmd_is_algo != null and cmd_is_algo != ''">
+                AND x.idt_cmd_name = #{idt_cmd_name}
+            </if>
+        </where>
+        ORDER BY x.idt_cmd_id
+    </select>
+</mapper>

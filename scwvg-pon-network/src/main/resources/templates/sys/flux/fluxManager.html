@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<head>
+    <meta charset="UTF-8">
+    <title>流量管理</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="../../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}" media="all">
+    <link rel="stylesheet" href="../../../static/style/admin.css" th:href="@{/style/admin.css}" media="all">
+</head>
+<body>
+<!--流量拥塞信息-->
+<div class="layui-fluid">
+    <div class="layui-card">
+        <!--header头部-->
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+                <!--开始编写查询条件内如-->
+                <div class="layui-inline">
+                    <label class="layui-form-label">属地</label>
+                    <div class="layui-input-inline layui-form" lay-filter="onu_city_id">
+                        <select id="city_id" name="city_id" lay-verify="">
+                            <option value="">请选择</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">OLT-IP</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="res_olt_ip" placeholder="请输入" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+                <div class="layui-inline">
+                    <label class="layui-form-label">范围</label>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="flux_min" placeholder="范围如：30%" autocomplete="off" class="layui-input">
+                    </div>
+                    <div class="layui-form-mid">-</div>
+                    <div class="layui-input-inline" style="width: 100px;">
+                        <input type="text" name="flux_max" placeholder="范围如：90%" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layui-btn-radius layui-btn-normal" lay-submit lay-filter="menu-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!--body中间-->
+        <div class="layui-card-body">
+            <table id="menus" lay-filter="menus"></table>
+            <script type="text/html" id="operation">
+                <a class="layui-btn layui-btn-sm" lay-event="edit" id="edit" permission="menus:edit">编辑</a>
+                <a class="layui-btn layui-btn-danger layui-btn-sm" lay-event="del" permission="menus:del">删除</a>
+            </script>
+        </div>
+    </div>
+</div>
+<!--流量拥塞数据曲线图-->
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script type="text/javascript" src="../../js/jquery-2.1.1.min.js"></script>
+<script type="text/javascript" src="../../js/jq.js"></script>
+<script type="text/javascript" src="../../js/select.js"></script>
+<script th:inline="none">
+    var token = localStorage.getItem("token");
+    var select_text;
+    layui.config({
+        base: '/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['layer', 'form', 'element'], function () {
+        var layer = layui.layer
+            , form = layui.form
+            , element = layui.element
+
+
+        /*属地查询*/
+        $.ajax({
+            type:"get",
+            url:"/selects/getUserCity?token"+token,
+            success:function (data) {
+                var city_id=$("#city_id");
+                $.each(data,function (i,item) {
+                    if(item.city_id !=0){
+                        city_id.append("<option value="+item.city_id+">"+item.city_name+"</option>");
+                    }
+                })
+                renderSelect();
+            },
+        });
+
+        //主题内容写在这儿
+    });
+    function renderSelect() {
+        //重新渲染 不然无法显示
+        layui.form.render("select");
+    }
+</script>
+</body>
+</html>

@@ -98,7 +98,8 @@ layui.use('table', function () {
         smartReloadModel: true,// 是否开启智能reload的模式
         cols: [[
             {field: 'city_id', title: '地市编码',align:"center", width: 100},
-            {field: 'city_name', title: '地市', minWidth: 80, align:"center",templet: '<div><a href="/page/res/list" target="_blank" class="layui-table-link">{{d.city_name}}</div>'},
+            {field: 'city_name', title: '地市', minWidth: 80, align:"center",templet:
+                '<div><a href="/page/res/list" target="_blank" class="layui-table-link">{{d.city_name}}</div>'},
             {field: 'flux_olt_mubers', title: 'OLT数量',align:"center", width: 100,sort: true},
             {field: 'flux_pon_mubers', title: 'PON口数量',align:"center", width: 120,sort: true},
             {field: 'affect_mubers', title: '影响用户数量',align:"center", width: 120,sort: true},
@@ -134,7 +135,6 @@ layui.use('table', function () {
 
 
 });
-
 
 initWvgConsole();
 
