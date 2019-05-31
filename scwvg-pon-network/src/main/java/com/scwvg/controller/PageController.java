@@ -1,5 +1,6 @@
 package com.scwvg.controller;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -243,6 +244,23 @@ public class PageController {
 	@GetMapping("/lib/manger")
 	public String libManager(){
 		return "sys/lib/gatherLibManage";
+	}
+
+	/**
+	 * 采集模型库新增
+	 * @return
+	 */
+	@GetMapping("/lib/addcmdbase")
+	public String addcmdbase(){
+		return "sys/lib/add";
+	}
+	/**
+	 * 采集模型库修改
+	 * @return
+	 */
+	@GetMapping("/lib/editcmdbase")
+	public String editcmdbase(){
+		return "sys/lib/edit";
 	}
 
 }

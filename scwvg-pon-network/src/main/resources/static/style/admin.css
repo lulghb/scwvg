@@ -874,7 +874,7 @@ html {
     text-align: center;
     border-radius: 2px;
     font-size: 30px;
-    background-color: #F8F8F8;
+    background-color: #00968869;
     color: #333;
     transition: all .3s;
     -webkit-transition: all .3s;
@@ -898,9 +898,9 @@ html {
 /* 寰呭姙浜嬮」 */
 .layadmin-backlog .layadmin-backlog-body {
     display: block;
-    padding: 10px 15px;
-    background-color: #f8f8f8;
-    color: #999;
+    padding: 6px 8px;
+    background-color: #5fb8784a;
+    color: #693232;
     border-radius: 2px;
     transition: all .3s;
     -webkit-transition: all .3s;

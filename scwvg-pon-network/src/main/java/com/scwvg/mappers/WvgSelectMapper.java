@@ -81,4 +81,12 @@ public interface WvgSelectMapper {
     @MapKey("base_id")
     @Select("select base_id,base_name from wvg_data_base")
     Map<Integer,Map<String,Object>> queryIdtBaseInt();
+
+    /**
+     * 板卡类型选择
+     * @return
+     */
+    @MapKey("card_type_id")
+    @Select("select card_type_id,card_type_name from wvg_card_type")
+    Map<Integer,Map<String,Object>> queryCardType();
 }

@@ -11,13 +11,12 @@ $.ajaxSetup({
 		if (code == 400) {
 			layer.msg(message);
 		} else if (code == 401) {
-			localStorage.removeItem("token");
-			location.href = '/login';
+            localStorage.removeItem("token");
+            location.href = '/login';
 		} else if (code == 403) {
-			console.log("没有权限操作！:" + message);
-			layer.msg('没有权限操作！');
+			layer.alert("您没有权限操作，请联系上级部门或系统厂商！")
 		} else if (code == 500) {
-			layer.msg('系统错误：' + message);
+            layer.alert("系统错误，请联系上级部门或系统厂商！")
 		}
 	}
 });

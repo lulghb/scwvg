@@ -78,6 +78,11 @@ public class WvgSelectController {
     public @ResponseBody Map<Integer,Map<String,Object>> queryIdtBaseInt(){
         return selectService.queryIdtBaseInt();
     }
+    @GetMapping("/queryCardType")
+    public @ResponseBody Map<Integer,Map<String,Object>> queryCardType(){
+        return selectService.queryCardType();
+    }
+
 
 
 

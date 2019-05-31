@@ -31,6 +31,8 @@ layui.config({
     queryDataTpye();
     queryResType();
     queryIdtBaseInt();
+    queryIdtSpec();
+    queryCardType();
 
     function queryVendors() {
         $.ajax({
@@ -52,7 +54,9 @@ layui.config({
             success: function (data) {
                 var spec_id = $("#spec_id");
                 $.each(data, function (i, item) {
-                    spec_id.append("<option value=" + item.spec_id + ">" + item.spec_name + "</option>");
+                    if(item.spec_id !=1) {
+                        spec_id.append("<option value=" + item.spec_id + ">" + item.spec_name + "</option>");
+                    }
                 })
                 renderSelect();
             },
@@ -120,6 +124,34 @@ layui.config({
                 var idt_base_int = $("#idt_base_int");
                 $.each(data, function (i, item) {
                     idt_base_int.append("<option value=" + item.base_id + ">" + item.base_name + "</option>");
+                })
+                renderSelect();
+            },
+        })
+    }
+    function queryIdtSpec() {
+        $.ajax({
+            type:"get",
+            url: "/selects/getUserSpec?token" + token,
+            success: function (data) {
+                var idt_spec_id = $("#idt_spec_id");
+                $.each(data, function (i, item) {
+                    if(item.spec_id !=1){
+                        idt_spec_id.append("<option value=" + item.spec_id + ">" + item.spec_name + "</option>");
+                    }
+                })
+                renderSelect();
+            },
+        })
+    }
+    function queryCardType() {
+        $.ajax({
+            type:"get",
+            url: "/selects/queryCardType?token" + token,
+            success: function (data) {
+                var cmd_card_type = $("#cmd_card_type");
+                $.each(data, function (i, item) {
+                    cmd_card_type.append("<option value=" + item.card_type_id + ">" + item.card_type_name + "</option>");
                 })
                 renderSelect();
             },
