@@ -66,14 +66,16 @@ layui.define(function(exports){
               console.log(params);
               var seriesName = params.seriesName;
               var values = params.data.valueMap;
+              var indexs = params.data.seriesIndex;
               var seriesNameArray = seriesName.split(" ");
               var res = "";
               for (var i = 0; i < seriesNameArray.length - 1; i++) {
-            	  if(i == 0) {
-            		  res += seriesNameArray[i] + ' : ' + values[i];
+                  if(i == 0) {
+            		  res += seriesNameArray[i] + ' : ' + values[0];
             	  } else {
-            		  res += '<br/>' + seriesNameArray[i] + ' : ' + values[i];
+            		  res += '<br/>' + seriesNameArray[i] + ' : ' + values[indexs[i]];
             	  }
+                  
               }
 //              setTimeout(function (){
 //                  // 仅为了模拟异步回调
@@ -85,23 +87,23 @@ layui.define(function(exports){
         	  fontSize: '10'
           }
         },
-        legend: {
-          orient: 'vertical',
-	      x: 'left',
-	      data:['告警'],
-	      show: false,
-	      textStyle: {
-	        color: "white"
-	      }
-        },
-        dataRange: {
-          min: 0,
-          max: 1000,
-          color:['#003266','#1a8bff'],
-          text:['高','低'],           // 文本，默认为数值文本
-          calculable : true,
-          show: false
-        },
+//        legend: {
+//          orient: 'vertical',
+//	      x: 'left',
+//	      data:['告警'],
+//	      show: false,
+//	      textStyle: {
+//	        color: "white"
+//	      }
+//        },
+//        dataRange: {
+//          min: 0,
+//          max: 1000,
+//          color:['#003266','#1a8bff'],
+//          text:['高','低'],           // 文本，默认为数值文本
+//          calculable : true,
+//          show: false
+//        },
         series : [
             {
                 name: 'OLT设备',
@@ -112,26 +114,26 @@ layui.define(function(exports){
                 selectedMode : 'single',
                 itemStyle:{
                     normal: {
-                    	borderColor: '#87cefa',
-                    	borderWidth: 1,
+//                    	borderColor: '#87cefa',
+//                    	borderWidth: 1,
                     	label: {
                     		show: true,
                     		textStyle: {
-	                      		color: 'white'
-	                      	},
-                    	}
+                    			color: 'white'
+                    		}
+                    	},
+                    	areaStyle: {
+                      		color: 'green'
+                      	},
                     },
                     emphasis: {
-                    	borderColor: '#1e90ff',
-                    	borderWidth: 1,
-                    	color: '#3399ff',
-                    	textStyle: {
-                    		color: 'white',
-                    		fontSize: '20px'
-                    	},
                     	label: {
                     		show: true
-                    	}
+                    	},
+                    	color: "#FFA07A",
+                    	areaStyle: {
+                      		color: 'black'
+                      	},
                     }
                 },
                 data: mapData
@@ -145,8 +147,8 @@ layui.define(function(exports){
                 selectedMode : 'single',
                 itemStyle:{
                     normal: {
-                    	borderColor: '#87cefa',
-                    	borderWidth: 1,
+//                    	borderColor: '#87cefa',
+//                    	borderWidth: 1,
                     	label: {
                     		show: true
                     	},
@@ -159,14 +161,17 @@ layui.define(function(exports){
                     emphasis: {
                     	borderColor: '#1e90ff',
                     	borderWidth: 1,
-                    	color: '#E788C3',
+//                    	color: '#E788C3',
                     	textStyle: {
-                    		color: '#fff',
+                    		//color: '#fff',
                     		fontSize: '20px'
                     	},
                     	label: {
                     		show: false
-                    	}
+                    	},
+                    	areaStyle: {
+                      		color: 'black'
+                      	},
                     }
                 },
                 data:[ 
@@ -194,8 +199,8 @@ layui.define(function(exports){
                 selectedMode : 'single',
                 itemStyle:{
                     normal: {
-                    	borderColor: '#87cefa',
-                    	borderWidth: 1,
+//                    	borderColor: '#87cefa',
+//                    	borderWidth: 1,
                     	label: {
                     		show: true
                     	}
@@ -203,15 +208,43 @@ layui.define(function(exports){
                     emphasis: {
                     	borderColor: '#1e90ff',
                     	borderWidth: 1,
-                    	color: '#E788C3',
+                    	//color: '#E788C3',
                     	textStyle: {
-                    		color: '#fff',
+                    		//color: '#fff',
                     		fontSize: '20px'
                     	},
                     	label: {
                     		show: false
                     	}
                     }
+                },
+                markPoint: {
+                	itemStyle: {
+                		normal: {
+                			label: {
+                				show: false
+                			},
+                			color: 'red'
+                		},
+                		emphasis: {
+                			label: {
+                				show: false
+                			},
+                			color: 'red'
+                		}
+                	},
+                	data: [
+                		{tooltip: {show: false},name: "大庆市",value:2000, geoCoord:[124.7717,46.4282],
+                			itemStyle: {
+                				normal: {
+                					areaStyle: {
+                						color: 'red'
+                					}
+                				}
+                			}
+                		},
+                        {tooltip: {show: false},name: "哈尔滨市",values:1000, geoCoord:[127.9688,45.368]},
+                	]
                 },
                 data:[ 
 					{name: "齐齐哈尔市", value: Math.round(Math.random()*1000)},
@@ -449,8 +482,9 @@ layui.define(function(exports){
 	  		    var echOltAlarmPip = [], oltAlarmOp = [
 	  		      {
 	  		    	title : {
-	  		  	        text: city_name,
-	  		  	        subtext: '告警',
+	  		  	       	//text: city_name,
+	  		  	        //subtext: '告警',
+	  		    		text: '告警',
 	  		  	        x:'center',
 	  		  	        textStyle: {
 	  		  	        	fontSize: '14',
@@ -518,6 +552,18 @@ layui.define(function(exports){
 	  		    };
 	  		    if(!elemOltAlarmPip[0]) return;
 	  		      rendeOltAlarmPip(0);
+	  		    $("#grave_am").click(function() {
+	  		    	rendeOltAlarmPip(0);
+	  		    });
+	  		    $("#major_am").click(function() {
+	  		    	rendeOltAlarmPip(0);
+	  		    });
+	  		    $("#minor_am").click(function() {
+	  		    	rendeOltAlarmPip(0);
+	  		    });
+	  		    $("#warn_am").click(function() {
+	  		    	rendeOltAlarmPip(0);
+	  		    });
 		    }
     ,renderDataView = function(index){
       if(index == 0) {
