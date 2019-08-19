@@ -93,7 +93,7 @@ public class SecurityHandlerConfig {
                 String msg = null;
                 if (exception instanceof BadCredentialsException) {
                     System.out.println(exception.getMessage());
-                    msg = "发生未知错误，请点击www.scwvg.com连接系统系统厂商处理！";
+                    msg = "发生未知错误，请访问www.scwvg.com连接系统系统厂商处理！";
                 } else {
                     msg = exception.getMessage();
                     System.out.println(exception.getMessage());
