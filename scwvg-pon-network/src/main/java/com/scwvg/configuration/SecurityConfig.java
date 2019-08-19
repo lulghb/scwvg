@@ -42,12 +42,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private AuthenticationFailureHandler authenticationFailureHandler;
     @Autowired
     /**
-     * 退出登录
+     * 退出登录处理
      */
     private LogoutSuccessHandler logoutSuccessHandler;
     @Autowired
     /**
-     * 其他异常
+     * 未登录处理
      */
     private AuthenticationEntryPoint authenticationEntryPoint;
     @Autowired
