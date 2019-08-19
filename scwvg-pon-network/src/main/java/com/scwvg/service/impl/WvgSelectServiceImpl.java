@@ -79,4 +79,14 @@ public class WvgSelectServiceImpl implements WvgSelectService {
         return selectMapper.queryCardType();
     }
 
+    @Override
+    public Map<Integer, Map<String, Object>> queryCycle() {
+        return selectMapper.queryCycle();
+    }
+
+    @Override
+    public Map<Integer, Map<String, Object>> queryResModel() {
+        return selectMapper.queryResModel();
+    }
+
 }

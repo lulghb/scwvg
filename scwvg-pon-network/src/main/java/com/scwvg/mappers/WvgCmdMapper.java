@@ -1,8 +1,11 @@
 package com.scwvg.mappers;
 
 import com.github.pagehelper.Page;
+import com.scwvg.entitys.scwvgponnetwork.WvgCmdBase;
+import com.scwvg.entitys.scwvgponnetwork.WvgCmdGroup;
 import org.apache.ibatis.annotations.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -143,4 +146,165 @@ public interface WvgCmdMapper {
     int deleteCmbBase(Long cmd_id);
 
 
+    /**
+     * 查询所有指令
+     * @return
+     */
+    @Select("select DISTINCT cmd_id,cmd_ch_name from wvg_cmd_base where res_vendor_id=#{vendor_id} ORDER BY cmd_id desc")
+    List<WvgCmdBase> queryCmdBase(int vendor_id);
+
+    /**
+     * 查询最大ID
+     * @return
+     */
+    @Select("select MAX(idt_cmd_id) from wvg_cmd_induction")
+    int queryMaxInduction();
+    /**
+     * 插入指令组
+     * @param params
+     * @return
+     */
+    @Insert("INSERT INTO wvg_cmd_induction (\n" +
+            "\tidt_cmd_id,\n" +
+            "\tidt_cmd_name,\n" +
+            "\tdata_type_id,\n" +
+            "\tspec_id,\n" +
+            "\tres_type_id,\n" +
+            "\tidt_retry_number,\n" +
+            "\tcycle_id,\n" +
+            "\tcycle_select,\n" +
+            "\tidt_gather_time,\n" +
+            "\tidt_is_test,\n" +
+            "\tidt_is_addlib,\n" +
+            "\tbase_id,\n" +
+            "\tcreateTime,\n" +
+            "\twvg_user_id\n" +
+            ")\n" +
+            "VALUES\n" +
+            "\t(\n" +
+            "\t\t#{idt_cmd_id},\n" +
+            "\t\t#{idt_cmd_name},\n" +
+            "\t\t#{data_type_id},\n" +
+            "\t\t#{spec_id},\n" +
+            "\t\t#{res_type_id},\n" +
+            "\t\t#{idt_retry_number},\n" +
+            "\t\t#{cycle_id},\n" +
+            "\t\t#{cycle_select},\n" +
+            "\t\t#{idt_gather_time},\n" +
+            "\t\t#{idt_is_test},\n" +
+            "\t\t#{idt_is_addlib},\n" +
+            "\t\t#{base_id},\n" +
+            "\t\tnow(),\n" +
+            "\t\t#{wvg_user_id})")
+    int saveInduction(Map<String,Object> params);
+    /**
+     * 插入组管理
+     * @return
+     */
+    @Insert("INSERT INTO wvg_cmd_group \n" +
+            "(idt_cmd_id,\n" +
+            "vendor_id,\n" +
+            "cmd_id_group,\n" +
+            "cmd_card_type,\n" +
+            "res_model_id)\n" +
+            "VALUES\n" +
+            "(#{idt_cmd_id},\n" +
+            "#{vendor_id},\n" +
+            "#{group},\n" +
+            "#{cmd_card_type},\n" +
+            "#{res_model_id})")
+    int saveGroup(Map<String,Object> params);
+
+    /**
+     * 修改宏指令
+     * @param params
+     * @return
+     */
+    @Update("UPDATE wvg_cmd_induction\n" +
+            "SET \n" +
+            "idt_cmd_name = #{idt_cmd_name},\n" +
+            "data_type_id=#{data_type_id},\n" +
+            "spec_id=#{spec_id},\n" +
+            "res_type_id=#{res_type_id},\n" +
+            "cycle_id=#{cycle_id},\n" +
+            "cycle_select=#{cycle_select},\n" +
+            "idt_gather_time=#{idt_gather_time},\n" +
+            "idt_is_addlib=#{idt_is_addlib},\n" +
+            "base_id=#{base_id},\n" +
+            "updateTime=now(),\n" +
+            "idt_retry_number=#{idt_retry_number},\n" +
+            "wvg_user_id=#{wvg_user_id} \n"+
+            "where idt_cmd_id=#{idt_cmd_id}")
+    int editInduction(Map<String,Object> params);
+    /**
+     * 修改指令组
+     * @param params
+     * @return
+     */
+    @Insert("INSERT INTO wvg_cmd_group \n" +
+            "(idt_cmd_id,\n" +
+            "vendor_id,\n" +
+            "cmd_id_group,\n" +
+            "cmd_card_type,\n" +
+            "res_model_id)\n" +
+            "VALUES\n" +
+            "(#{idt_cmd_id},\n" +
+            "#{vendor_id},\n" +
+            "#{group},\n" +
+            "#{cmd_card_type},\n" +
+            "#{res_model_id})")
+    int editCmdGroup(Map<String,Object> params);
+
+    /**
+     * 查询宏指令明细
+     * @param idt_cmd_id
+     * @return
+     */
+    @Select("select \n" +
+            "x.idt_cmd_id,\n" +
+            "x.idt_cmd_name,\n" +
+            "x.data_type_id,\n" +
+            "x.spec_id,\n" +
+            "x.res_type_id,\n" +
+            "x.idt_retry_number,\n" +
+            "x.cycle_id,\n" +
+            "x.cycle_select,\n" +
+            "x.idt_gather_time,\n" +
+            "x.idt_is_addlib,\n" +
+            "x.base_id\n" +
+            "from wvg_cmd_induction x\n" +
+            "where x.idt_cmd_id=#{idt_cmd_id}")
+    Map<String,Object> getIdtCmdBaseById(Long idt_cmd_id);
+
+    /**
+     * 查询右侧数据第一步
+     * @param
+     * @return
+     */
+    @Select("select * from wvg_cmd_group where idt_cmd_id=#{idt_cmd_id}")
+   List<WvgCmdGroup> queryCmdGroupByid(Long idt_cmd_id);
+
+    /**
+     * 查询右侧数据第二步
+     * @param
+     * @return
+     */
+    @Select("select DISTINCT cmd_id,cmd_ch_name from wvg_cmd_base where cmd_id=#{cmd_id}")
+    WvgCmdBase queryCmdBaseById(int cmd_id);
+
+    /**
+     * 删除组数据
+     * @param idt_cmd_id
+     * @return
+     */
+    @Delete("delete from wvg_cmd_group where idt_cmd_id=#{idt_cmd_id}")
+    int deleteGroup(Long idt_cmd_id);
+
+    /**
+     * 删除宏指令管理
+     * @param idt_cmd_id
+     * @return
+     */
+    @Delete("delete from wvg_cmd_induction where idt_cmd_id=#{idt_cmd_id}")
+    int deleteIdt(Long idt_cmd_id);
 }

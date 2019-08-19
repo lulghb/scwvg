@@ -107,6 +107,7 @@ public class WvgTokenServiceImpl implements WvgTokenService {
      */
     @Override
     public WvgLoginUser getLoginUser(String jwtToken) {
+        System.out.println(jwtToken);
         String uuid = getUUIDFromJWT(jwtToken);
         if (uuid != null) {
             WvgToken model = tokenMapper.getByTokenId(uuid);

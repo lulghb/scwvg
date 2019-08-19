@@ -2,7 +2,9 @@ package com.scwvg.service;
 
 import com.github.pagehelper.Page;
 import com.scwvg.entitys.Msg;
+import com.scwvg.entitys.scwvgponnetwork.WvgCmdBase;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -64,4 +66,16 @@ public interface WvgCmdService {
      * @return
      */
     Msg deleteCmbBase(Long cmd_id);
+
+    List<WvgCmdBase> queryCmdBase(int vendor_id);
+
+    List<WvgCmdBase> queryCmdBaseById(Long idt_cmd_id);
+
+    Msg saveInduction(Map<String,Object> params);
+
+    Map<String,Object> getIdtCmdBaseById(Long idt_cmd_id);
+
+    Msg editInduction(Map<String,Object> params);
+
+    Msg deleteIdtGroup(Long idt_cmd_id);
 }

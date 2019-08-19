@@ -3,7 +3,7 @@ package com.scwvg.controller;
 import com.github.pagehelper.Page;
 import com.scwvg.annotation.Log;
 import com.scwvg.entitys.Msg;
-import com.scwvg.entitys.scwvgponnetwork.WvgUser;
+import com.scwvg.entitys.scwvgponnetwork.WvgCmdBase;
 import com.scwvg.service.WvgCmdService;
 import com.scwvg.utils.PageInfo;
 import io.swagger.annotations.Api;
@@ -14,13 +14,14 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @aothor: lul
  * @unit: 智谷园网络科技有限公司
  * @iphone:18482297774
- * @date：20192019/5/28
+ * @date：2019/5/28
  * @Explain：指令中心操作类
  **/
 @Api("指令操作中心")
@@ -101,9 +102,9 @@ public class WvgCmdController {
         return cmdService.editCmdBaes(params);
     }
     @GetMapping("/delCmdBase/{cmd_id}")
-    @ApiOperation(value = "菜单删除")
-    @Log("菜单修改")
-    @PreAuthorize("hasAuthority('menus:del')")
+    @ApiOperation(value = "指令库删除")
+    @Log("指令库删除")
+    @PreAuthorize("hasAuthority('cmd:del')")
     public Msg delCmdBase(@PathVariable Long cmd_id){
         return cmdService.deleteCmbBase(cmd_id);
     }
@@ -121,6 +122,7 @@ public class WvgCmdController {
         params.put("idt_is_addlib", request.getParameter("idt_is_addlib"));
         params.put("idt_base_int", request.getParameter("idt_base_int"));
         params.put("idt_cmd_name", request.getParameter("idt_cmd_name"));
+        params.put("cycle_id", request.getParameter("cycle_id"));
 
         Page<Map<String, Object>> induction=cmdService.getInduction(params,page);
         PageInfo<Map<String, Object>> pageInfo = new PageInfo<>(induction.getPageNum(), induction.getPageSize(), induction.getTotal());
@@ -128,6 +130,55 @@ public class WvgCmdController {
         pageInfo.setItems(induction.getResult());
         return pageInfo;
     }
+
+    /**
+     * 左侧查询所有指令
+     * @return
+     */
+    @GetMapping("/queryCmdBase/{vendor_id}")
+    public @ResponseBody
+    List<WvgCmdBase> queryCmdBase(@PathVariable("vendor_id") int vendor_id){
+        return cmdService.queryCmdBase(vendor_id);
+    }
+    /**
+     * 右侧查询所有指令
+     * @return
+     */
+    @GetMapping("/queryCmdBaseById/{idt_cmd_id}")
+    public @ResponseBody
+    List<WvgCmdBase> queryCmdBaseById(@PathVariable("idt_cmd_id") Long idt_cmd_id){
+        return cmdService.queryCmdBaseById(idt_cmd_id);
+    }
+
+
+
+    @PostMapping("/addInduction")
+    @ApiOperation(value = "宏指令新增（指令组）")
+    @Log("指令新增（指令组）")
+    @PreAuthorize("hasAuthority('idt:add')")
+    public Msg addInduction(HttpServletRequest request){
+        Map<String, Object> params = new HashMap<>();
+        //宏指令管理
+        params.put("idt_cmd_name",request.getParameter("idt_cmd_name"));
+        params.put("data_type_id",request.getParameter("data_type_id"));
+        params.put("spec_id",request.getParameter("spec_id"));
+        params.put("res_type_id",request.getParameter("res_type_id"));
+        params.put("cycle_id",request.getParameter("cycle_id"));
+        params.put("cycle_select",request.getParameter("cycle_select"));
+        params.put("idt_gather_time",request.getParameter("idt_gather_time"));
+        params.put("idt_is_addlib",request.getParameter("idt_is_addlib"));
+        params.put("base_id",request.getParameter("base_id"));
+        params.put("idt_retry_number",request.getParameter("idt_retry_number"));
+        //组管理
+        params.put("vendor_id",request.getParameter("vendor_id"));
+        params.put("cmd_card_type",request.getParameter("cmd_card_type"));
+        params.put("res_model_id",request.getParameter("res_model_id"));
+        params.put("cmd_id_group",request.getParameter("cmd_id_group"));
+
+        return cmdService.saveInduction(params);
+    }
+
+
 
     @GetMapping("/getCmdAlgo")
     @ApiOperation("指令算法获取")
@@ -145,6 +196,46 @@ public class WvgCmdController {
     }
 
 
+    @Log("ID查询宏指令")
+    @GetMapping("/getIdtInfo/{idt_cmd_id}")
+    public @ResponseBody Map<String, Object> getIdtInof(@PathVariable("idt_cmd_id") Long idt_cmd_id) {
+        return cmdService.getIdtCmdBaseById(idt_cmd_id);
+    }
+
+    @PostMapping("/editInduction")
+    @ApiOperation(value = "宏指令修改（指令组）")
+    @Log("指令修改（指令组）")
+    @PreAuthorize("hasAuthority('idt:edit')")
+    public Msg editInduction(HttpServletRequest request){
+        Map<String, Object> params = new HashMap<>();
+        //宏指令管理
+        params.put("idt_cmd_name",request.getParameter("idt_cmd_name"));
+        params.put("data_type_id",request.getParameter("data_type_id"));
+        params.put("spec_id",request.getParameter("spec_id"));
+        params.put("res_type_id",request.getParameter("res_type_id"));
+        params.put("cycle_id",request.getParameter("cycle_id"));
+        params.put("cycle_select",request.getParameter("cycle_select"));
+        params.put("idt_gather_time",request.getParameter("idt_gather_time"));
+        params.put("idt_is_addlib",request.getParameter("idt_is_addlib"));
+        params.put("base_id",request.getParameter("base_id"));
+        params.put("idt_retry_number",request.getParameter("idt_retry_number"));
+        //组管理
+        params.put("vendor_id",request.getParameter("vendor_id"));
+        params.put("cmd_card_type",request.getParameter("cmd_card_type"));
+        params.put("res_model_id",request.getParameter("res_model_id"));
+        params.put("cmd_id_group",request.getParameter("cmd_id_group"));
+
+        params.put("idt_cmd_id",request.getParameter("idt_cmd_id"));
+
+        return cmdService.editInduction(params);
+    }
+    @GetMapping("/delIdtCmd/{idt_cmd_id}")
+    @ApiOperation(value = "指令组删除")
+    @Log("指令库删除")
+    @PreAuthorize("hasAuthority('idt:del')")
+    public Msg delIdtCmd(@PathVariable Long idt_cmd_id){
+        return cmdService.deleteIdtGroup(idt_cmd_id);
+    }
 
 
 }

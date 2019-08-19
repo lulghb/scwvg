@@ -37,4 +37,7 @@ public interface WvgSelectService {
     Map<Integer,Map<String,Object>> queryIdtBaseInt();
     //采集协议
     Map<Integer,Map<String,Object>> queryCardType();
+
+    Map<Integer,Map<String,Object>> queryResModel();
+    Map<Integer,Map<String,Object>> queryCycle();
 }

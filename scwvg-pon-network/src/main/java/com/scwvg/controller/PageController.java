@@ -1,6 +1,5 @@
 package com.scwvg.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -252,7 +251,7 @@ public class PageController {
 	 */
 	@GetMapping("/lib/addcmdbase")
 	public String addcmdbase(){
-		return "sys/lib/add";
+		return "sys/lib/cmdAdd";
 	}
 	/**
 	 * 采集模型库修改
@@ -260,7 +259,24 @@ public class PageController {
 	 */
 	@GetMapping("/lib/editcmdbase")
 	public String editcmdbase(){
-		return "sys/lib/edit";
+		return "sys/lib/cmdEdit";
+	}
+	/**
+	 * 宏指令新增
+	 * @return
+	 */
+	@GetMapping("/lib/addInduction")
+	public String addInduction(){
+		return "sys/lib/IdtAdd";
+	}
+
+	/**
+	 * 宏指令新增
+	 * @return
+	 */
+	@GetMapping("/lib/editInduction")
+	public String editInduction(){
+		return "sys/lib/IdtEdit";
 	}
 
 }

@@ -89,4 +89,20 @@ public interface WvgSelectMapper {
     @MapKey("card_type_id")
     @Select("select card_type_id,card_type_name from wvg_card_type")
     Map<Integer,Map<String,Object>> queryCardType();
+
+    /**
+     * 采集时段
+     * @return
+     */
+    @MapKey("cycle_id")
+    @Select("select cycle_id,cycle_name from wvg_cycle")
+    Map<Integer,Map<String,Object>> queryCycle();
+
+    /**
+     * 型号查询
+     * @return
+     */
+    @MapKey("res_model_id")
+    @Select("select res_model_id, res_model_name from wvg_res_model")
+    Map<Integer,Map<String,Object>> queryResModel();
 }
