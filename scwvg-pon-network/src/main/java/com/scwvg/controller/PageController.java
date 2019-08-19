@@ -215,7 +215,7 @@ public class PageController {
 	 */
 	@GetMapping("/am/list")
 	public String am_list(){
-		return "am/list";
+		return "sys/am/list";
 	}
 
 	/**
@@ -224,7 +224,16 @@ public class PageController {
 	 */
 	@GetMapping("/am/detail")
 	public String am_detail(){
-		return "am/detail";
+		return "sys/am/detail";
+	}
+	
+	/**
+	 * 告警明细
+	 * @return
+	 */
+	@GetMapping("/map/hlj")
+	public String hlj_map(){
+		return "sys/map/hlj";
 	}
 
 	/**

@@ -125,6 +125,16 @@
                     	<div id=LAY-index-right class="right" style="height: 432px; width: 24%; position: relative; float: left;margin-left: 5px;margin-right: 5px;">
                     		<!-- 告警 -->
                     		<a id="toAm" lay-href="page/am/list" style="display: none">告警查询</a>
+                    		<div style="margin-left: 15%; width: 90%; z-index: 1; top:40px; position: absolute;">
+                    			<!-- 严重告警 -->
+                    			<span id="grave_am" style="background-color: #8B0000;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+                    			<!-- 主要告警 -->
+                    			<span id="major_am" style="background-color: #CD5C5C;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+                    			<!-- 次要告警 -->
+                    			<span id="minor_am" style="background-color: #FFA07A;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>&nbsp;
+                    			<!-- 警告 -->
+                    			<span id="warn_am" style="background-color: #FFFF00;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                    		</div>
                     		<div carousel-item id="LAY-index-olt-alarm-pie" style="height: 200px; padding: 5px;"></div>
 							<!-- 流量 -->
 							<div carousel-item id="LAY-index-olt-flux-pie" style="height: 200px; padding: 5px; margin-top: 5px;"></div>
