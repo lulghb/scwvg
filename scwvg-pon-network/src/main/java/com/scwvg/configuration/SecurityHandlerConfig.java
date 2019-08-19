@@ -92,9 +92,11 @@ public class SecurityHandlerConfig {
                                                 AuthenticationException exception) throws IOException, ServletException {
                 String msg = null;
                 if (exception instanceof BadCredentialsException) {
-                    msg = "密码错误!";
+                    System.out.println(exception.getMessage());
+                    msg = "发生未知错误，请点击www.scwvg.com连接系统系统厂商处理！";
                 } else {
                     msg = exception.getMessage();
+                    System.out.println(exception.getMessage());
                 }
                 
                 // 保存登录失败日志
