@@ -6,6 +6,7 @@ import com.scwvg.entitys.scwvgponnetwork.WvgUser;
 import com.scwvg.mappers.WvgMenuMapper;
 import com.scwvg.mappers.WvgUserMapper;
 import com.scwvg.service.WvgUserService;
+import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
@@ -36,13 +37,13 @@ public class WvgUserDetailsServiceImpl implements UserDetailsService {
             throw new AuthenticationCredentialsNotFoundException("用户名不存在!");
         }else if(user.getWvg_act_date() !=1)
         {
-            throw new UsernameNotFoundException("您的账号已过有效期！请联系统供应商处理！");
+            throw new AuthenticationCredentialsNotFoundException("您的账号已过有效期！请联系统供应商处理！");
         }
         else if(user.getWvg_pwd_date() !=1){
-            throw new UsernameNotFoundException("您的密码已过期！请联系统供应商处理！");
+            throw new AuthenticationCredentialsNotFoundException("您的密码已过期！请联系统供应商处理！");
         }
         else if(user.getWvg_account_enabled() !=1){
-            throw new UsernameNotFoundException("您的账号未启用！请联系统供应商处理！");
+            throw new AuthenticationCredentialsNotFoundException("您的账号未启用！请联系统供应商处理！");
         }
         WvgLoginUser loginUser= new WvgLoginUser();
         BeanUtils.copyProperties(user,loginUser);
